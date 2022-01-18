@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane fx:id="mainBP" layoutX="200.0" layoutY="78.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <VBox fx:id="containerVB" spacing="5.0">
+                     <padding>
+                        <Insets left="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </center>
+         <top>
+            <HBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label text="Visualizza borse:" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+         <right>
+            <HBox BorderPane.alignment="CENTER">
+               <children>
+                  <VBox minWidth="150.0">
+                     <children>
+                        <Hyperlink fx:id="refreshHL" layoutX="10.0" layoutY="10.0" text="Aggiorna" />
+                        <Hyperlink fx:id="orderHL" text="Ordina" />
+                        <Separator />
+                        <Hyperlink fx:id="regBorsaHL" text="Nuova borsa" />
+                        <Hyperlink fx:id="showBorsaHL" text="Informazioni borsa" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </right>
+      </BorderPane>
+   </children>
+</fx:root>

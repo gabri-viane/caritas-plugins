@@ -1,0 +1,27 @@
+-d
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\build\\modules
+-classpath
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\build\\modules
+-target
+17
+-encoding
+UTF-8
+-g
+-processorpath
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\build\\empty
+-s
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\build\\generated-sources\\ap-source-output
+-source
+17
+--module-source-path
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\src\\*\\classes
+--module-path
+"C:\\Program Files\\Java\\javafx-sdk-17.0.1\\lib\\javafx-swt.jar;C:\\Program Files\\Java\\javafx-sdk-17.0.1\\lib\\javafx.base.jar;C:\\Program Files\\Java\\javafx-sdk-17.0.1\\lib\\javafx.controls.jar;C:\\Program Files\\Java\\javafx-sdk-17.0.1\\lib\\javafx.fxml.jar;C:\\Program Files\\Java\\javafx-sdk-17.0.1\\lib\\javafx.graphics.jar;C:\\Program Files\\Java\\javafx-sdk-17.0.1\\lib\\javafx.media.jar;C:\\Program Files\\Java\\javafx-sdk-17.0.1\\lib\\javafx.swing.jar;C:\\Program Files\\Java\\javafx-sdk-17.0.1\\lib\\javafx.web.jar;V:\\Data\\Programmazione\\Caritas\\TheOpenHand_CariApp\\dist\\Commons.jar"
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\src\\Borse\\classes\\module-info.java
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\src\\Borse\\classes\\theopenhand\\plugins\\borse\\connector\\runtimes\\PluginSettings.java
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\src\\Borse\\classes\\theopenhand\\plugins\\borse\\controllers\\borse\\BorseController.java
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\src\\Borse\\classes\\theopenhand\\plugins\\borse\\data\\Borsa.java
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\src\\Borse\\classes\\theopenhand\\plugins\\borse\\data\\holders\\BorsaHolder.java
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\src\\Borse\\classes\\theopenhand\\plugins\\borse\\window\\borse\\BorseMain.java
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\src\\Borse\\classes\\theopenhand\\plugins\\borse\\window\\borse\\add\\BorsaRegister.java
+V:\\Data\\Programmazione\\Caritas\\CariApp_Plugins\\src\\Famiglie\\classes\\theopenhand\\plugins\\famiglie\\connector\\runtimes\\FamigliaRR.java

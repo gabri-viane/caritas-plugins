@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.10.8
+Created-By: 10.0.2+13 ("Oracle Corporation")
+uuid: fe9db61c-cf32-4122-96d6-dd45df7575c6
+pknm: Prodotti
+injnm: theopenhand.plugins.prodotti.connector.PluginRegisterProdotti

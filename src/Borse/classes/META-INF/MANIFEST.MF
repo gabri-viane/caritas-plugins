@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.10.8
+Created-By: 10.0.2+13 ("Oracle Corporation")
+uuid: 17b61877-33e5-4e66-92f5-baae168ca0bc
+pknm: Borse
+injnm: theopenhand.plugins.borse.connector.PluginRegisterBorse
