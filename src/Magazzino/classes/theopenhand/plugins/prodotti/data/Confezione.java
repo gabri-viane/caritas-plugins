@@ -17,7 +17,9 @@ package theopenhand.plugins.prodotti.data;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
+import theopenhand.commons.connection.runtime.custom.ClauseType;
 import theopenhand.commons.connection.runtime.interfaces.BindableResult;
 
 /**
@@ -29,9 +31,11 @@ public class Confezione implements BindableResult {
     @QueryField(name = "ID", fieldID = 0, registerOut = true)
     protected BigInteger id;
 
+    @QueryCustom(displayName = "Nome", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE})
     @QueryField(name = "Dimensione", fieldID = 1)
     protected String dimensione;
 
+    @QueryCustom(displayName = "Nome", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE})
     @QueryField(name = "Confezione", fieldID = 2)
     protected String confezione;
 

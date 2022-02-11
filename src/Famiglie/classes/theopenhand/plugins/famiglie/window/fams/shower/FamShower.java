@@ -194,24 +194,24 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
                 setData(f);
             } else {
                 DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore selezione",
-                        "La famiglia selezionata non è correttamente registrata.", null).show();
+                        "La famiglia selezionata non è correttamente registrata.", null);
             }
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore ricerca",
-                    "Non è stata selezionata nessuna famiglia per cui visualizzare i dati.", null).show();
+                    "Non è stata selezionata nessuna famiglia per cui visualizzare i dati.", null);
         }
     }
 
     private void deleteFam() {
         Optional<ButtonType> res = DialogCreator.showAlert(Alert.AlertType.CONFIRMATION, "Eliminazione dati",
-                "Eliminando la famiglia eliminerai anche tutti i dati ad essa correlati:\n\t-Informazioni famiglia\n\t-Componenti\n\t-Storico borse\nProcedendo eliminerai tutti i dati, continuare?", null).showAndWait();
+                "Eliminando la famiglia eliminerai anche tutti i dati ad essa correlati:\n\t-Informazioni famiglia\n\t-Componenti\n\t-Storico borse\nProcedendo eliminerai tutti i dati, continuare?", null);
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (f != null) {
                     FamiglieController.rs = (FamigliaHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 5, Famiglia.class, f).orElse(null);
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
-                            "Non è stata selezionata nessuna famiglia da eliminare.", null).show();
+                            "Non è stata selezionata nessuna famiglia da eliminare.", null);
                 }
                 reset();
             }
@@ -228,10 +228,10 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
             refreshValues();
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
-                    "I dati della famiglia sono stati aggiornati.", null).show();
+                    "I dati della famiglia sono stati aggiornati.", null);
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore modifica",
-                    "Non è stata selezionata nessuna famiglia da modificare.", null).show();
+                    "Non è stata selezionata nessuna famiglia da modificare.", null);
         }
     }
 

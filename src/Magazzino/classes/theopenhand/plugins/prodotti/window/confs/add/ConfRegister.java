@@ -77,7 +77,7 @@ public class ConfRegister extends AnchorPane implements DialogComponent {
                 }
             
         } else {
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dimensione della confezione non valida", null).show();
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dimensione della confezione non valida", null);
         }
 
     }

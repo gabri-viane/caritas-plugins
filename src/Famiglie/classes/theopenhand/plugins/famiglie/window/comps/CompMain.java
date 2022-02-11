@@ -132,7 +132,7 @@ public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, Dialo
                     cl.onClick();
                 });
             } else {
-                DialogCreator.showAlert(Alert.AlertType.WARNING, "Operazione bloccata", "Per aggiungere un componente è necessario innanzitutto selezionare una famiglia.", null).show();
+                DialogCreator.showAlert(Alert.AlertType.WARNING, "Operazione bloccata", "Per aggiungere un componente è necessario innanzitutto selezionare una famiglia.", null);
             }
             addHL.setVisited(false);
         });
@@ -158,7 +158,7 @@ public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, Dialo
                 });
             }
         } else {
-            DialogCreator.showAlert(Alert.AlertType.WARNING, "Nessun dato", "Non è stata selezionata nessuna famiglia, non possono essere perciò mostrati i relativi dati.", null).show();
+            DialogCreator.showAlert(Alert.AlertType.WARNING, "Nessun dato", "Non è stata selezionata nessuna famiglia, non possono essere perciò mostrati i relativi dati.", null);
         }
     }
 

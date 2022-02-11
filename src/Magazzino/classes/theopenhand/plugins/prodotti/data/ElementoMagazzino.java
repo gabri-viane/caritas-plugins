@@ -16,7 +16,9 @@
 package theopenhand.plugins.prodotti.data;
 
 import java.math.BigInteger;
+import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
+import theopenhand.commons.connection.runtime.custom.ClauseType;
 import theopenhand.commons.interfaces.graphics.ColumnData;
 import theopenhand.commons.interfaces.graphics.TableAssoc;
 
@@ -32,10 +34,12 @@ public class ElementoMagazzino implements TableAssoc {
     @QueryField(name = "IDProdotto", fieldID = 1)
     private BigInteger id_prodotto;
 
+    @QueryCustom(displayName = "Quantità", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE})
     @ColumnData(Title = "Quantità", order = 1)
     @QueryField(name = "Totale", fieldID = 2)
-    private Integer totale;
+    private Long totale;
 
+    @QueryCustom(displayName = "Nome prodotto", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE})
     @ColumnData(Title = "Prodotto", order = 0)
     @QueryField(name = "Nome", fieldID = 3)
     private String nome;
@@ -43,7 +47,7 @@ public class ElementoMagazzino implements TableAssoc {
     public ElementoMagazzino() {
     }
 
-    public ElementoMagazzino(long id_prodotto, Integer totale, String nome) {
+    public ElementoMagazzino(long id_prodotto, Long totale, String nome) {
         this.id = null;
         this.id_prodotto = BigInteger.valueOf(id_prodotto);
         this.totale = totale;
@@ -63,7 +67,7 @@ public class ElementoMagazzino implements TableAssoc {
         return id_prodotto;
     }
 
-    public Integer getTotale() {
+    public Long getTotale() {
         return totale;
     }
 
@@ -75,7 +79,11 @@ public class ElementoMagazzino implements TableAssoc {
         this.id_prodotto = id_prodotto;
     }
 
-    public void setTotale(Integer totale) {
+    public void setTotale(Long totale) {
+        this.totale = totale;
+    }
+
+    public void setTotale(long totale) {
         this.totale = totale;
     }
 

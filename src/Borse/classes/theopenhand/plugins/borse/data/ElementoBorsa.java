@@ -25,7 +25,7 @@ import theopenhand.commons.interfaces.graphics.TableAssoc;
  *
  * @author gabri
  */
-public class ElementoBorsa implements BindableResult,TableAssoc {
+public class ElementoBorsa implements BindableResult, TableAssoc {
 
     @QueryField(fieldID = 0, name = "ID", registerOut = true)
     protected BigInteger id;
@@ -38,8 +38,9 @@ public class ElementoBorsa implements BindableResult,TableAssoc {
 
     @ColumnData(Title = "Totale", order = 2)
     @QueryField(fieldID = 3, name = "Totale")
-    private Integer tot;
+    private BigInteger tot;
 
+    @ColumnData(Title = "Rimosso dal magazzino", order = 3)
     @QueryField(fieldID = 4, name = "IsSottratto")
     private Boolean subtr;
 
@@ -61,13 +62,25 @@ public class ElementoBorsa implements BindableResult,TableAssoc {
         existing = true;
     }
 
-    public ElementoBorsa(long idborsa, long idprodotto, int tot, boolean subtr) {
+    public ElementoBorsa(boolean existing) {
+        this.existing = existing;
+    }
+    
+    public ElementoBorsa(long idborsa, long idprodotto, long tot, boolean subtr) {
         this.id = null;
         this.idborsa = BigInteger.valueOf(idborsa);
         this.idprodotto = BigInteger.valueOf(idprodotto);
-        this.tot = tot;
+        this.tot = BigInteger.valueOf(tot);
         this.subtr = subtr;
         existing = false;
+    }
+
+    public static ElementoBorsa create(BigInteger idprodotto, BigInteger tot) {
+        ElementoBorsa eb = new ElementoBorsa(false);
+        eb.idprodotto = idprodotto;
+        eb.tot = tot;
+        eb.subtr = false;
+        return eb;
     }
 
     public boolean alreadyExists() {
@@ -95,14 +108,19 @@ public class ElementoBorsa implements BindableResult,TableAssoc {
         this.idprodotto = idprodotto;
     }
 
-    public Integer getTot() {
+    public BigInteger getTot() {
         return tot;
     }
 
-    public void setTot(Integer tot) {
-        this.tot = tot;
+    public void setTot(Long tot) {
+        this.tot = BigInteger.valueOf(tot);
     }
 
+    
+    public void setTot(BigInteger tot) {
+        this.tot = tot;
+    }
+    
     public Boolean getSubtr() {
         return subtr;
     }

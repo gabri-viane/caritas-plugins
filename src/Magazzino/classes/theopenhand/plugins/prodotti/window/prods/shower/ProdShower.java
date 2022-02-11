@@ -148,12 +148,6 @@ public class ProdShower extends AnchorPane implements DialogComponent {
             pdcntrl.onAcceptPressed(() -> {
                 c = pdcntrl.getValue();
                 p.setId_confezioni(pdcntrl.getValue().getId());
-//                /*
-//                Devo cambiare le query in modo da avere un Field in Prodotto 
-//                che sia solo per il nome della confezione e il campo "Nome" 
-//                contenga solo il nome del prodotto e non l'insieme del nome e 
-//                della dimensione della confezione
-//                 */
                 p.setNome_confezione(pdcntrl.getValue().getConfezione());
                 cl.onClick();
                 confTypeBTN.setText(p.getNome_confezione());
@@ -197,11 +191,11 @@ public class ProdShower extends AnchorPane implements DialogComponent {
                 setData(p);
             } else {
                 DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore selezione",
-                        "Il prodotto selezionato non è correttamente registrato.", null).show();
+                        "Il prodotto selezionato non è correttamente registrato.", null);
             }
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore ricerca",
-                    "Non è stato selezionato nessun prodotto per cui visualizzare i dati.", null).show();
+                    "Non è stato selezionato nessun prodotto per cui visualizzare i dati.", null);
         }
     }
 
@@ -214,14 +208,14 @@ public class ProdShower extends AnchorPane implements DialogComponent {
 
     private void deleteProd() {
         Optional<ButtonType> res = DialogCreator.showAlert(Alert.AlertType.CONFIRMATION, "Eliminazione dati",
-                "Eliminando il prodotto eliminerai anche tutti i dati ad essa correlati:\n\t-Elementi nelle borse\n\t-Registri entrate\n\t-Magazzino\nProcedendo eliminerai tutti i dati, continuare?", null).showAndWait();
+                "Eliminando il prodotto eliminerai anche tutti i dati ad essa correlati:\n\t-Elementi nelle borse\n\t-Registri entrate\n\t-Magazzino\nProcedendo eliminerai tutti i dati, continuare?", null);
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (p != null) {
                     ProdottiController.rs = (ProdottoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Prodotto.class, p).orElse(null);
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
-                            "Non è stato selezionato nessun prodotto da eliminare.", null).show();
+                            "Non è stato selezionato nessun prodotto da eliminare.", null);
                 }
                 reset();
             }
@@ -242,10 +236,10 @@ public class ProdShower extends AnchorPane implements DialogComponent {
             refreshValues();
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
-                    "I dati del prodotto sono stati aggiornati.", null).show();
+                    "I dati del prodotto sono stati aggiornati.", null);
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore modifica",
-                    "Non è stato selezionato nessun prodotto da modificare.", null).show();
+                    "Non è stato selezionato nessun prodotto da modificare.", null);
         }
     }
 
@@ -302,7 +296,7 @@ public class ProdShower extends AnchorPane implements DialogComponent {
             magazzinoCB.setSelected(prod.getIs_magazzino());
             igieneCB.setSelected(prod.getIs_igiene());
             if (prod.getIs_magazzino()) {
-                MagazzinoController.rs = (MagazzinoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, ElementoMagazzino.class, new ElementoMagazzino(prod.getID().longValue(), null, null)).orElse(null);
+                MagazzinoController.rs = (MagazzinoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 6, ElementoMagazzino.class, new ElementoMagazzino(prod.getID().longValue(), null, null)).orElse(null);
                 if (MagazzinoController.rs != null) {
                     ElementoMagazzino lastInsert = MagazzinoController.rs.getLastInsert();
                     contProdLBL.setText(lastInsert.getTotale().toString());

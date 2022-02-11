@@ -15,16 +15,21 @@
  */
 package theopenhand.plugins.prodotti.controllers.prodotti;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import javafx.scene.layout.AnchorPane;
+import theopenhand.commons.ReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
+import theopenhand.commons.connection.runtime.custom.Clause;
 import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
 import theopenhand.commons.events.graphics.ClickListener;
+import theopenhand.commons.events.programm.ValueAcceptListener;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.data.Prodotto;
 import theopenhand.plugins.prodotti.data.holders.ProdottoHolder;
 import theopenhand.plugins.prodotti.window.prods.ProdMain;
 import theopenhand.runtime.templates.ReferenceController;
+import theopenhand.window.graphics.dialogs.DialogCreator;
 
 /**
  *
@@ -64,9 +69,20 @@ public class ProdottiController implements ReferenceController {
     public AnchorPane getNode() {
         return fp;
     }
-    
-    public static AnchorPane getNodeMain(){
+
+    public static AnchorPane getNodeMain() {
         return fp;
+    }
+
+    public static void requestProductQuery(int query_id) {
+        Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, query_id, Prodotto.class, null);
+        if (eq.isPresent()) {
+            rs = (ProdottoHolder) eq.get();
+        }
+    }
+
+    public static void requestProductOrderQuery(int query_id, ValueAcceptListener<Optional<ArrayList<Clause>>> future) {
+        DialogCreator.createSearcher(new ReferenceQuery(PluginRegisterProdotti.prr, Prodotto.class, rs, query_id), future);
     }
 
 }

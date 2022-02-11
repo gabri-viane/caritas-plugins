@@ -146,7 +146,7 @@
                         <Separator />
                         <VBox>
                            <children>
-                              <Hyperlink fx:id="moveToFamHL" text="Assgna a famiglia diversa" />
+                              <Hyperlink fx:id="moveToFamHL" text="Assegna a famiglia diversa" />
                               <Hyperlink fx:id="editElemsHL" text="Modifica elementi borsa" />
                            </children>
                         </VBox>

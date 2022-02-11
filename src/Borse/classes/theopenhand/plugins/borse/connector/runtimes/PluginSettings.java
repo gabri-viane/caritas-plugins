@@ -28,4 +28,7 @@ public class PluginSettings extends Settings {
     @SettingProperty(id = "table_prop", name = "Usa tabelle", description = "Utilizza le tabelle per mostrare liste di dati")
     public static LinkableBoolean table_prop = new LinkableBoolean(true);
 
+    @SettingProperty(id = "table_prop", name = "Rimuovi da magazzino", description = "Rimuovi automaticamente gli elementi aggiunti alle borse dal magazzino")
+    public static LinkableBoolean remove_qt = new LinkableBoolean(true);
+
 }

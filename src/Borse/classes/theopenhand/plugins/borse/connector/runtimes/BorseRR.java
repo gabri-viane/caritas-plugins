@@ -19,6 +19,7 @@ import theopenhand.commons.Pair;
 import theopenhand.commons.connection.runtime.interfaces.BindableResult;
 import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
 import theopenhand.plugins.borse.controllers.borse.BorseController;
+import theopenhand.plugins.borse.controllers.borse.ElementiController;
 import theopenhand.runtime.templates.RuntimeReference;
 
 /**
@@ -36,7 +37,7 @@ public class BorseRR extends RuntimeReference {
 
     private void init() {
         addReferenceController(new BorseController());
-        //addReferenceController(new ElementiController());
+        addReferenceController(new ElementiController());
         
         /*InterchangeRequest.register("borsa_picker", () -> {
             return BorPicker.createPicker();

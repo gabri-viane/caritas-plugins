@@ -16,7 +16,6 @@
 package theopenhand.plugins.borse.window.borse.add;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -114,7 +113,7 @@ public class BorsaRegister extends AnchorPane implements DialogComponent {
         dateConsDP.setValue(LocalDate.now());
         if (creator_enabled) {
             refreshValues();
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Cambiare dati", "Per continuare è necessario cambiare la data selezionata.", null).showAndWait();
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Cambiare dati", "Per continuare è necessario cambiare la data selezionata.", null);
         }
     }
 
@@ -131,13 +130,13 @@ public class BorsaRegister extends AnchorPane implements DialogComponent {
                         after_accept.onClick();
                     }
                 } else {
-                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una data di consegna valida.", null).show();
+                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una data di consegna valida.", null);
                 }
             } else {
-                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una famiglia valida.", null).show();
+                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una famiglia valida.", null);
             }
         } else {
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una famiglia per procedere alla creazione.", null).show();
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una famiglia per procedere alla creazione.", null);
         }
 
     }

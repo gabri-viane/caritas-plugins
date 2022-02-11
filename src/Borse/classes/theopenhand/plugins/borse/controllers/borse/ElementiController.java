@@ -18,6 +18,7 @@ package theopenhand.plugins.borse.controllers.borse;
 import javafx.scene.layout.AnchorPane;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.plugins.borse.data.holders.ElementiHolder;
+import theopenhand.plugins.borse.window.elementi.editor.ElementiCreator;
 import theopenhand.runtime.templates.ReferenceController;
 
 /**
@@ -37,7 +38,7 @@ public class ElementiController implements ReferenceController {
 
     @Override
     public String getAssocButtonName() {
-        return "Mostra Elementi Borsa";
+        return "Crea lista Elementi Borsa";
     }
 
     @Override
@@ -52,7 +53,7 @@ public class ElementiController implements ReferenceController {
 
     @Override
     public AnchorPane getNode() {
-        return null;
+        return new ElementiCreator();
     }
 
 }

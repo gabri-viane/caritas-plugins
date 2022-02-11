@@ -17,7 +17,9 @@ package theopenhand.plugins.prodotti.data;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
+import theopenhand.commons.connection.runtime.custom.ClauseType;
 import theopenhand.commons.connection.runtime.interfaces.BindableResult;
 
 /**
@@ -29,27 +31,33 @@ public class Prodotto implements BindableResult {
     @QueryField(name = "ID", fieldID = 0, registerOut = true)
     protected BigInteger id;
 
+    @QueryCustom(displayName = "Nome", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "Nome", fieldID = 1)
     private String nome;
 
     @QueryField(name = "IDConfezioni", fieldID = 2)
     private BigInteger id_confezioni;
 
+    @QueryCustom(displayName = "A magazzino", enabled = ClauseType.WHERE)
     @QueryField(name = "IsMagazzino", fieldID = 3)
     private Boolean is_magazzino;
 
+    @QueryCustom(displayName = "Fresco", enabled = ClauseType.WHERE)
     @QueryField(name = "IsFresco", fieldID = 4)
     private Boolean is_fresco;
 
+    @QueryCustom(displayName = "Igiene", enabled = ClauseType.WHERE)
     @QueryField(name = "IsIgiene", fieldID = 5)
     private Boolean is_igiene;
 
+    @QueryCustom(displayName = "Extra", enabled = ClauseType.WHERE)
     @QueryField(name = "IsExtra", fieldID = 6)
     private Boolean is_extra;
 
     @QueryField(name = "IDMagazzino", fieldID = 7)
     private BigInteger id_mag;
 
+    @QueryCustom(displayName = "Confezione", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "Confezione", fieldID = 8)
     private String nome_confezione;
 

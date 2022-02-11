@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package theopenhand.plugins.borse.window.elementi.shower;
 
-open module Borse {
-    requires Commons;
-    requires Famiglie;
-    requires Magazzino;
-    requires java.sql;
-    requires javafx.graphics;
-    requires javafx.fxml;
-    requires javafx.controls;
-    requires java.base;
-    requires java.logging;
+/**
+ *
+ * @author gabri
+ */
+public class ElementiShower {
+    
 }

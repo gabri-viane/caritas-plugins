@@ -91,22 +91,32 @@ public class BorseMain extends AnchorPane {
         });
         showBorsaHL.setOnAction(a -> {
             Borsa selectedItem = PluginSettings.table_prop.getValue() ? table.getSelectionModel().getSelectedItem() : null;
-            BorsaShower bs = new BorsaShower(selectedItem);
-            bs.onExitPressed(() -> {
-                StaticReferences.getMainWindowReference().setCenterNode(this);
-            });
-            StaticReferences.getMainWindowReference().setCenterNode(bs);
+            showBorsa(selectedItem);
+            showBorsaHL.setVisited(false);
         });
         refreshHL.setOnAction(a -> {
             reloadElements(true);
             refreshHL.setVisited(false);
         });
         table = ElementCreator.generateTable(Borsa.class, BorseController.rs);
+        table.setValueAcceptListener((b) -> {
+            if (b != null) {
+                showBorsa(b);
+            }
+        });
         PluginSettings.table_prop.addListener((previus_value, new_value) -> {
             changeType(new_value);
         });
         changeType(PluginSettings.table_prop.getValue());
         reloadElements(true);
+    }
+
+    private void showBorsa(Borsa b) {
+        BorsaShower bs = new BorsaShower(b);
+        bs.onExitPressed(() -> {
+            StaticReferences.getMainWindowReference().setCenterNode(this);
+        });
+        StaticReferences.getMainWindowReference().setCenterNode(bs);
     }
 
     private void changeType(boolean b) {

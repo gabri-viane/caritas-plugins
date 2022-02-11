@@ -136,24 +136,24 @@ public class ConfShower extends AnchorPane implements DialogComponent {
                 setData(c);
             } else {
                 DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore selezione",
-                        "La confezione selezionata non è correttamente registrata.", null).show();
+                        "La confezione selezionata non è correttamente registrata.", null);
             }
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore ricerca",
-                    "Non è stata selezionata nessuna confezione per cui visualizzare i dati.", null).show();
+                    "Non è stata selezionata nessuna confezione per cui visualizzare i dati.", null);
         }
     }
 
     private void deleteConf() {
         Optional<ButtonType> res = DialogCreator.showAlert(Alert.AlertType.CONFIRMATION, "Eliminazione dati",
-                "Eliminando la confezione eliminerai anche tutti i dati ad essa correlati:\n\t-Prodotti\n\t-Elementi nelle borse\n\t-Registri entrate\n\t-Magazzino\nProcedendo eliminerai tutti i dati, continuare?", null).showAndWait();
+                "Eliminando la confezione eliminerai anche tutti i dati ad essa correlati:\n\t-Prodotti\n\t-Elementi nelle borse\n\t-Registri entrate\n\t-Magazzino\nProcedendo eliminerai tutti i dati, continuare?", null);
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (c != null) {
                     ConfezioniController.rs = (ConfezioneHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Confezione.class, c).orElse(null);
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
-                            "Non è stata selezionata nessuna confezione da eliminare.", null).show();
+                            "Non è stata selezionata nessuna confezione da eliminare.", null);
                 }
                 reset();
             }
@@ -167,10 +167,10 @@ public class ConfShower extends AnchorPane implements DialogComponent {
             refreshValues();
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
-                    "I dati della confezione sono stati aggiornati.", null).show();
+                    "I dati della confezione sono stati aggiornati.", null);
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore modifica",
-                    "Non è stata selezionata nessuna confezione da modificare.", null).show();
+                    "Non è stata selezionata nessuna confezione da modificare.", null);
         }
     }
 

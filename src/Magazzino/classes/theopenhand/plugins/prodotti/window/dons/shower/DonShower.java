@@ -141,24 +141,24 @@ public class DonShower extends AnchorPane implements DialogComponent {
                 setData(d);
             } else {
                 DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore selezione",
-                        "Il donatore selezionato non è correttamente registrato.", null).show();
+                        "Il donatore selezionato non è correttamente registrato.", null);
             }
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore ricerca",
-                    "Non è stato selezionato nessun donatore per cui visualizzare i dati.", null).show();
+                    "Non è stato selezionato nessun donatore per cui visualizzare i dati.", null);
         }
     }
 
     private void deleteDon() {
         Optional<ButtonType> res = DialogCreator.showAlert(Alert.AlertType.CONFIRMATION, "Eliminazione dati",
-                "Eliminando il donatore eliminerai anche tutti i dati ad esso correlati:\n\t-Registri entrate\nProcedendo eliminerai tutti i dati, continuare?", null).showAndWait();
+                "Eliminando il donatore eliminerai anche tutti i dati ad esso correlati:\n\t-Registri entrate\nProcedendo eliminerai tutti i dati, continuare?", null);
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (d != null) {
                     DonatoriController.rs = (DonatoreHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Donatore.class, d).orElse(null);
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
-                            "Non è stato selezionato nessun donatore da eliminare.", null).show();
+                            "Non è stato selezionato nessun donatore da eliminare.", null);
                 }
                 reset();
             }
@@ -173,10 +173,10 @@ public class DonShower extends AnchorPane implements DialogComponent {
             refreshValues();
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
-                    "I dati del donatore sono stati aggiornati.", null).show();
+                    "I dati del donatore sono stati aggiornati.", null);
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore modifica",
-                    "Non è stato selezionato nessun donatore da modificare.", null).show();
+                    "Non è stato selezionato nessun donatore da modificare.", null);
         }
     }
 

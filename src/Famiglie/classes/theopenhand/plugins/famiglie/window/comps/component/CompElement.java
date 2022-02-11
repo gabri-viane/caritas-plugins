@@ -151,14 +151,14 @@ public class CompElement extends AnchorPane implements ValueHolder<Componente>, 
 
     private void deleteFam() {
         Optional<ButtonType> res = DialogCreator.showAlert(Alert.AlertType.CONFIRMATION, "Eliminazione dati",
-                "Eliminando il componente eliminerai anche tutti i dati ad esso correlati.\n\nProcedendo eliminerai tutti i dati, continuare?", null).showAndWait();
+                "Eliminando il componente eliminerai anche tutti i dati ad esso correlati.\n\nProcedendo eliminerai tutti i dati, continuare?", null);
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (c != null) {
                     ComponentiController.rs = ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 5, Componente.class, c).orElse(null);
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
-                            "Non è stato selezionato nessun componente da eliminare.", null).show();
+                            "Non è stato selezionato nessun componente da eliminare.", null);
                 }
                 this.setDisable(true);
                 if (exit_listener != null) {
@@ -239,17 +239,17 @@ public class CompElement extends AnchorPane implements ValueHolder<Componente>, 
                             //Aggiorna valori in database
                             ConnectionExecutor.getInstance().executeCall(PluginRegisterFamiglie.frr, 2, Componente.class, c);
                         }
-                        DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati salvati", "I dati del componente sono stati aggiornati con successo! ", null).show();
+                        DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati salvati", "I dati del componente sono stati aggiornati con successo! ", null);
                         editable(false);
                         return true;
                     } else {
-                        DialogCreator.showAlert(Alert.AlertType.WARNING, "Dati non validi", "La parentela selezionata non è valida.", null).show();
+                        DialogCreator.showAlert(Alert.AlertType.WARNING, "Dati non validi", "La parentela selezionata non è valida.", null);
                     }
                 } else {
-                    DialogCreator.showAlert(Alert.AlertType.WARNING, "Dati non validi", "La data di nascita immessa non è valida.", null).show();
+                    DialogCreator.showAlert(Alert.AlertType.WARNING, "Dati non validi", "La data di nascita immessa non è valida.", null);
                 }
             } else {
-                DialogCreator.showAlert(Alert.AlertType.WARNING, "Dati non validi", "Il nome e/o il cognome inseriti non sono validi, ricontrollare i campi.", null).show();
+                DialogCreator.showAlert(Alert.AlertType.WARNING, "Dati non validi", "Il nome e/o il cognome inseriti non sono validi, ricontrollare i campi.", null);
             }
         }
         return false;

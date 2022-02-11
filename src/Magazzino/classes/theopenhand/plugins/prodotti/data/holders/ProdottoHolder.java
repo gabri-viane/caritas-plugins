@@ -43,6 +43,12 @@ public class ProdottoHolder extends ResultHolderImpl<Prodotto> {
     @Query(queryID = 5, bindedClass = Prodotto.class, hasBindedParams = true, isUpdate = true, hasResult = false)
     public static final String DELETE_QUERY = "DELETE FROM Prodotti WHERE %N0 = %V0;";
 
+    @Query(queryID = 7, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_CUSTOM_FORMATTED = "SELECT * FROM getCustomProdF";
+    
+     @Query(queryID = 8, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_COMPLETE_CUSTOM = "SELECT * FROM getProdottiCompleteF";
+
     public ProdottoHolder() {
     }
 

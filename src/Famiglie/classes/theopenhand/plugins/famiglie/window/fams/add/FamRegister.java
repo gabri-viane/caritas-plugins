@@ -121,15 +121,15 @@ public class FamRegister extends AnchorPane implements DialogComponent {
                         if (ld != null) {
                             d = DataUtils.toDate(ld);
                             if (d.compareTo(new Date()) > 0) {
-                                DialogCreator.showAlert(Alert.AlertType.ERROR, "Dati errati", "Data non possibile (futura), inserire una data uguale o precedente ad oggi.", null).show();
+                                DialogCreator.showAlert(Alert.AlertType.ERROR, "Dati errati", "Data non possibile (futura), inserire una data uguale o precedente ad oggi.", null);
                                 checkd_ = false;
                             }
                         } else {
-                            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati del coniuge incompleti: data di nascita non valida.", null).show();
+                            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati del coniuge incompleti: data di nascita non valida.", null);
                             checkd_ = false;
                         }
                     } else {
-                        DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati del coniuge non validi.", null).show();
+                        DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati del coniuge non validi.", null);
                         checkd_ = false;
                     }
                 }
@@ -142,15 +142,15 @@ public class FamRegister extends AnchorPane implements DialogComponent {
                             after_accept.onClick();
                         }
                     } else {
-                        DialogCreator.showAlert(Alert.AlertType.ERROR, "Errori registrazione", "La famiglia non è stata registrata.", null).show();
+                        DialogCreator.showAlert(Alert.AlertType.ERROR, "Errori registrazione", "La famiglia non è stata registrata.", null);
                     }
                 }
             } else {
-                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati della famiglia (indirizzo o telefono) non validi", null).show();
+                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati della famiglia (indirizzo o telefono) non validi", null);
             }
         } else {
             //   throw new Exception();
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati del dichiarante non validi", null).show();
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati del dichiarante non validi", null);
         }
 
     }
@@ -166,12 +166,12 @@ public class FamRegister extends AnchorPane implements DialogComponent {
             try {
                 long val = Long.parseLong(text_id);
                 if (val < 0) {
-                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "L'ID famiglia deve essere maggiore di 0.", null).show();
+                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "L'ID famiglia deve essere maggiore di 0.", null);
                 } else {
                     return val;
                 }
             } catch (NumberFormatException nfe) {
-                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati incompleti", "ID famiglia non valido.", null).show();
+                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati incompleti", "ID famiglia non valido.", null);
             }
         }
         return -1;

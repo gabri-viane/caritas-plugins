@@ -17,7 +17,9 @@ package theopenhand.plugins.prodotti.data;
 
 import java.math.BigInteger;
 import java.util.Date;
+import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
+import theopenhand.commons.connection.runtime.custom.ClauseType;
 import theopenhand.commons.connection.runtime.interfaces.BindableResult;
 import theopenhand.commons.interfaces.graphics.ColumnData;
 import theopenhand.commons.interfaces.graphics.TableAssoc;
@@ -31,18 +33,22 @@ public class Entrata implements BindableResult, TableAssoc {
     @QueryField(name = "ID", fieldID = 0, registerOut = true)
     protected BigInteger id;
 
+    @QueryCustom(displayName = "Nome prodotto", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE})
     @ColumnData(Title = "Prodotto", order = 0)
     @QueryField(name = "Prodotto", fieldID = 1)
     private String nome_prodotto;
 
+    @QueryCustom(displayName = "Nome donatore", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE})
     @ColumnData(Title = "Donatore", order = 1)
     @QueryField(name = "Donatore", fieldID = 2)
     private String nome_donatore;
 
+    @QueryCustom(displayName = "Qauntità", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE})
     @ColumnData(Title = "Quantità", order = 2)
     @QueryField(name = "Totale", fieldID = 3)
     private Integer totale;
 
+    @QueryCustom(displayName = "Data", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE, ClauseType.GROUP_BY})
     @ColumnData(Title = "Data entrata", order = 3)
     @QueryField(name = "Arrivo", fieldID = 4)
     private Date data_arrivo;
@@ -121,7 +127,7 @@ public class Entrata implements BindableResult, TableAssoc {
 
     @Override
     public String toString() {
-        return nome_prodotto + " +" + totale; 
+        return nome_prodotto + " +" + totale;
     }
 
 }

@@ -33,6 +33,9 @@ public class MagazzinoHolder extends ResultHolderImpl<ElementoMagazzino> {
 
     @Query(queryID = 3, bindedClass = ElementoMagazzino.class, hasBindedParams = true, hasResult = true)
     public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getMagazzinoCompleteF WHERE %N0 = %V0";
+    
+    @Query(queryID = 6, bindedClass = ElementoMagazzino.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_COMPLETE_PROD_ID = "SELECT * FROM getMagazzinoCompleteF WHERE %N1 = %V1";
 
     @Query(queryID = 4, bindedClass = ElementoMagazzino.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String EDIT_PROCEDURE = "CALL editMagazzino(%N2, %N4, %N5, %N6, %N7);";

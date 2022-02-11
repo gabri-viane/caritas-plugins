@@ -83,7 +83,7 @@ public class DonRegister extends AnchorPane implements DialogComponent {
                 after_accept.onClick();
             }
         } else {
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Nome o descrizione immessi non validi.", null).show();
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Nome o descrizione immessi non validi.", null);
         }
 
     }

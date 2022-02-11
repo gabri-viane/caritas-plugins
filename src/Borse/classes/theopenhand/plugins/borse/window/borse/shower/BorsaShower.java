@@ -31,10 +31,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -42,6 +46,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import theopenhand.commons.DataUtils;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
+import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
 import theopenhand.commons.interfaces.graphics.ValueHolder;
@@ -55,8 +60,11 @@ import theopenhand.plugins.borse.data.holders.BorsaHolder;
 import theopenhand.plugins.borse.data.holders.ElementiHolder;
 import theopenhand.plugins.borse.window.picker.BorPicker;
 import theopenhand.plugins.famiglie.data.Famiglia;
+import theopenhand.plugins.famiglie.data.holders.FamigliaHolder;
+import theopenhand.plugins.famiglie.window.pickers.FamPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
+import theopenhand.window.graphics.commons.ValueDialog;
 import theopenhand.window.graphics.dialogs.DialogCreator;
 import theopenhand.window.graphics.dialogs.ElementCreator;
 import theopenhand.window.graphics.inner.DisplayTableValue;
@@ -150,10 +158,36 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
         }
         TextFieldBuilder.transformNumericField(idTB);
         table = ElementCreator.generateTable(ElementoBorsa.class, ElementiController.rs);
+        generatePopupControls();
         clearAll();
         updateValuesHL.setOnAction((a) -> {
             updateValuesHL.setVisited(false);
             refreshValues();
+        });
+        moveToFamHL.setOnAction((t) -> {
+            PickerDialogCNTRL<Famiglia, FamigliaHolder> ppcntrl = FamPicker.createPicker();
+            Stage s = DialogCreator.showDialog(ppcntrl, ppcntrl.getPrefWidth(), ppcntrl.getPrefHeight(), "Seleziona famiglia");
+            ClickListener cl = () -> {
+                s.close();
+            };
+            ppcntrl.onExitPressed(cl);
+            ppcntrl.onAcceptPressed(() -> {
+                f = ppcntrl.getValue();
+                b.setId_fam(f.getIdfam());
+                Optional<ResultHolder> executeCall = ConnectionExecutor.getInstance().executeCall(PluginRegisterBorse.brr, 4, Borsa.class, b);
+                cl.onClick();
+                if (executeCall.isPresent()) {
+                    Exception e = executeCall.get().getExecutionException();
+                    if (e == null) {
+                        DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Borsa aggiornata", "La famiglia è stata cambiata correttamente!", null);
+                    }
+                }
+                refreshValues();
+            });
+            moveToFamHL.setVisited(false);
+        });
+        editElemsHL.setOnAction(a -> {
+
         });
         editBorHL.setOnAction((a) -> {
             editBorHL.setVisited(false);
@@ -217,24 +251,24 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
                 setData(b);
             } else {
                 DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore selezione",
-                        "La borsa selezionata non è correttamente registrata.", null).show();
+                        "La borsa selezionata non è correttamente registrata.", null);
             }
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore ricerca",
-                    "Non è stata selezionata nessuna borsa per cui visualizzare i dati.", null).show();
+                    "Non è stata selezionata nessuna borsa per cui visualizzare i dati.", null);
         }
     }
 
     private void deleteBorsa() {
         Optional<ButtonType> res = DialogCreator.showAlert(Alert.AlertType.CONFIRMATION, "Eliminazione dati",
-                "Eliminando la borsa eliminerai anche tutti i dati ad essa correlati:\n\t-Elementi registrati\nProcedendo eliminerai tutti i dati, continuare?", null).showAndWait();
+                "Eliminando la borsa eliminerai anche tutti i dati ad essa correlati:\n\t-Elementi registrati\nProcedendo eliminerai tutti i dati, continuare?", null);
         res.ifPresent((r) -> {
             if (r.equals(ButtonType.YES)) {
                 if (this.b != null) {
                     BorseController.rs = (BorsaHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterBorse.brr, 5, Borsa.class, this.b).orElse(null);
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
-                            "Non è stata selezionata nessuna borsa da eliminare.", null).show();
+                            "Non è stata selezionata nessuna borsa da eliminare.", null);
                 }
                 reset();
             }
@@ -254,10 +288,10 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
             refreshValues();
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
-                    "I dati della borsa sono stati aggiornati.", null).show();
+                    "I dati della borsa sono stati aggiornati.", null);
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore modifica",
-                    "Non è stata selezionata nessuna borse da modificare.", null).show();
+                    "Non è stata selezionata nessuna borse da modificare.", null);
         }
     }
 
@@ -327,6 +361,72 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
                     table.setData(ElementiController.rs.getList());
                 }
             }
+        }
+    }
+
+    private void generatePopupControls() {
+        ContextMenu cm = new ContextMenu();
+        MenuItem remove_element = new MenuItem("Rimuovi");
+        MenuItem edit_element = new MenuItem("Modifica");
+        cm.getItems().add(edit_element);
+        cm.getItems().add(remove_element);
+        if (!PluginSettings.remove_qt.getValue()) {
+            SeparatorMenuItem smi = new SeparatorMenuItem();
+            MenuItem sub_from_mag = new MenuItem("Sottrai");
+//            MenuItem add_from_mag = new MenuItem("Aggiungi");
+
+            Menu mag_gest = new Menu("Magazzino");
+            mag_gest.getItems().add(sub_from_mag);
+//            mag_gest.getItems().add(add_from_mag);
+
+            sub_from_mag.setOnAction(a -> {
+                ElementoBorsa selectedItem = table.getSelectionModel().getSelectedItem();
+                selectedItem.setSubtr(true);
+
+                ConnectionExecutor.getInstance().executeCall(PluginRegisterBorse.brr, 1, ElementoBorsa.class, selectedItem);
+                refreshValues();
+            });
+//
+//            add_from_mag.setOnAction(a -> {
+//                ElementoBorsa selectedItem = table.getSelectionModel().getSelectedItem();
+//                selectedItem.setSubtr(false);
+//                ConnectionExecutor.getInstance().executeCall(PluginRegisterBorse.brr, 1, ElementoBorsa.class, selectedItem);
+//                refreshValues();
+//            });
+
+            cm.getItems().add(smi);
+            cm.getItems().add(mag_gest);
+        }
+
+        remove_element.setOnAction(a -> {
+            ElementoBorsa selectedItem = table.getSelectionModel().getSelectedItem();
+            selectedItem.setTot(0l);
+            ConnectionExecutor.getInstance().executeCall(PluginRegisterBorse.brr, 5, ElementoBorsa.class, selectedItem);
+            refreshValues();
+        });
+        edit_element.setOnAction(a -> {
+            showEditQt(table.getSelectionModel().getSelectedItem());
+        });
+
+        table.setPopUpMenu(cm);
+    }
+
+    public void showEditQt(ElementoBorsa eb) {
+        if (eb != null) {
+            TextField tf = TextFieldBuilder.buildNumericField();
+            tf.setPrefWidth(80);
+            tf.setText(eb.getTot().toString());
+            ValueDialog vd = new ValueDialog("Inserisci quantità", "Cambia la quantità dell'elemento della borsa.", tf);
+            ClickListener cl = () -> {
+                String qt = tf.getText();
+                if (qt != null && !qt.isBlank()) {
+                    eb.setTot(Long.parseLong(qt));
+                    ConnectionExecutor.getInstance().executeCall(PluginRegisterBorse.brr, 1, ElementoBorsa.class, eb);
+                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifica completata", "La quantità è stata aggiornata", null);
+                    refreshValues();
+                }
+            };
+            DialogCreator.showDialog(vd, cl, null);
         }
     }
 

@@ -141,24 +141,24 @@ public class MotShower extends AnchorPane implements DialogComponent {
                 setData(m);
             } else {
                 DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore selezione",
-                        "Il motivo selezionato non è correttamente registrato.", null).show();
+                        "Il motivo selezionato non è correttamente registrato.", null);
             }
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore ricerca",
-                    "Non è stato selezionato nessun motivo per cui visualizzare i dati.", null).show();
+                    "Non è stato selezionato nessun motivo per cui visualizzare i dati.", null);
         }
     }
 
     private void deleteMot() {
         Optional<ButtonType> res = DialogCreator.showAlert(Alert.AlertType.CONFIRMATION, "Eliminazione dati",
-                "Eliminando il motivo eliminerai anche tutti i dati ad esso correlati:\n\t-Registri entrate\n\t-Alterazioni magazzino\nProcedendo eliminerai tutti i dati, continuare?", null).showAndWait();
+                "Eliminando il motivo eliminerai anche tutti i dati ad esso correlati:\n\t-Registri entrate\n\t-Alterazioni magazzino\nProcedendo eliminerai tutti i dati, continuare?", null);
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (m != null) {
                     MotiviController.rs = (MotivoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Motivo.class, m).orElse(null);
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
-                            "Non è stato selezionato nessun motivo da eliminare.", null).show();
+                            "Non è stato selezionato nessun motivo da eliminare.", null);
                 }
                 reset();
             }
@@ -173,10 +173,10 @@ public class MotShower extends AnchorPane implements DialogComponent {
             refreshValues();
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
-                    "I dati del motivo sono stati aggiornati.", null).show();
+                    "I dati del motivo sono stati aggiornati.", null);
         } else {
             DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore modifica",
-                    "Non è stato selezionato nessun motivo da modificare.", null).show();
+                    "Non è stato selezionato nessun motivo da modificare.", null);
         }
     }
 

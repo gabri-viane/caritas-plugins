@@ -21,4 +21,8 @@ open module Magazzino {
     requires javafx.fxml;
     requires javafx.controls;
     requires java.base;
+    
+    exports theopenhand.plugins.prodotti.data.holders;
+    exports theopenhand.plugins.prodotti.data;
+    exports theopenhand.plugins.prodotti.controllers.prodotti;
 }

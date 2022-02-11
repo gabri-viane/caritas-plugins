@@ -121,12 +121,12 @@ public class ProdRegister extends AnchorPane implements DialogComponent {
         });
         magCB.selectedProperty().addListener((o) -> {
             if (!magCB.isSelected()) {
-                DialogCreator.showAlert(Alert.AlertType.WARNING, "Attenzione!", "Se non si registra il prodotto a magazzino non si potrà tenere conto nel registro entrate.", null).show();
+                DialogCreator.showAlert(Alert.AlertType.WARNING, "Attenzione!", "Se non si registra il prodotto a magazzino non si potrà tenere conto nel registro entrate.", null);
             }
         });
         if(creator_enabled){
             refreshValues();
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Cambiare dati", "Per continuare è necessario cambiare la confezione selezionata.", null).showAndWait();
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Cambiare dati", "Per continuare è necessario cambiare la confezione selezionata.", null);
         }
     }
 
@@ -146,13 +146,13 @@ public class ProdRegister extends AnchorPane implements DialogComponent {
                         after_accept.onClick();
                     }
                 } else {
-                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati della prodotto (confezione) non validi", null).show();
+                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati della prodotto (confezione) non validi", null);
                 }
             } else {
-                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Nome del prodotto non valido", null).show();
+                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Nome del prodotto non valido", null);
             }
         } else {
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una confezione per procedere alla registrazione", null).show();
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una confezione per procedere alla registrazione", null);
         }
 
     }

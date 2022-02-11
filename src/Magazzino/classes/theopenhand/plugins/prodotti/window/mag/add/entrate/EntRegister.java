@@ -37,6 +37,7 @@ import theopenhand.commons.interfaces.graphics.DialogComponent;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.data.DataBuilder;
 import theopenhand.plugins.prodotti.data.Donatore;
+import theopenhand.plugins.prodotti.data.ElementoMagazzino;
 import theopenhand.plugins.prodotti.data.Entrata;
 import theopenhand.plugins.prodotti.data.Prodotto;
 import theopenhand.plugins.prodotti.data.holders.DonatoreHolder;
@@ -142,10 +143,18 @@ public class EntRegister extends AnchorPane implements DialogComponent {
         dateEntDP.setValue(LocalDate.now());
         if (creator_enabled) {
             refreshValues();
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Cambiare dati", "Per continuare è necessario cambiare la data selezionata.", null).showAndWait();
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Cambiare dati", "Per continuare è necessario cambiare la data selezionata.", null);
         }
     }
 
+    public void selectProd(ElementoMagazzino p){
+        if(p!=null){
+            pr = DataBuilder.generateProdottoByID(p.getId_prodotto());
+            pr.setNome(p.getNome());
+            refreshValues();
+        }
+    }
+    
     private void saveProd() {
         String ent_qnt = qntEntrTB.getText();
         LocalDate ld = dateEntDP.getValue();
@@ -169,23 +178,23 @@ public class EntRegister extends AnchorPane implements DialogComponent {
                                     after_accept.onClick();
                                 }
                             } else {
-                                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati dell'entrata (data arrivo) non validi", null).show();
+                                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati dell'entrata (data arrivo) non validi", null);
                             }
                         } else {
-                            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati dell'entrata (donatore) non validi", null).show();
+                            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati dell'entrata (donatore) non validi", null);
                         }
                     } else {
-                        DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati dell'entrata (prodotto) non validi", null).show();
+                        DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati dell'entrata (prodotto) non validi", null);
                     }
 
                 } else {
-                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Quantità del prodotto non valida", null).show();
+                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Quantità del prodotto non valida", null);
                 }
             } else {
-                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare un donatore per procedere alla registrazione", null).show();
+                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare un donatore per procedere alla registrazione", null);
             }
         } else {
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare un prodotto per procedere alla registrazione", null).show();
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare un prodotto per procedere alla registrazione", null);
         }
 
     }

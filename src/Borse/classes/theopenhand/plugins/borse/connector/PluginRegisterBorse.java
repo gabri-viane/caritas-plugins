@@ -15,8 +15,11 @@
  */
 package theopenhand.plugins.borse.connector;
 
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.plugins.borse.connector.runtimes.BorseRR;
 import theopenhand.plugins.borse.connector.runtimes.PluginSettings;
+import theopenhand.plugins.borse.controllers.borse.BorseController;
+import theopenhand.plugins.borse.controllers.borse.ElementiController;
 import theopenhand.plugins.borse.data.Borsa;
 import theopenhand.plugins.borse.data.ElementoBorsa;
 import theopenhand.plugins.borse.data.holders.BorsaHolder;
@@ -39,6 +42,9 @@ public class PluginRegisterBorse implements LinkableClass {
         SubscriptionHandler.subscribeToLoading(brr);
         SubscriptionHandler.subscribeToDBObjects(brr, BorsaHolder.class, Borsa.class);
         SubscriptionHandler.subscribeToDBObjects(brr, ElementiHolder.class, ElementoBorsa.class);
+
+        SharedReferenceQuery.getInstance().register(brr, "borsa", Borsa.class, BorseController.rs);
+        SharedReferenceQuery.getInstance().register(brr, "elementoborsa", ElementoBorsa.class, ElementiController.rs);
     }
 
     @Override

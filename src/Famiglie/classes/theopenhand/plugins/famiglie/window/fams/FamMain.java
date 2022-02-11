@@ -92,17 +92,18 @@ public class FamMain extends AnchorPane {
         });
         showFamHL.setOnAction(a -> {
             Famiglia selectedItem = PluginSettings.table_prop.getValue() ? table.getSelectionModel().getSelectedItem() : null;
-            FamShower fs = new FamShower(selectedItem);
-            fs.onExitPressed(() -> {
-                StaticReferences.getMainWindowReference().setCenterNode(this);
-            });
-            StaticReferences.getMainWindowReference().setCenterNode(fs);
+            showFam(selectedItem);
         });
         refreshHL.setOnAction(a -> {
             reloadElements(true);
             refreshHL.setVisited(false);
         });
         table = ElementCreator.generateTable(Famiglia.class, FamiglieController.rs);
+        table.setValueAcceptListener((f) -> {
+            if (f != null) {
+                showFam(f);
+            }
+        });
         PluginSettings.table_prop.addListener((previus_value, new_value) -> {
             changeType(new_value);
         });
@@ -136,6 +137,14 @@ public class FamMain extends AnchorPane {
                 table.setData(FamiglieController.rs.getList());
             }
         }
+    }
+
+    private void showFam(Famiglia f) {
+        FamShower fs = new FamShower(f);
+        fs.onExitPressed(() -> {
+            StaticReferences.getMainWindowReference().setCenterNode(this);
+        });
+        StaticReferences.getMainWindowReference().setCenterNode(fs);
     }
 
 }

@@ -15,8 +15,15 @@
  */
 package theopenhand.plugins.prodotti.connector;
 
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.plugins.prodotti.connector.runtimes.PluginSettings;
 import theopenhand.plugins.prodotti.connector.runtimes.ProdottiRR;
+import theopenhand.plugins.prodotti.controllers.prodotti.ConfezioniController;
+import theopenhand.plugins.prodotti.controllers.prodotti.DonatoriController;
+import theopenhand.plugins.prodotti.controllers.prodotti.EntrateController;
+import theopenhand.plugins.prodotti.controllers.prodotti.MagazzinoController;
+import theopenhand.plugins.prodotti.controllers.prodotti.MotiviController;
+import theopenhand.plugins.prodotti.controllers.prodotti.ProdottiController;
 import theopenhand.plugins.prodotti.data.Confezione;
 import theopenhand.plugins.prodotti.data.Donatore;
 import theopenhand.plugins.prodotti.data.ElementoMagazzino;
@@ -51,11 +58,19 @@ public class PluginRegisterProdotti implements LinkableClass {
         SubscriptionHandler.subscribeToDBObjects(prr, DonatoreHolder.class, Donatore.class);
         SubscriptionHandler.subscribeToDBObjects(prr, MotivoHolder.class, Motivo.class);
         SubscriptionHandler.subscribeToDBObjects(prr, EntrataHolder.class, Entrata.class);
+
+        SharedReferenceQuery.getInstance().register(prr, "prodotto", Prodotto.class, ProdottiController.rs);
+        SharedReferenceQuery.getInstance().register(prr, "motivo", Motivo.class, MotiviController.rs);
+        SharedReferenceQuery.getInstance().register(prr, "confezione", Confezione.class, ConfezioniController.rs);
+        SharedReferenceQuery.getInstance().register(prr, "magazzino", ElementoMagazzino.class, MagazzinoController.rs);
+        SharedReferenceQuery.getInstance().register(prr, "donatore", Donatore.class, DonatoriController.rs);
+        SharedReferenceQuery.getInstance().register(prr, "donatore", Entrata.class, EntrateController.rs);
     }
 
     @Override
     public void unload() {
         SubscriptionHandler.unsubscribeToLoading(prr);
+        SharedReferenceQuery.getInstance().unregister(prr);
     }
 
     @Override
