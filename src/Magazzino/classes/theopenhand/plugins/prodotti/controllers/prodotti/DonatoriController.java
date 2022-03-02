@@ -30,16 +30,14 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class DonatoriController implements ReferenceController {
-
-    public static DonatoreHolder rs;
+public class DonatoriController extends ReferenceController<DonatoreHolder> {
 
     @Override
     public ClickListener getOnAssocButtonClick() {
         return () -> {
             Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Donatore.class, null);
             if (eq.isPresent()) {
-                rs = (DonatoreHolder) eq.get();
+                setRH(eq.get());
             }
         };
     }

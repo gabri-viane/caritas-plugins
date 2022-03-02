@@ -16,7 +16,9 @@
 package theopenhand.plugins.borse.data;
 
 import java.math.BigInteger;
+import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
+import theopenhand.commons.connection.runtime.custom.ClauseType;
 import theopenhand.commons.connection.runtime.interfaces.BindableResult;
 import theopenhand.commons.interfaces.graphics.ColumnData;
 import theopenhand.commons.interfaces.graphics.TableAssoc;
@@ -36,6 +38,8 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
     @QueryField(fieldID = 2, name = "IDProdotti")
     private BigInteger idprodotto;
 
+    
+    @QueryCustom(displayName = "Quantità", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @ColumnData(Title = "Totale", order = 2)
     @QueryField(fieldID = 3, name = "Totale")
     private BigInteger tot;
@@ -44,10 +48,13 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
     @QueryField(fieldID = 4, name = "IsSottratto")
     private Boolean subtr;
 
+    
+    @QueryCustom(displayName = "Prodotto", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @ColumnData(Title = "Prodotto", order = 0)
     @QueryField(fieldID = 5, name = "Prodotto")
     private String prodotto;
 
+    @QueryCustom(displayName = "Confezione", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @ColumnData(Title = "Confezione", order = 1)
     @QueryField(fieldID = 6, name = "Confezione")
     private String confezione;

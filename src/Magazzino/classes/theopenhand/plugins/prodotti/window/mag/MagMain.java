@@ -27,16 +27,19 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.connector.runtimes.PluginSettings;
 import theopenhand.plugins.prodotti.controllers.prodotti.MagazzinoController;
 import theopenhand.plugins.prodotti.data.ElementoMagazzino;
-import theopenhand.plugins.prodotti.data.holders.MagazzinoHolder;
 import theopenhand.plugins.prodotti.window.confs.shower.ConfShower;
 import theopenhand.plugins.prodotti.window.mag.add.entrate.EntRegister;
 import theopenhand.plugins.prodotti.window.prods.add.ProdRegister;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
+import theopenhand.window.graphics.dialogs.ActionCreator;
 import theopenhand.window.graphics.dialogs.DialogCreator;
 import theopenhand.window.graphics.dialogs.ElementCreator;
 import theopenhand.window.graphics.inner.DisplayTableValue;
@@ -45,32 +48,34 @@ import theopenhand.window.graphics.inner.DisplayTableValue;
  *
  * @author gabri
  */
-public class MagMain extends AnchorPane {
-    
+public class MagMain extends AnchorPane implements Refreshable{
+
     @FXML
     private VBox containerVB;
-    
+
     @FXML
     private BorderPane mainBP;
-    
+
     @FXML
     private Hyperlink orderHL;
-    
+
     @FXML
     private Hyperlink refreshHL;
-    
+
     @FXML
     private Hyperlink regEntrataHL;
-    
+
     @FXML
     private Hyperlink regProdHL;
-    
+
     private DisplayTableValue<ElementoMagazzino> table;
-    
+    private final MagazzinoController controller;
+
     public MagMain() {
+        controller = SharedReferenceQuery.getController(MagazzinoController.class);
         init();
     }
-    
+
     private void init() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -85,28 +90,28 @@ public class MagMain extends AnchorPane {
         regEntrataHL.setOnAction(a -> {
             EntRegister er = new EntRegister();
             DialogCreator.showDialog(er, () -> {
-                reloadElements(true);
+                onRefresh(true);
             }, null);
             regEntrataHL.setVisited(false);
         });
         regProdHL.setOnAction(a -> {
             ProdRegister pr = new ProdRegister();
             DialogCreator.showDialog(pr, () -> {
-                reloadElements(true);
+                onRefresh(true);
             }, null);
             regProdHL.setVisited(false);
         });
         refreshHL.setOnAction(a -> {
-            reloadElements(true);
+            onRefresh(true);
             refreshHL.setVisited(false);
         });
-        table = ElementCreator.generateTable(ElementoMagazzino.class, MagazzinoController.rs);
+        table = ElementCreator.generateTable(ElementoMagazzino.class);
         table.setValueAcceptListener((p) -> {
             if (p != null) {
                 EntRegister er = new EntRegister();
                 er.selectProd(p);
                 DialogCreator.showDialog(er, () -> {
-                    reloadElements(true);
+                    onRefresh(true);
                 }, null);
                 regEntrataHL.setVisited(false);
             }
@@ -115,9 +120,10 @@ public class MagMain extends AnchorPane {
             changeType(new_value);
         });
         changeType(PluginSettings.table_prop.getValue());
-        reloadElements(true);
+        ActionCreator.setHyperlinkAction(ActionCreator.generateOrderAction(new ReferenceQuery(PluginRegisterProdotti.prr, ElementoMagazzino.class, controller.getRH(), 7), this), orderHL);
+        onRefresh(true);
     }
-    
+
     private void changeType(boolean b) {
         if (b) {
             mainBP.setCenter(table);
@@ -125,25 +131,26 @@ public class MagMain extends AnchorPane {
             mainBP.setCenter(containerVB);
         }
     }
-    
-    public void reloadElements(boolean refresh) {
+
+    @Override
+    public void onRefresh(boolean refresh) {
         if (refresh) {
-            MagazzinoController.rs = (MagazzinoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, ElementoMagazzino.class, null).orElse(null);
+            controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, ElementoMagazzino.class, null).orElse(null));
         }
-        if (MagazzinoController.rs != null) {
+        if (controller.getRH() != null) {
             if (!PluginSettings.table_prop.getValue()) {
                 ObservableList<Node> els = containerVB.getChildren();
                 els.clear();
-                MagazzinoController.rs.getList().stream().forEachOrdered(e -> {
+                controller.getRH().getList().stream().forEachOrdered(e -> {
                     PickerElementCNTRL<ElementoMagazzino> selectableElement = new PickerElementCNTRL<>(e, false, (element) -> {
                         return element.getNome() + " = " + element.getTotale();
                     }, null);
                     els.add(selectableElement);
                 });
             } else {
-                table.setData(MagazzinoController.rs.getList());
+                table.setData(controller.getRH().getList());
             }
         }
     }
-    
+
 }

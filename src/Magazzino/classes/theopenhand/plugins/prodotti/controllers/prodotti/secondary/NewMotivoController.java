@@ -25,7 +25,7 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class NewMotivoController implements ReferenceController {
+public class NewMotivoController extends ReferenceController {
 
     @Override
     public ClickListener getOnAssocButtonClick() {

@@ -27,16 +27,19 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.famiglie.connector.PluginRegisterFamiglie;
 import theopenhand.plugins.famiglie.connector.runtimes.PluginSettings;
 import theopenhand.plugins.famiglie.controllers.famiglie.FamiglieController;
 import theopenhand.plugins.famiglie.data.Famiglia;
-import theopenhand.plugins.famiglie.data.holders.FamigliaHolder;
 import theopenhand.plugins.famiglie.window.fams.add.FamRegister;
 import theopenhand.plugins.famiglie.window.fams.shower.FamShower;
 import theopenhand.statics.StaticReferences;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
+import theopenhand.window.graphics.dialogs.ActionCreator;
 import theopenhand.window.graphics.dialogs.DialogCreator;
 import theopenhand.window.graphics.dialogs.ElementCreator;
 import theopenhand.window.graphics.inner.DisplayTableValue;
@@ -46,7 +49,7 @@ import theopenhand.window.graphics.inner.DisplayTableValue;
  *
  * @author gabri
  */
-public class FamMain extends AnchorPane {
+public class FamMain extends AnchorPane implements Refreshable {
 
     @FXML
     private VBox containerVB;
@@ -67,8 +70,10 @@ public class FamMain extends AnchorPane {
     private Hyperlink showFamHL;
 
     private DisplayTableValue<Famiglia> table;
+    private final FamiglieController controller;
 
     public FamMain() {
+        controller = SharedReferenceQuery.getController(FamiglieController.class);
         init();
     }
 
@@ -86,7 +91,7 @@ public class FamMain extends AnchorPane {
         regFamHL.setOnAction(a -> {
             FamRegister pr = new FamRegister();
             DialogCreator.showDialog(pr, () -> {
-                reloadElements(true);
+                onRefresh(true);
             }, null);
             regFamHL.setVisited(false);
         });
@@ -95,10 +100,10 @@ public class FamMain extends AnchorPane {
             showFam(selectedItem);
         });
         refreshHL.setOnAction(a -> {
-            reloadElements(true);
+            onRefresh(true);
             refreshHL.setVisited(false);
         });
-        table = ElementCreator.generateTable(Famiglia.class, FamiglieController.rs);
+        table = ElementCreator.generateTable(Famiglia.class);
         table.setValueAcceptListener((f) -> {
             if (f != null) {
                 showFam(f);
@@ -108,7 +113,8 @@ public class FamMain extends AnchorPane {
             changeType(new_value);
         });
         changeType(PluginSettings.table_prop.getValue());
-        reloadElements(true);
+        ActionCreator.setHyperlinkAction(ActionCreator.generateOrderAction(new ReferenceQuery(PluginRegisterFamiglie.frr,Famiglia.class,controller.getRH(),7), this), orderHL);
+        /*reloadElements(true);*/
     }
 
     private void changeType(boolean b) {
@@ -119,22 +125,24 @@ public class FamMain extends AnchorPane {
         }
     }
 
-    public void reloadElements(boolean refresh) {
-        if (refresh) {
-            FamiglieController.rs = (FamigliaHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Famiglia.class, null).orElse(null);
+    @Override
+    public void onRefresh(boolean reload) {
+        if (reload) {
+            controller.setRH(
+                    ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Famiglia.class, null).orElse(null));
         }
-        if (FamiglieController.rs != null) {
+        if (controller.getRH() != null) {
             if (!PluginSettings.table_prop.getValue()) {
                 ObservableList<Node> els = containerVB.getChildren();
                 els.clear();
-                FamiglieController.rs.getList().stream().forEachOrdered(e -> {
+                controller.getRH().getList().stream().forEachOrdered(e -> {
                     PickerElementCNTRL<Famiglia> selectableElement = new PickerElementCNTRL<>(e, false, (element) -> {
                         return element.toString();
                     }, null);
                     els.add(selectableElement);
                 });
             } else {
-                table.setData(FamiglieController.rs.getList());
+                table.setData(controller.getRH().getList());
             }
         }
     }

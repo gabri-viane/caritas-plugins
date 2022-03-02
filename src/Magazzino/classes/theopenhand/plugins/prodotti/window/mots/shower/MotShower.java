@@ -32,9 +32,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.controllers.prodotti.MotiviController;
 import theopenhand.plugins.prodotti.data.Motivo;
@@ -48,7 +50,7 @@ import theopenhand.window.graphics.dialogs.DialogCreator;
  *
  * @author gabri
  */
-public class MotShower extends AnchorPane implements DialogComponent {
+public class MotShower extends AnchorPane implements DialogComponent,Refreshable {
 
     @FXML
     private Hyperlink changeMotHL;
@@ -82,8 +84,10 @@ public class MotShower extends AnchorPane implements DialogComponent {
 
     private Motivo m;
     private boolean editing = false;
+    private final MotiviController controller;
 
     public MotShower() {
+        controller = SharedReferenceQuery.getController(MotiviController.class);
         init();
     }
 
@@ -101,11 +105,11 @@ public class MotShower extends AnchorPane implements DialogComponent {
         clearAll();
         updateValuesHL.setOnAction((a) -> {
             updateValuesHL.setVisited(false);
-            refreshValues();
+            onRefresh(true);
         });
         editMotHL.setOnAction((a) -> {
             editMotHL.setVisited(false);
-            refreshValues();
+            onRefresh(true);
             editable(!editing);
         });
         changeMotHL.setOnAction(a -> {
@@ -118,9 +122,9 @@ public class MotShower extends AnchorPane implements DialogComponent {
             pdcntrl.onAcceptPressed(() -> {
                 m = pdcntrl.getValue();
                 cl.onClick();
-                refreshValues();
+                onRefresh(true);
             });
-            pdcntrl.reloadElements(true);
+            pdcntrl.onRefresh(true);
             if (m != null) {
                 pdcntrl.select(m);
             }
@@ -132,10 +136,13 @@ public class MotShower extends AnchorPane implements DialogComponent {
         changeMotHL.fire();
     }
 
-    private void refreshValues() {
+    @Override
+    public void onRefresh(boolean reload) {
         if (m != null) {
-            MotiviController.rs = (MotivoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 2, Motivo.class, m).orElse(null);
-            m = (MotiviController.rs).find(m.getID().longValue());
+            if (reload) {
+                controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 2, Motivo.class, m).orElse(null));
+            }
+            m = controller.getRH().find(m.getID().longValue());
             if (m != null) {
                 clearAll();
                 setData(m);
@@ -155,7 +162,7 @@ public class MotShower extends AnchorPane implements DialogComponent {
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (m != null) {
-                    MotiviController.rs = (MotivoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Motivo.class, m).orElse(null);
+                    controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Motivo.class, m).orElse(null));
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
                             "Non è stato selezionato nessun motivo da eliminare.", null);
@@ -170,7 +177,7 @@ public class MotShower extends AnchorPane implements DialogComponent {
             m.setDescrizione(descTF.getText());
             m.setName(nameTF.getText());
             ConnectionExecutor.getInstance().executeCall(PluginRegisterProdotti.prr, 4, Motivo.class, m).orElse(null);
-            refreshValues();
+            onRefresh(true);
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
                     "I dati del motivo sono stati aggiornati.", null);

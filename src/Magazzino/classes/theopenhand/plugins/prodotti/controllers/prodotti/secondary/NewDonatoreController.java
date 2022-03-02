@@ -24,7 +24,7 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class NewDonatoreController implements ReferenceController {
+public class NewDonatoreController extends ReferenceController {
 
     @Override
     public ClickListener getOnAssocButtonClick() {

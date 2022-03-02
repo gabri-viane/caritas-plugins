@@ -30,16 +30,14 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class MotiviController implements ReferenceController {
-
-    public static MotivoHolder rs;
+public class MotiviController extends ReferenceController<MotivoHolder> {
 
     @Override
     public ClickListener getOnAssocButtonClick() {
         return () -> {
             Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Motivo.class, null);
             if (eq.isPresent()) {
-                rs = (MotivoHolder) eq.get();
+                setRH(eq.get());
             }
         };
     }
@@ -63,5 +61,5 @@ public class MotiviController implements ReferenceController {
     public AnchorPane getNode() {
         return new MotShower();
     }
-    
+
 }

@@ -33,6 +33,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
@@ -102,13 +103,19 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
     @FXML
     private Hyperlink updateValuesHL;
     private DisplayTableValue<Componente> table;
+    private final FamiglieController controller;
+    private final ComponentiController controller2;
 
     public FamShower() {
+        controller = SharedReferenceQuery.getController(FamiglieController.class);
+        controller2 = SharedReferenceQuery.getController(ComponentiController.class);
         init();
     }
 
     public FamShower(Famiglia f) {
         this.f = f;
+        controller = SharedReferenceQuery.getController(FamiglieController.class);
+        controller2 = SharedReferenceQuery.getController(ComponentiController.class);
         init();
     }
 
@@ -149,14 +156,14 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
                 cl.onClick();
                 refreshValues();
             });
-            frcntrl.reloadElements(true);
+            frcntrl.onRefresh(true);
             if (f != null) {
                 frcntrl.select(f);
             }
             changeFamHL.setVisited(false);
         });
 
-        table = ElementCreator.generateTable(Componente.class, ComponentiController.rs);
+        table = ElementCreator.generateTable(Componente.class);
         PluginSettings.table_prop.addListener((Boolean previus_value, Boolean new_value) -> {
             enableTable(new_value);
         });
@@ -187,8 +194,9 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
 
     private void refreshValues() {
         if (f != null) {
-            FamiglieController.rs = (FamigliaHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 3, Famiglia.class, f).orElse(null);
-            f = ((FamigliaHolder) FamiglieController.rs).find(f.getID().longValue());
+            controller.setRH(
+                    ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 3, Famiglia.class, f).orElse(null));
+            f = controller.getRH().find(f.getID().longValue());
             if (f != null) {
                 clearAll();
                 setData(f);
@@ -208,7 +216,8 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (f != null) {
-                    FamiglieController.rs = (FamigliaHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 5, Famiglia.class, f).orElse(null);
+                    controller.setRH(
+                            ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 5, Famiglia.class, f).orElse(null));
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
                             "Non è stata selezionata nessuna famiglia da eliminare.", null);
@@ -276,14 +285,15 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
             dichSurnTB.setText(fam.getCogn_dic());
             addressTb.setText(fam.getIndirizzo());
             phoneTB.setText(fam.getTelefono());
-            ComponentiController.rs = ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Componente.class, new Componente(fam.getIdfam(), null, null, null, 0)).orElse(null);
-            if (ComponentiController.rs != null) {
+            controller2.setRH(
+                    ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Componente.class, new Componente(fam.getIdfam(), null, null, null, 0)).orElse(null));
+            if (controller2.getRH() != null) {
                 if (!PluginSettings.table_prop.getValue()) {
-                    ComponentiController.rs.getList().forEach(c -> {
+                    controller2.getRH().getList().forEach(c -> {
                         componentsVB.getChildren().add(new ShortCompElement(c));
                     });
                 } else {
-                    table.setData(ComponentiController.rs.getList());
+                    table.setData(controller2.getRH().getList());
                 }
             }
         }

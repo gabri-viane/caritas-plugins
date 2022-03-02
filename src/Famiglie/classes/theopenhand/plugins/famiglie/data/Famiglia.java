@@ -8,7 +8,9 @@ package theopenhand.plugins.famiglie.data;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Objects;
+import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
+import theopenhand.commons.connection.runtime.custom.ClauseType;
 import theopenhand.commons.connection.runtime.interfaces.BindableResult;
 import theopenhand.commons.interfaces.graphics.ColumnData;
 import theopenhand.commons.interfaces.graphics.TableAssoc;
@@ -17,29 +19,35 @@ import theopenhand.commons.interfaces.graphics.TableAssoc;
  *
  * @author gabri
  */
-public class Famiglia implements BindableResult,TableAssoc {
+public class Famiglia implements BindableResult, TableAssoc {
 
     @QueryField(name = "ID", fieldID = 1, registerOut = true)
     protected BigInteger id;
 
-    @ColumnData(Title = "ID Famiglia",order = 0)
+    @QueryCustom(displayName = "ID", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
+    @ColumnData(Title = "ID Famiglia", order = 0)
     @QueryField(name = "IDFAM", fieldID = 2)
     private BigInteger idfam;
-    
-    @ColumnData(Title = "Dichiarante",order = 1)
+
+    @QueryCustom(displayName = "Dichiarante", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
+    @ColumnData(Title = "Dichiarante", order = 1)
     @QueryField(name = "Dichiarante", fieldID = 3)
     private String dichiarante;
 
+    @QueryCustom(displayName = "Nome dich.", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "NDic", fieldID = 4)
     private String nome_dic;
 
+    @QueryCustom(displayName = "Cognome dich.", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "CDic", fieldID = 5)
     private String cogn_dic;
-
-    @ColumnData(Title = "Indirizzo",order = 2)
+    
+    @QueryCustom(displayName = "Indirizzo", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
+    @ColumnData(Title = "Indirizzo", order = 2)
     @QueryField(name = "Indirizzo", fieldID = 6)
     private String indirizzo;
-
+    
+    @QueryCustom(displayName = "Telefono", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "Telefono", fieldID = 7)
     private String telefono;
 

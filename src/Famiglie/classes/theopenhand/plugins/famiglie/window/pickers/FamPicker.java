@@ -16,6 +16,7 @@
 package theopenhand.plugins.famiglie.window.pickers;
 
 import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.plugins.famiglie.connector.PluginRegisterFamiglie;
 import theopenhand.plugins.famiglie.controllers.famiglie.FamiglieController;
 import theopenhand.plugins.famiglie.data.Famiglia;
@@ -35,7 +36,7 @@ public class FamPicker {
     }
 
     public static PickerDialogCNTRL<Famiglia, FamigliaHolder> createPicker() {
-        ReferenceQuery<Famiglia, FamigliaHolder> rq = new ReferenceQuery<>(PluginRegisterFamiglie.frr, Famiglia.class, FamiglieController.rs, 0);
+        ReferenceQuery<Famiglia, FamigliaHolder> rq = new ReferenceQuery<>(PluginRegisterFamiglie.frr, Famiglia.class, SharedReferenceQuery.getController(FamiglieController.class).getRH(), 0);
         FamRegister frcntrl = new FamRegister();
         PickerDialogCNTRL<Famiglia, FamigliaHolder> createPicker = DialogCreator.createPicker(rq, "Lista Famiglie", frcntrl);
         createPicker.setTransformer_id(f -> {

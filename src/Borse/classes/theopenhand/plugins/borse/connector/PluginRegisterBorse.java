@@ -34,7 +34,7 @@ import theopenhand.runtime.templates.Settings;
  */
 public class PluginRegisterBorse implements LinkableClass {
 
-    public static final BorseRR brr = new BorseRR("Gestione Borse");
+    public static final BorseRR brr = new BorseRR("plugin_borse");
     private static final Settings sf = new PluginSettings();
 
     @Override
@@ -43,8 +43,8 @@ public class PluginRegisterBorse implements LinkableClass {
         SubscriptionHandler.subscribeToDBObjects(brr, BorsaHolder.class, Borsa.class);
         SubscriptionHandler.subscribeToDBObjects(brr, ElementiHolder.class, ElementoBorsa.class);
 
-        SharedReferenceQuery.getInstance().register(brr, "borsa", Borsa.class, BorseController.rs);
-        SharedReferenceQuery.getInstance().register(brr, "elementoborsa", ElementoBorsa.class, ElementiController.rs);
+        SharedReferenceQuery.getInstance().register(brr, "borsa", Borsa.class, BorseController.class);
+        SharedReferenceQuery.getInstance().register(brr, "elementoborsa", ElementoBorsa.class, ElementiController.class);
     }
 
     @Override

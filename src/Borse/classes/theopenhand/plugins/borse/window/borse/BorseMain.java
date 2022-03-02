@@ -27,12 +27,14 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.borse.connector.PluginRegisterBorse;
 import theopenhand.plugins.borse.connector.runtimes.PluginSettings;
 import theopenhand.plugins.borse.controllers.borse.BorseController;
 import theopenhand.plugins.borse.data.Borsa;
-import theopenhand.plugins.borse.data.holders.BorsaHolder;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
 import theopenhand.window.graphics.dialogs.DialogCreator;
 import theopenhand.window.graphics.dialogs.ElementCreator;
@@ -40,12 +42,13 @@ import theopenhand.window.graphics.inner.DisplayTableValue;
 import theopenhand.plugins.borse.window.borse.add.BorsaRegister;
 import theopenhand.plugins.borse.window.borse.shower.BorsaShower;
 import theopenhand.statics.StaticReferences;
+import theopenhand.window.graphics.dialogs.ActionCreator;
 
 /**
  *
  * @author gabri
  */
-public class BorseMain extends AnchorPane {
+public class BorseMain extends AnchorPane implements Refreshable {
 
     @FXML
     private VBox containerVB;
@@ -66,8 +69,10 @@ public class BorseMain extends AnchorPane {
     private Hyperlink showBorsaHL;
 
     private DisplayTableValue<Borsa> table;
+    private final BorseController controller;
 
     public BorseMain() {
+        controller = SharedReferenceQuery.getController(BorseController.class);
         init();
     }
 
@@ -85,7 +90,7 @@ public class BorseMain extends AnchorPane {
         regBorsaHL.setOnAction(a -> {
             BorsaRegister pr = new BorsaRegister();
             DialogCreator.showDialog(pr, () -> {
-                reloadElements(true);
+                onRefresh(true);
             }, null);
             regBorsaHL.setVisited(false);
         });
@@ -95,10 +100,10 @@ public class BorseMain extends AnchorPane {
             showBorsaHL.setVisited(false);
         });
         refreshHL.setOnAction(a -> {
-            reloadElements(true);
+            onRefresh(true);
             refreshHL.setVisited(false);
         });
-        table = ElementCreator.generateTable(Borsa.class, BorseController.rs);
+        table = ElementCreator.generateTable(Borsa.class);
         table.setValueAcceptListener((b) -> {
             if (b != null) {
                 showBorsa(b);
@@ -108,7 +113,7 @@ public class BorseMain extends AnchorPane {
             changeType(new_value);
         });
         changeType(PluginSettings.table_prop.getValue());
-        reloadElements(true);
+        ActionCreator.setHyperlinkAction(ActionCreator.generateOrderAction(new ReferenceQuery(PluginRegisterBorse.brr, Borsa.class, controller.getRH(), 7), this), orderHL);
     }
 
     private void showBorsa(Borsa b) {
@@ -127,22 +132,24 @@ public class BorseMain extends AnchorPane {
         }
     }
 
-    public void reloadElements(boolean refresh) {
+    @Override
+    public void onRefresh(boolean refresh) {
         if (refresh) {
-            BorseController.rs = (BorsaHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterBorse.brr, 0, Borsa.class, null).orElse(null);
+            controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterBorse.brr, 0, Borsa.class, null)
+                    .orElse(null));
         }
-        if (BorseController.rs != null) {
+        if (controller.getRH() != null) {
             if (!PluginSettings.table_prop.getValue()) {
                 ObservableList<Node> els = containerVB.getChildren();
                 els.clear();
-                BorseController.rs.getList().stream().forEachOrdered(e -> {
+                controller.getRH().getList().stream().forEachOrdered(e -> {
                     PickerElementCNTRL<Borsa> selectableElement = new PickerElementCNTRL<>(e, false, (element) -> {
                         return element.toString();
                     }, null);
                     els.add(selectableElement);
                 });
             } else {
-                table.setData(BorseController.rs.getList());
+                table.setData(controller.getRH().getList());
             }
         }
     }

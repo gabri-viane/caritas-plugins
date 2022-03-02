@@ -30,16 +30,14 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class EntrateController implements ReferenceController {
-
-    public static EntrataHolder rs;
+public class EntrateController extends ReferenceController<EntrataHolder> {
 
     @Override
     public ClickListener getOnAssocButtonClick() {
         return () -> {
             Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Entrata.class, null);
             if (eq.isPresent()) {
-                rs = (EntrataHolder) eq.get();
+                setRH(eq.get());
             }
         };
     }
@@ -63,5 +61,5 @@ public class EntrateController implements ReferenceController {
     public AnchorPane getNode() {
         return new EntMain();
     }
-    
+
 }

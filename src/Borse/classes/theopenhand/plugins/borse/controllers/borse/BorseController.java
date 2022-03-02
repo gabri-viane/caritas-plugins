@@ -30,17 +30,23 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class BorseController implements ReferenceController {
+public class BorseController extends ReferenceController<BorsaHolder> {
 
-    public static BorsaHolder rs;
-    private final BorseMain bp = new BorseMain();
+    private static BorseMain bp;
+
+    private static BorseMain getBP() {
+        if (bp == null) {
+            bp = new BorseMain();
+        }
+        return bp;
+    }
 
     @Override
     public ClickListener getOnAssocButtonClick() {
         return () -> {
             Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterBorse.brr, 0, Borsa.class, null);
             if (eq.isPresent()) {
-                rs = (BorsaHolder) eq.get();
+                setRH(eq.get());
             }
         };
     }
@@ -62,7 +68,8 @@ public class BorseController implements ReferenceController {
 
     @Override
     public AnchorPane getNode() {
-        bp.reloadElements(true);
+        getBP();
+        bp.onRefresh(true);
         return bp;
     }
 }

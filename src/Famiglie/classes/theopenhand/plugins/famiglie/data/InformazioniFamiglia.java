@@ -16,7 +16,9 @@
 package theopenhand.plugins.famiglie.data;
 
 import java.math.BigInteger;
+import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
+import theopenhand.commons.connection.runtime.custom.ClauseType;
 import theopenhand.commons.connection.runtime.interfaces.BindableResult;
 
 /**
@@ -28,12 +30,15 @@ public class InformazioniFamiglia implements BindableResult {
     @QueryField(name = "ID", fieldID = 1, registerOut = true)
     private BigInteger id;
 
+    @QueryCustom(displayName = "ID Famiglia", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "IDFAM", fieldID = 2)
     private BigInteger idfam;
 
+    @QueryCustom(displayName = "Indirizzo", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "Indirizzo", fieldID = 3)
     private String indirizzo;
 
+    @QueryCustom(displayName = "Telefono", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "Telefono", fieldID = 4)
     private String telefono;
 

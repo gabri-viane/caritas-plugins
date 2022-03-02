@@ -25,10 +25,8 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class ElementiController implements ReferenceController {
-
-    public static ElementiHolder rs;
-
+public class ElementiController extends ReferenceController<ElementiHolder> {
+    
     @Override
     public ClickListener getOnAssocButtonClick() {
         return () -> {

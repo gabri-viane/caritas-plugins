@@ -105,7 +105,7 @@ public class BorsaRegister extends AnchorPane implements DialogComponent {
                 cl.onClick();
                 refreshValues();
             });
-            ppcntrl.reloadElements(true);
+            ppcntrl.onRefresh(true);
             if (f != null) {
                 ppcntrl.select(DataBuilder.generateFamigliaByID(f.getId()));
             }

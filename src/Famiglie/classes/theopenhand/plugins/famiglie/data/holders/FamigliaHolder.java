@@ -30,6 +30,9 @@ public class FamigliaHolder extends ResultHolderImpl<Famiglia> {
     @Query(queryID = 5, bindedClass = Famiglia.class, hasBindedParams = true, isUpdate = true, hasResult = false)
     public static final String DELETE_QUERY = "DELETE FROM Famiglie WHERE %N2 = %V2;";
 
+    @Query(queryID = 7, bindedClass = Famiglia.class, hasBindedParams = true, hasResult = false)
+    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getFamiglieCompleteF";
+
     public FamigliaHolder() {
     }
 

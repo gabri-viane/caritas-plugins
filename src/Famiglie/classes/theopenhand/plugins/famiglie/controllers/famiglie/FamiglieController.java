@@ -31,17 +31,23 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class FamiglieController implements ReferenceController {
+public class FamiglieController extends ReferenceController<FamigliaHolder> {
 
-    public static FamigliaHolder rs;
-    private final FamMain fp = new FamMain();
+    private static FamMain fp;
+
+    private static FamMain getFP() {
+        if (fp == null) {
+            fp = new FamMain();
+        }
+        return fp;
+    }
 
     @Override
     public ClickListener getOnAssocButtonClick() {
         return () -> {
             Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Famiglia.class, null);
             if (eq.isPresent()) {
-                rs = (FamigliaHolder) eq.get();
+                setRH(eq.get());
             }
         };
     }
@@ -63,8 +69,9 @@ public class FamiglieController implements ReferenceController {
 
     @Override
     public AnchorPane getNode() {
-        fp.reloadElements(true);
-        return fp;
+        getFP();
+        fp.onRefresh(true);
+        return getFP();
     }
 
 }

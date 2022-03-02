@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
@@ -32,8 +33,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
+import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
 import theopenhand.commons.events.graphics.ClickListener;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.borse.connector.PluginRegisterBorse;
 import theopenhand.plugins.borse.connector.runtimes.PluginSettings;
 import theopenhand.plugins.borse.data.Borsa;
@@ -50,7 +54,7 @@ import theopenhand.window.graphics.dialogs.DialogCreator;
  *
  * @author gabri
  */
-public class ElementiCreator extends AnchorPane {
+public class ElementiCreator extends AnchorPane implements Refreshable {
 
     @FXML
     private FlowPane containerFP;
@@ -73,7 +77,10 @@ public class ElementiCreator extends AnchorPane {
     @FXML
     private Hyperlink saveToBorsaHL;
 
+    private final ProdottiController controller;
+
     public ElementiCreator() {
+        controller = SharedReferenceQuery.getController(ProdottiController.class);
         init();
     }
 
@@ -89,18 +96,23 @@ public class ElementiCreator extends AnchorPane {
             Logger.getLogger(BorseMain.class.getName()).log(Level.SEVERE, null, ex);
         }
         refreshHL.setOnAction(a -> {
-            reloadElements(true);
+            onRefresh(true);
             refreshHL.setVisited(false);
         });
         orderHL.setOnAction(a -> {
-            ProdottiController.requestProductOrderQuery(8, (value) -> {
-                ObservableList<Node> els = containerFP.getChildren();
-                els.clear();
-                ProdottiController.rs.getList().stream().forEachOrdered(e -> {
-                    SingleElemento se = new SingleElemento(e);
-                    els.add(se);
-                });
-            });
+            SharedReferenceQuery.execute(SharedReferenceQuery.getInstance().forceGenerate("plugin_prodotti", "prodotto", 8),
+                    null,
+                    SharedReferenceQuery.EXECUTION_REQUEST.CUSTOM_QUERY,
+                    ((args) -> {
+                        ObservableList<Node> els = containerFP.getChildren();
+                        els.clear();
+                        controller.getRH().getList().stream().forEachOrdered(e -> {
+                            SingleElemento se = new SingleElemento(e);
+                            els.add(se);
+                        });
+                        return null;
+                    })
+            );
         });
         saveToBorsaHL.setOnAction(a -> {
             PickerDialogCNTRL<Borsa, BorsaHolder> bpcntrl = BorPicker.createPicker();
@@ -119,21 +131,27 @@ public class ElementiCreator extends AnchorPane {
                     DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Articoli aggiunti!", "Gli articoli sono stati aggiunti con le relative quantità alla borsa selezionata.", null);
                 }
                 cl.onClick();
-                reloadElements(true);
+                onRefresh(true);
             });
-            bpcntrl.reloadElements(true);
+            bpcntrl.onRefresh(true);
         });
-        reloadElements(true);
+        onRefresh(true);
     }
 
-    public void reloadElements(boolean refresh) {
-        if (refresh) {
-            ProdottiController.requestProductQuery(7);
+    @Override
+    public void onRefresh(boolean reload) {
+        if (reload) {
+            SharedReferenceQuery.execute(SharedReferenceQuery.getInstance().forceGenerate("plugin_prodotti", "prodotto", 7),
+                    null,
+                    SharedReferenceQuery.EXECUTION_REQUEST.QUERY, (args) -> {
+                        controller.setRH(((Optional<ResultHolder>) args[0]).orElse(null));
+                        return null;
+                    });
         }
-        if (ProdottiController.rs != null) {
+        if (controller.getRH() != null) {
             ObservableList<Node> els = containerFP.getChildren();
             els.clear();
-            ProdottiController.rs.getList().stream().forEachOrdered(e -> {
+            controller.getRH().getList().stream().forEachOrdered(e -> {
                 SingleElemento se = new SingleElemento(e);
                 els.add(se);
             });

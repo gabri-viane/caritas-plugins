@@ -48,6 +48,9 @@ public class EntrataHolder extends ResultHolderImpl<Entrata> {
     @Query(queryID = 5, bindedClass = Entrata.class, hasBindedParams = true, isUpdate = true, hasResult = false)
     public static final String DELETE_QUERY = "DELETE FROM Entrate WHERE %N0 = %V0;";
 
+    @Query(queryID = 7, bindedClass = Entrata.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getEntrateCompleteF";
+
     public EntrataHolder() {
     }
 

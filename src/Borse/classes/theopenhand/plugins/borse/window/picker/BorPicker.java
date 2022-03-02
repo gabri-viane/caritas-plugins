@@ -16,6 +16,7 @@
 package theopenhand.plugins.borse.window.picker;
 
 import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.plugins.borse.connector.PluginRegisterBorse;
 import theopenhand.plugins.borse.controllers.borse.BorseController;
 import theopenhand.plugins.borse.data.Borsa;
@@ -35,7 +36,7 @@ public class BorPicker {
     }
 
     public static PickerDialogCNTRL<Borsa, BorsaHolder> createPicker() {
-        ReferenceQuery<Borsa, BorsaHolder> rq = new ReferenceQuery<>(PluginRegisterBorse.brr, Borsa.class, BorseController.rs, 0);
+        ReferenceQuery<Borsa, BorsaHolder> rq = new ReferenceQuery<>(PluginRegisterBorse.brr, Borsa.class, SharedReferenceQuery.getController(BorseController.class).getRH(), 0);
         BorsaRegister frcntrl = new BorsaRegister();
         PickerDialogCNTRL<Borsa, BorsaHolder> createPicker = DialogCreator.createPicker(rq, "Lista Borse", frcntrl);
         return createPicker;

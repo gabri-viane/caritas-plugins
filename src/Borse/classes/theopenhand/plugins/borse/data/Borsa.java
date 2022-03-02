@@ -18,7 +18,9 @@ package theopenhand.plugins.borse.data;
 import java.math.BigInteger;
 import java.util.Date;
 import theopenhand.commons.DataUtils;
+import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
+import theopenhand.commons.connection.runtime.custom.ClauseType;
 import theopenhand.commons.connection.runtime.interfaces.BindableResult;
 import theopenhand.commons.interfaces.graphics.ColumnData;
 import theopenhand.commons.interfaces.graphics.TableAssoc;
@@ -35,6 +37,7 @@ public class Borsa implements BindableResult, TableAssoc {
     @QueryField(fieldID = 1, name = "IDFAM")
     private BigInteger id_fam;
 
+    @QueryCustom(displayName = "Data consegna", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY, ClauseType.GROUP_BY})
     @ColumnData(Title = "Data di consegna", order = 1)
     @QueryField(fieldID = 2, name = "DataConsegna")
     private Date consegna;
@@ -42,10 +45,12 @@ public class Borsa implements BindableResult, TableAssoc {
     @QueryField(fieldID = 3, name = "Note")
     private String note;
 
+    @QueryCustom(displayName = "Consegnata", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @ColumnData(Title = "Consegnata", order = 2)
     @QueryField(fieldID = 4, name = "Consegnata")
     private Boolean consegnata;
 
+    @QueryCustom(displayName = "Famiglia", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY, ClauseType.GROUP_BY})
     @ColumnData(Title = "Famiglia", order = 0)
     @QueryField(fieldID = 5, name = "Famiglia")
     private String dichiarante;

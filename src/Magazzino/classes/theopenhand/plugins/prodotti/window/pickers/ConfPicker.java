@@ -16,6 +16,7 @@
 package theopenhand.plugins.prodotti.window.pickers;
 
 import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.controllers.prodotti.ConfezioniController;
 import theopenhand.plugins.prodotti.data.Confezione;
@@ -35,9 +36,9 @@ public class ConfPicker {
     }
 
     public static PickerDialogCNTRL<Confezione, ConfezioneHolder> createPicker() {
-        ReferenceQuery<Confezione, ConfezioneHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Confezione.class, ConfezioniController.rs, 0);
+        ReferenceQuery<Confezione, ConfezioneHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Confezione.class, SharedReferenceQuery.getController(ConfezioniController.class).getRH(), 0);
         ConfRegister cr = new ConfRegister();
-        PickerDialogCNTRL<Confezione, ConfezioneHolder> createPicker = DialogCreator.createPicker(rq, "Lista Confezioni",cr);
+        PickerDialogCNTRL<Confezione, ConfezioneHolder> createPicker = DialogCreator.createPicker(rq, "Lista Confezioni", cr);
         createPicker.setTransformer_id(null);
         return createPicker;
     }

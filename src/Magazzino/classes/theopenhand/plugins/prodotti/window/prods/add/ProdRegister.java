@@ -114,7 +114,7 @@ public class ProdRegister extends AnchorPane implements DialogComponent {
                 cl.onClick();
                 refreshValues();
             });
-            ppcntrl.reloadElements(true);
+            ppcntrl.onRefresh(true);
             if (c != null) {
                 ppcntrl.select(DataBuilder.generateConfezioneByID(c.getId()));
             }

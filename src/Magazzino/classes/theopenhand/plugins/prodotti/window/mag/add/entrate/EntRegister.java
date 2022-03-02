@@ -118,7 +118,7 @@ public class EntRegister extends AnchorPane implements DialogComponent {
                 cl.onClick();
                 refreshValues();
             });
-            ppcntrl.reloadElements(true);
+            ppcntrl.onRefresh(true);
             if (dn != null) {
                 ppcntrl.select(DataBuilder.generateDonatoreByID(dn.getId()));
             }
@@ -135,7 +135,7 @@ public class EntRegister extends AnchorPane implements DialogComponent {
                 cl.onClick();
                 refreshValues();
             });
-            ppcntrl.reloadElements(true);
+            ppcntrl.onRefresh(true);
             if (pr != null) {
                 ppcntrl.select(DataBuilder.generateProdottoByID(pr.getId()));
             }

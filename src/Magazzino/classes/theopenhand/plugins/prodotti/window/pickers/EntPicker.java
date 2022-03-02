@@ -16,6 +16,7 @@
 package theopenhand.plugins.prodotti.window.pickers;
 
 import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.controllers.prodotti.EntrateController;
 import theopenhand.plugins.prodotti.data.Entrata;
@@ -34,7 +35,7 @@ public class EntPicker {
     }
 
     public static PickerDialogCNTRL<Entrata, EntrataHolder> createPicker() {
-        ReferenceQuery<Entrata, EntrataHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Entrata.class, EntrateController.rs, 0);
+        ReferenceQuery<Entrata, EntrataHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Entrata.class, SharedReferenceQuery.getController(EntrateController.class).getRH(), 0);
         EntRegister er = new EntRegister();
         PickerDialogCNTRL<Entrata, EntrataHolder> createPicker = DialogCreator.createPicker(rq, "Lista Entrate", er);
         createPicker.setTransformer_id(null);

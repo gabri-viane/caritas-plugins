@@ -15,8 +15,12 @@
  */
 package theopenhand.plugins.famiglie.connector;
 
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.plugins.famiglie.connector.runtimes.FamigliaRR;
 import theopenhand.plugins.famiglie.connector.runtimes.PluginSettings;
+import theopenhand.plugins.famiglie.controllers.famiglie.ComponentiController;
+import theopenhand.plugins.famiglie.controllers.famiglie.FamiglieController;
+import theopenhand.plugins.famiglie.controllers.famiglie.ParentelaController;
 import theopenhand.plugins.famiglie.data.Componente;
 import theopenhand.plugins.famiglie.data.holders.ComponenteHolder;
 import theopenhand.plugins.famiglie.data.Famiglia;
@@ -35,7 +39,7 @@ import theopenhand.runtime.templates.Settings;
  */
 public class PluginRegisterFamiglie implements LinkableClass {
 
-    public static final FamigliaRR frr = new FamigliaRR("Gestione Famiglie");
+    public static final FamigliaRR frr = new FamigliaRR("plugin_famiglie");
     private static final Settings sf = new PluginSettings();
 
     @Override
@@ -45,6 +49,10 @@ public class PluginRegisterFamiglie implements LinkableClass {
         SubscriptionHandler.subscribeToDBObjects(frr, ComponenteHolder.class, Componente.class);
         SubscriptionHandler.subscribeToDBObjects(frr, InformazioniFamigliaHolder.class, InformazioniFamiglia.class);
         SubscriptionHandler.subscribeToDBObjects(frr, ParentelaHolder.class, Parentela.class);
+
+        SharedReferenceQuery.getInstance().register(frr, "famiglia", Famiglia.class, FamiglieController.class);
+        SharedReferenceQuery.getInstance().register(frr, "componente", Componente.class, ComponentiController.class);
+        SharedReferenceQuery.getInstance().register(frr, "parentela", Parentela.class, ParentelaController.class);
     }
 
     @Override

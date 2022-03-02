@@ -30,16 +30,14 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class MagazzinoController implements ReferenceController {
-
-    public static MagazzinoHolder rs;
+public class MagazzinoController extends ReferenceController<MagazzinoHolder> {
 
     @Override
     public ClickListener getOnAssocButtonClick() {
         return () -> {
             Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, ElementoMagazzino.class, null);
             if (eq.isPresent()) {
-                rs = (MagazzinoHolder) eq.get();
+                setRH(eq.get());
             }
         };
     }

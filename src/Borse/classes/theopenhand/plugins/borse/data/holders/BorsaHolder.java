@@ -42,6 +42,9 @@ public class BorsaHolder extends ResultHolderImpl<Borsa> {
 
     @Query(queryID = 6, bindedClass = Borsa.class, hasBindedParams = true, hasResult = true)
     public static final String SELECT_QUERY_COMPLETE_FAMIGLIA = "SELECT * FROM getBorseCompleteF WHERE %N1 = %V1";
+    
+    @Query(queryID = 7, bindedClass = Borsa.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getBorseCompleteF";
 
     public BorsaHolder() {
     }

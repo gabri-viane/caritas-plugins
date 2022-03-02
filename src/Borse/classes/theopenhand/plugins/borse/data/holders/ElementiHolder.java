@@ -40,6 +40,9 @@ public class ElementiHolder extends ResultHolderImpl<ElementoBorsa> {
     @Query(queryID = 6, bindedClass = ElementoBorsa.class, hasBindedParams = true, hasResult = true)
     public static final String SELECT_QUERY_COMPLETE_BORSA = "SELECT * FROM getElementiBorseCompleteF WHERE %N1 = %V1";
 
+    @Query(queryID = 7, bindedClass = ElementoBorsa.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getElementiBorseCompleteF";
+
     public ElementiHolder() {
     }
 

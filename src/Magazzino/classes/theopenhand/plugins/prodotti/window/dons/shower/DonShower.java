@@ -32,9 +32,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.controllers.prodotti.DonatoriController;
 import theopenhand.plugins.prodotti.data.Donatore;
@@ -48,7 +50,7 @@ import theopenhand.window.graphics.dialogs.DialogCreator;
  *
  * @author gabri
  */
-public class DonShower extends AnchorPane implements DialogComponent {
+public class DonShower extends AnchorPane implements DialogComponent, Refreshable {
 
     @FXML
     private Hyperlink changeDonHL;
@@ -82,8 +84,10 @@ public class DonShower extends AnchorPane implements DialogComponent {
 
     private Donatore d;
     private boolean editing = false;
+    private final DonatoriController controller;
 
     public DonShower() {
+        controller = SharedReferenceQuery.getController(DonatoriController.class);
         init();
     }
 
@@ -101,11 +105,11 @@ public class DonShower extends AnchorPane implements DialogComponent {
         clearAll();
         updateValuesHL.setOnAction((a) -> {
             updateValuesHL.setVisited(false);
-            refreshValues();
+            onRefresh(true);
         });
         editDonHL.setOnAction((a) -> {
             editDonHL.setVisited(false);
-            refreshValues();
+            onRefresh(true);
             editable(!editing);
         });
         changeDonHL.setOnAction(a -> {
@@ -118,9 +122,9 @@ public class DonShower extends AnchorPane implements DialogComponent {
             pdcntrl.onAcceptPressed(() -> {
                 d = pdcntrl.getValue();
                 cl.onClick();
-                refreshValues();
+                onRefresh(true);
             });
-            pdcntrl.reloadElements(true);
+            pdcntrl.onRefresh(true);
             if (d != null) {
                 pdcntrl.select(d);
             }
@@ -132,10 +136,13 @@ public class DonShower extends AnchorPane implements DialogComponent {
         changeDonHL.fire();
     }
 
-    private void refreshValues() {
+    @Override
+    public void onRefresh(boolean reload) {
         if (d != null) {
-            DonatoriController.rs = (DonatoreHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 2, Donatore.class, d).orElse(null);
-            d = (DonatoriController.rs).find(d.getID().longValue());
+            if (reload) {
+                controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 2, Donatore.class, d).orElse(null));
+            }
+            d = controller.getRH().find(d.getID().longValue());
             if (d != null) {
                 clearAll();
                 setData(d);
@@ -155,7 +162,7 @@ public class DonShower extends AnchorPane implements DialogComponent {
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (d != null) {
-                    DonatoriController.rs = (DonatoreHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Donatore.class, d).orElse(null);
+                    controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Donatore.class, d).orElse(null));
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
                             "Non è stato selezionato nessun donatore da eliminare.", null);
@@ -170,7 +177,7 @@ public class DonShower extends AnchorPane implements DialogComponent {
             d.setDescrizione(descTF.getText());
             d.setName(nameTF.getText());
             ConnectionExecutor.getInstance().executeCall(PluginRegisterProdotti.prr, 3, Donatore.class, d).orElse(null);
-            refreshValues();
+            onRefresh(true);
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
                     "I dati del donatore sono stati aggiornati.", null);

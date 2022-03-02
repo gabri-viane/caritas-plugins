@@ -29,16 +29,14 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class ConfezioniController implements ReferenceController {
-
-    public static ConfezioneHolder rs;
+public class ConfezioniController extends ReferenceController<ConfezioneHolder> {
 
     @Override
     public ClickListener getOnAssocButtonClick() {
         return () -> {
             Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Confezione.class, null);
             if (eq.isPresent()) {
-                rs = (ConfezioneHolder) eq.get();
+                setRH(eq.get());
             }
         };
     }
@@ -63,5 +61,4 @@ public class ConfezioniController implements ReferenceController {
         return ProdottiController.getNodeMain();
     }
 
-    
 }

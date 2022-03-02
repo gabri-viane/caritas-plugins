@@ -16,6 +16,7 @@
 package theopenhand.plugins.prodotti.window.pickers;
 
 import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.controllers.prodotti.MotiviController;
 import theopenhand.plugins.prodotti.data.Motivo;
@@ -29,12 +30,13 @@ import theopenhand.window.graphics.dialogs.DialogCreator;
  * @author gabri
  */
 public class MotPicker {
+
     private MotPicker() {
 
     }
 
     public static PickerDialogCNTRL<Motivo, MotivoHolder> createPicker() {
-        ReferenceQuery<Motivo, MotivoHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Motivo.class, MotiviController.rs, 0);
+        ReferenceQuery<Motivo, MotivoHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Motivo.class, SharedReferenceQuery.getController(MotiviController.class).getRH(), 0);
         MotRegister cr = new MotRegister();
         PickerDialogCNTRL<Motivo, MotivoHolder> createPicker = DialogCreator.createPicker(rq, "Lista Motivi", cr);
         createPicker.setTransformer_id(null);

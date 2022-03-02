@@ -28,15 +28,18 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import theopenhand.commons.DataUtils;
+import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.connector.runtimes.PluginSettings;
 import theopenhand.plugins.prodotti.controllers.prodotti.EntrateController;
 import theopenhand.plugins.prodotti.data.Entrata;
-import theopenhand.plugins.prodotti.data.holders.EntrataHolder;
 import theopenhand.plugins.prodotti.window.confs.shower.ConfShower;
 import theopenhand.plugins.prodotti.window.mag.add.entrate.EntRegister;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
+import theopenhand.window.graphics.dialogs.ActionCreator;
 import theopenhand.window.graphics.dialogs.DialogCreator;
 import theopenhand.window.graphics.dialogs.ElementCreator;
 import theopenhand.window.graphics.inner.DisplayTableValue;
@@ -45,7 +48,7 @@ import theopenhand.window.graphics.inner.DisplayTableValue;
  *
  * @author gabri
  */
-public class EntMain extends AnchorPane {
+public class EntMain extends AnchorPane implements Refreshable {
 
     @FXML
     private VBox containerVB;
@@ -72,8 +75,10 @@ public class EntMain extends AnchorPane {
     private Hyperlink showEntrProd;
 
     private DisplayTableValue<Entrata> table;
+    private final EntrateController controller;
 
     public EntMain() {
+        controller = SharedReferenceQuery.getController(EntrateController.class);
         init();
     }
 
@@ -91,20 +96,21 @@ public class EntMain extends AnchorPane {
         regEntrataHL.setOnAction(a -> {
             EntRegister pr = new EntRegister();
             DialogCreator.showDialog(pr, () -> {
-                reloadElements(true);
+                onRefresh(true);
             }, null);
             regEntrataHL.setVisited(false);
         });
         refreshHL.setOnAction(a -> {
-            reloadElements(true);
+            onRefresh(true);
             refreshHL.setVisited(false);
         });
-        table = ElementCreator.generateTable(Entrata.class, EntrateController.rs);
+        table = ElementCreator.generateTable(Entrata.class);
         PluginSettings.table_prop.addListener((previus_value, new_value) -> {
             changeType(new_value);
         });
         changeType(PluginSettings.table_prop.getValue());
-        reloadElements(true);
+        ActionCreator.setHyperlinkAction(ActionCreator.generateOrderAction(new ReferenceQuery(PluginRegisterProdotti.prr, Entrata.class, controller.getRH(), 7), this), orderHL);
+        onRefresh(true);
     }
 
     private void changeType(boolean b) {
@@ -115,22 +121,23 @@ public class EntMain extends AnchorPane {
         }
     }
 
-    public void reloadElements(boolean refresh) {
-        if (refresh) {
-            EntrateController.rs = (EntrataHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Entrata.class, null).orElse(null);
+    @Override
+    public void onRefresh(boolean reload) {
+        if (reload) {
+            controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Entrata.class, null).orElse(null));
         }
-        if (EntrateController.rs != null) {
+        if (controller.getRH() != null) {
             if (!PluginSettings.table_prop.getValue()) {
                 ObservableList<Node> els = containerVB.getChildren();
                 els.clear();
-                EntrateController.rs.getList().stream().forEachOrdered(e -> {
+                controller.getRH().getList().stream().forEachOrdered(e -> {
                     PickerElementCNTRL<Entrata> selectableElement = new PickerElementCNTRL<>(e, false, (element) -> {
                         return element.getNome_prodotto() + " +" + element.getTotale() + "\t(" + element.getNome_donatore() + " - " + DataUtils.format(element.getData_arrivo()) + ")";
                     }, null);
                     els.add(selectableElement);
                 });
             } else {
-                table.setData(EntrateController.rs.getList());
+                table.setData(controller.getRH().getList());
             }
         }
     }

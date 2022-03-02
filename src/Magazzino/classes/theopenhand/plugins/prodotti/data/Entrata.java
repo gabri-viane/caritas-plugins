@@ -43,7 +43,7 @@ public class Entrata implements BindableResult, TableAssoc {
     @QueryField(name = "Donatore", fieldID = 2)
     private String nome_donatore;
 
-    @QueryCustom(displayName = "Qauntità", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE})
+    @QueryCustom(displayName = "Quantità", enabled = {ClauseType.ORDER_BY, ClauseType.WHERE})
     @ColumnData(Title = "Quantità", order = 2)
     @QueryField(name = "Totale", fieldID = 3)
     private Integer totale;

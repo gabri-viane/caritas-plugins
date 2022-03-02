@@ -31,9 +31,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.controllers.prodotti.ConfezioniController;
 import theopenhand.plugins.prodotti.data.Confezione;
@@ -46,9 +48,9 @@ import theopenhand.window.graphics.dialogs.DialogCreator;
  *
  * @author gabri
  */
-public class ConfShower extends AnchorPane implements DialogComponent {
+public class ConfShower extends AnchorPane implements DialogComponent,Refreshable {
 
-   @FXML
+    @FXML
     private Hyperlink changeConfHL;
 
     @FXML
@@ -77,8 +79,10 @@ public class ConfShower extends AnchorPane implements DialogComponent {
 
     private Confezione c;
     private boolean editing = false;
+    private final ConfezioniController controller;
 
     public ConfShower() {
+        controller = SharedReferenceQuery.getController(ConfezioniController.class);
         init();
     }
 
@@ -96,11 +100,11 @@ public class ConfShower extends AnchorPane implements DialogComponent {
         clearAll();
         updateValuesHL.setOnAction((a) -> {
             updateValuesHL.setVisited(false);
-            refreshValues();
+            onRefresh(true);
         });
         editConfHL.setOnAction((a) -> {
             editConfHL.setVisited(false);
-            refreshValues();
+            onRefresh(true);
             editable(!editing);
         });
         changeConfHL.setOnAction(a -> {
@@ -113,9 +117,9 @@ public class ConfShower extends AnchorPane implements DialogComponent {
             pdcntrl.onAcceptPressed(() -> {
                 c = pdcntrl.getValue();
                 cl.onClick();
-                refreshValues();
+                onRefresh(true);
             });
-            pdcntrl.reloadElements(true);
+            pdcntrl.onRefresh(true);
             if (c != null) {
                 pdcntrl.select(c);
             }
@@ -127,10 +131,13 @@ public class ConfShower extends AnchorPane implements DialogComponent {
         changeConfHL.fire();
     }
 
-    private void refreshValues() {
+    @Override
+    public void onRefresh(boolean reload) {
         if (c != null) {
-            ConfezioniController.rs = (ConfezioneHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 2, Confezione.class, c).orElse(null);
-            c = (ConfezioniController.rs).find(c.getID().longValue());
+            if (reload) {
+                controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 2, Confezione.class, c).orElse(null));
+            }
+            c = controller.getRH().find(c.getID().longValue());
             if (c != null) {
                 clearAll();
                 setData(c);
@@ -150,7 +157,7 @@ public class ConfShower extends AnchorPane implements DialogComponent {
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (c != null) {
-                    ConfezioniController.rs = (ConfezioneHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Confezione.class, c).orElse(null);
+                    controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Confezione.class, c).orElse(null));
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
                             "Non è stata selezionata nessuna confezione da eliminare.", null);
@@ -164,7 +171,7 @@ public class ConfShower extends AnchorPane implements DialogComponent {
         if (c != null) {
             c.setDimensione(confNameTB.getText());
             ConnectionExecutor.getInstance().executeCall(PluginRegisterProdotti.prr, 4, Confezione.class, c).orElse(null);
-            refreshValues();
+            onRefresh(true);
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
                     "I dati della confezione sono stati aggiornati.", null);

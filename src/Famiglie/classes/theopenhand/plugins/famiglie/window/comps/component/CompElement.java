@@ -34,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import theopenhand.commons.DataUtils;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
@@ -110,7 +111,7 @@ public class CompElement extends AnchorPane implements ValueHolder<Componente>, 
             }
         });
         typeBTN.setOnAction(a -> {
-            PickerDialogCNTRL<Parentela,ParentelaHolder> ppcntrl = ParPicker.createPicker();
+            PickerDialogCNTRL<Parentela, ParentelaHolder> ppcntrl = ParPicker.createPicker();
             //ParPickerCNTRL ppcntrl = new ParPickerCNTRL();
             Stage s = DialogCreator.showDialog(ppcntrl, ppcntrl.getPrefWidth(), ppcntrl.getPrefHeight(), "Seleziona parentela");
             ClickListener cl = () -> {
@@ -123,7 +124,7 @@ public class CompElement extends AnchorPane implements ValueHolder<Componente>, 
                 cl.onClick();
                 refreshValues();
             });
-            ppcntrl.reloadElements(true);
+            ppcntrl.onRefresh(true);
             if (c != null) {
                 ppcntrl.select(DataBuilder.generateParentelaByID(c.getId_parentela()));
             }
@@ -155,7 +156,8 @@ public class CompElement extends AnchorPane implements ValueHolder<Componente>, 
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (c != null) {
-                    ComponentiController.rs = ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 5, Componente.class, c).orElse(null);
+                    SharedReferenceQuery.getController(ComponentiController.class).setRH(
+                            ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 5, Componente.class, c).orElse(null));
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
                             "Non è stato selezionato nessun componente da eliminare.", null);

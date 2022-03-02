@@ -24,7 +24,7 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class NewConfezioneController implements ReferenceController {
+public class NewConfezioneController extends ReferenceController {
 
     @Override
     public ClickListener getOnAssocButtonClick() {

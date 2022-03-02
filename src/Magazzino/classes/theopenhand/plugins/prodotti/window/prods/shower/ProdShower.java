@@ -32,9 +32,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.controllers.prodotti.MagazzinoController;
 import theopenhand.plugins.prodotti.controllers.prodotti.ProdottiController;
@@ -43,7 +45,6 @@ import theopenhand.plugins.prodotti.data.DataBuilder;
 import theopenhand.plugins.prodotti.data.ElementoMagazzino;
 import theopenhand.plugins.prodotti.data.Prodotto;
 import theopenhand.plugins.prodotti.data.holders.ConfezioneHolder;
-import theopenhand.plugins.prodotti.data.holders.MagazzinoHolder;
 import theopenhand.plugins.prodotti.data.holders.ProdottoHolder;
 import theopenhand.plugins.prodotti.window.pickers.ConfPicker;
 import theopenhand.plugins.prodotti.window.pickers.ProdPicker;
@@ -55,7 +56,7 @@ import theopenhand.window.graphics.dialogs.DialogCreator;
  *
  * @author gabri
  */
-public class ProdShower extends AnchorPane implements DialogComponent {
+public class ProdShower extends AnchorPane implements DialogComponent, Refreshable {
 
     @FXML
     private Hyperlink changeProdHL;
@@ -108,8 +109,12 @@ public class ProdShower extends AnchorPane implements DialogComponent {
     private Prodotto p;
     private Confezione c;
     private boolean editing = false;
+    private final ProdottiController controller;
+    private final MagazzinoController controller2;
 
     public ProdShower() {
+        controller = SharedReferenceQuery.getController(ProdottiController.class);
+        controller2 = SharedReferenceQuery.getController(MagazzinoController.class);
         init();
     }
 
@@ -127,11 +132,11 @@ public class ProdShower extends AnchorPane implements DialogComponent {
         clearAll();
         updateValuesHL.setOnAction((a) -> {
             updateValuesHL.setVisited(false);
-            refreshValues();
+            onRefresh(true);
         });
         editProdHL.setOnAction((a) -> {
             editProdHL.setVisited(false);
-            refreshValues();
+            onRefresh(true);
             editable(!editing);
         });
         newProdAs.setOnAction(a -> {
@@ -152,7 +157,7 @@ public class ProdShower extends AnchorPane implements DialogComponent {
                 cl.onClick();
                 confTypeBTN.setText(p.getNome_confezione());
             });
-            pdcntrl.reloadElements(true);
+            pdcntrl.onRefresh(true);
             if (p != null) {
                 pdcntrl.select(DataBuilder.generateConfezioneByID(p.getId_confezioni()));
             }
@@ -167,9 +172,9 @@ public class ProdShower extends AnchorPane implements DialogComponent {
             pdcntrl.onAcceptPressed(() -> {
                 p = pdcntrl.getValue();
                 cl.onClick();
-                refreshValues();
+                onRefresh(true);
             });
-            pdcntrl.reloadElements(true);
+            pdcntrl.onRefresh(true);
             if (p != null) {
                 pdcntrl.select(p);
             }
@@ -181,11 +186,14 @@ public class ProdShower extends AnchorPane implements DialogComponent {
         changeProdHL.fire();
     }
 
-    private void refreshValues() {
+    @Override
+    public void onRefresh(boolean reload) {
         if (p != null) {
             c = null;
-            ProdottiController.rs = (ProdottoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 3, Prodotto.class, p).orElse(null);
-            p = (ProdottiController.rs).find(p.getID().longValue());
+            if (reload) {
+                controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 3, Prodotto.class, p).orElse(null));
+            }
+            p = controller.getRH().find(p.getID().longValue());
             if (p != null) {
                 clearAll();
                 setData(p);
@@ -212,7 +220,7 @@ public class ProdShower extends AnchorPane implements DialogComponent {
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (p != null) {
-                    ProdottiController.rs = (ProdottoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Prodotto.class, p).orElse(null);
+                    controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Prodotto.class, p).orElse(null));
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
                             "Non è stato selezionato nessun prodotto da eliminare.", null);
@@ -233,7 +241,7 @@ public class ProdShower extends AnchorPane implements DialogComponent {
                 p.setId_confezioni(c.getId());
             }
             ConnectionExecutor.getInstance().executeCall(PluginRegisterProdotti.prr, 4, Prodotto.class, p).orElse(null);
-            refreshValues();
+            onRefresh(true);
             editable(false);
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
                     "I dati del prodotto sono stati aggiornati.", null);
@@ -296,9 +304,9 @@ public class ProdShower extends AnchorPane implements DialogComponent {
             magazzinoCB.setSelected(prod.getIs_magazzino());
             igieneCB.setSelected(prod.getIs_igiene());
             if (prod.getIs_magazzino()) {
-                MagazzinoController.rs = (MagazzinoHolder) ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 6, ElementoMagazzino.class, new ElementoMagazzino(prod.getID().longValue(), null, null)).orElse(null);
-                if (MagazzinoController.rs != null) {
-                    ElementoMagazzino lastInsert = MagazzinoController.rs.getLastInsert();
+                controller2.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 6, ElementoMagazzino.class, new ElementoMagazzino(prod.getID().longValue(), null, null)).orElse(null));
+                if (controller2.getRH() != null) {
+                    ElementoMagazzino lastInsert = controller2.getRH().getLastInsert();
                     contProdLBL.setText(lastInsert.getTotale().toString());
                 }
             } else {

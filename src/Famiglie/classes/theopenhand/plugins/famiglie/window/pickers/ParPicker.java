@@ -16,6 +16,7 @@
 package theopenhand.plugins.famiglie.window.pickers;
 
 import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.plugins.famiglie.connector.PluginRegisterFamiglie;
 import theopenhand.plugins.famiglie.controllers.famiglie.ParentelaController;
 import theopenhand.plugins.famiglie.data.Parentela;
@@ -29,12 +30,12 @@ import theopenhand.window.graphics.dialogs.DialogCreator;
  */
 public class ParPicker {
 
-    private ParPicker(){
-        
+    private ParPicker() {
+
     }
-    
+
     public static PickerDialogCNTRL<Parentela, ParentelaHolder> createPicker() {
-        ReferenceQuery<Parentela, ParentelaHolder> rq = new ReferenceQuery<>(PluginRegisterFamiglie.frr, Parentela.class, ParentelaController.rs, 0);
+        ReferenceQuery<Parentela, ParentelaHolder> rq = new ReferenceQuery<>(PluginRegisterFamiglie.frr, Parentela.class, SharedReferenceQuery.getController(ParentelaController.class).getRH(), 0);
         //ParRegisterCNTRL frcntrl = new ParRegisterCNTRL();
         return DialogCreator.createPicker(rq, "Lista Parentele");
     }

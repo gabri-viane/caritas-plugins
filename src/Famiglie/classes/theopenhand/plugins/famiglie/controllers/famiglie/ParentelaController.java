@@ -29,16 +29,14 @@ import theopenhand.runtime.templates.ReferenceController;
  *
  * @author gabri
  */
-public class ParentelaController implements ReferenceController{
-    
-    public static ParentelaHolder rs;
+public class ParentelaController extends ReferenceController<ParentelaHolder> {
 
     @Override
     public ClickListener getOnAssocButtonClick() {
         return () -> {
             Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Parentela.class, null);
             if (eq.isPresent()) {
-                rs = (ParentelaHolder) eq.get();
+                setRH(eq.get());
             }
         };
     }
@@ -63,5 +61,4 @@ public class ParentelaController implements ReferenceController{
         return null;
     }
 
-    
 }

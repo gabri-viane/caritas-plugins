@@ -30,9 +30,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import theopenhand.commons.ReferenceQuery;
+import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
+import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.commons.interfaces.graphics.ValueHolder;
 import theopenhand.plugins.famiglie.connector.PluginRegisterFamiglie;
 import theopenhand.plugins.famiglie.controllers.famiglie.ComponentiController;
@@ -42,13 +45,14 @@ import theopenhand.plugins.famiglie.data.holders.FamigliaHolder;
 import theopenhand.plugins.famiglie.window.comps.component.CompElement;
 import theopenhand.plugins.famiglie.window.pickers.FamPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
+import theopenhand.window.graphics.dialogs.ActionCreator;
 import theopenhand.window.graphics.dialogs.DialogCreator;
 
 /**
  *
  * @author gabri
  */
-public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, DialogComponent {
+public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, DialogComponent, Refreshable {
 
     @FXML
     private Hyperlink changeFamHL;
@@ -71,9 +75,13 @@ public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, Dialo
     @FXML
     private VBox contentVB;
 
+    private final Componente ricerca_tmp;
     private Famiglia f;
+    private final ComponentiController controller;
 
     public CompMain() {
+        controller = SharedReferenceQuery.getController(ComponentiController.class);
+        ricerca_tmp = new Componente();
         init();
     }
 
@@ -88,14 +96,9 @@ public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, Dialo
         } catch (IOException ex) {
             Logger.getLogger(CompMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-        orderHL.setOnAction(a -> {
-            if (f != null) {
-                orderHL.setVisited(false);
-            }
-        });
         refreshHL.setOnAction(a -> {
             refreshHL.setVisited(false);
-            refreshValues();
+            onRefresh(true);
         });
         changeFamHL.setOnAction(a -> {
             PickerDialogCNTRL<Famiglia, FamigliaHolder> frcntrl = FamPicker.createPicker();
@@ -106,10 +109,11 @@ public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, Dialo
             frcntrl.onExitPressed(cl);
             frcntrl.onAcceptPressed(() -> {
                 f = frcntrl.getValue();
+                ricerca_tmp.setIdfam(f.getIdfam());
                 cl.onClick();
-                refreshValues();
+                onRefresh(true);
             });
-            frcntrl.reloadElements(true);
+            frcntrl.onRefresh(true);
             if (f != null) {
                 frcntrl.select(f);
             }
@@ -127,7 +131,7 @@ public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, Dialo
                         Componente value = cecntrl.getValue();
                         value.setIdfam(f.getIdfam());
                         ConnectionExecutor.getInstance().executeCall(PluginRegisterFamiglie.frr, 1, Componente.class, value);
-                        refreshValues();
+                        onRefresh(true);
                     }
                     cl.onClick();
                 });
@@ -136,20 +140,25 @@ public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, Dialo
             }
             addHL.setVisited(false);
         });
+        ActionCreator.setHyperlinkAction(ActionCreator.generateOrderAction(new ReferenceQuery(PluginRegisterFamiglie.frr, Componente.class, controller.getRH(), 0), this, ricerca_tmp), orderHL);
     }
 
     public void changeFam() {
         changeFamHL.fire();
     }
 
-    public void refreshValues() {
+    @Override
+    public void onRefresh(boolean reload) {
         if (f != null) {
             idfamLBL.setText("" + f.getIdfam());
             ObservableList<Node> cmp = contentVB.getChildren();
             cmp.clear();
-            ComponentiController.rs = ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Componente.class, new Componente(f.getIdfam(), null, null, null, -1)).orElse(null);
-            if (ComponentiController.rs != null) {
-                ComponentiController.rs.getList().stream().forEach(c -> {
+            if (reload) {
+                controller.setRH(
+                        ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Componente.class, new Componente(f.getIdfam(), null, null, null, -1)).orElse(null));
+            }
+            if (controller.getRH() != null) {
+                controller.getRH().getList().stream().forEach(c -> {
                     CompElement cecntrl = new CompElement(c);
                     cmp.add(cecntrl);
                     cecntrl.onExitPressed(() -> {
