@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="330.0" minWidth="325.0" prefHeight="550.0" prefWidth="325.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="330.0" minWidth="325.0" prefHeight="550.0" prefWidth="325.0" styleClass="anchor-pane" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="157.0" layoutY="66.0" prefHeight="406.0" prefWidth="414.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,7 +21,7 @@
                <children>
                   <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Registra un nuovo prodotto" textAlignment="CENTER">
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="popup-window-title" text="Registra un nuovo prodotto" textAlignment="CENTER">
                            <font>
                               <Font size="18.0" />
                            </font>

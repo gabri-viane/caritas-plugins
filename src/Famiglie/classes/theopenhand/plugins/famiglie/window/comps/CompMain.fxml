@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="anchor-pane" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane layoutX="168.0" layoutY="109.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <right>
@@ -41,12 +41,12 @@
          <top>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER_LEFT">
                <children>
-                  <Label text="Famiglia selezionata:" HBox.hgrow="NEVER">
+                  <Label styleClass="window-title" text="Famiglia selezionata:" HBox.hgrow="NEVER">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="idfamLBL" maxWidth="1.7976931348623157E308" text="ID_FAM" HBox.hgrow="ALWAYS">
+                  <Label fx:id="idfamLBL" maxWidth="1.7976931348623157E308" styleClass="window-title-element" text="ID_FAM" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>

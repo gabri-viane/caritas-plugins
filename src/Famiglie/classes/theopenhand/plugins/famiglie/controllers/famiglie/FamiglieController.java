@@ -15,15 +15,7 @@
  */
 package theopenhand.plugins.famiglie.controllers.famiglie;
 
-import java.util.Optional;
-import javafx.scene.layout.AnchorPane;
-import theopenhand.commons.connection.runtime.ConnectionExecutor;
-import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
-import theopenhand.commons.events.graphics.ClickListener;
-import theopenhand.plugins.famiglie.connector.PluginRegisterFamiglie;
-import theopenhand.plugins.famiglie.data.Famiglia;
 import theopenhand.plugins.famiglie.data.holders.FamigliaHolder;
-import theopenhand.plugins.famiglie.window.fams.FamMain;
 import theopenhand.runtime.templates.ReferenceController;
 
 /**
@@ -33,45 +25,12 @@ import theopenhand.runtime.templates.ReferenceController;
  */
 public class FamiglieController extends ReferenceController<FamigliaHolder> {
 
-    private static FamMain fp;
 
-    private static FamMain getFP() {
-        if (fp == null) {
-            fp = new FamMain();
-        }
-        return fp;
-    }
-
-    @Override
-    public ClickListener getOnAssocButtonClick() {
-        return () -> {
-            Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Famiglia.class, null);
-            if (eq.isPresent()) {
-                setRH(eq.get());
-            }
-        };
-    }
-
-    @Override
-    public String getAssocButtonName() {
-        return "Mostra famiglie";
-    }
-
-    @Override
-    public String getGroupName() {
-        return "Famiglie";
-    }
 
     @Override
     public String getID() {
         return "PLG-FAM-WND";
     }
 
-    @Override
-    public AnchorPane getNode() {
-        getFP();
-        fp.onRefresh(true);
-        return getFP();
-    }
 
 }

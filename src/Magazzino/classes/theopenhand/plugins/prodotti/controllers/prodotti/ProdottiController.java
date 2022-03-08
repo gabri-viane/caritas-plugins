@@ -15,15 +15,7 @@
  */
 package theopenhand.plugins.prodotti.controllers.prodotti;
 
-import java.util.Optional;
-import javafx.scene.layout.AnchorPane;
-import theopenhand.commons.connection.runtime.ConnectionExecutor;
-import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
-import theopenhand.commons.events.graphics.ClickListener;
-import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
-import theopenhand.plugins.prodotti.data.Prodotto;
 import theopenhand.plugins.prodotti.data.holders.ProdottoHolder;
-import theopenhand.plugins.prodotti.window.prods.ProdMain;
 import theopenhand.runtime.templates.ReferenceController;
 
 /**
@@ -32,40 +24,9 @@ import theopenhand.runtime.templates.ReferenceController;
  */
 public class ProdottiController extends ReferenceController<ProdottoHolder> {
 
-    private static final ProdMain fp = new ProdMain();
-
-    @Override
-    public ClickListener getOnAssocButtonClick() {
-        return () -> {
-            Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Prodotto.class, null);
-            if (eq.isPresent()) {
-                setRH(eq.get());
-            }
-        };
-    }
-
-    @Override
-    public String getAssocButtonName() {
-        return "Mostra prodotti";
-    }
-
-    @Override
-    public String getGroupName() {
-        return "Magazzino";
-    }
-
     @Override
     public String getID() {
         return "PLG-MAG-WND";
-    }
-
-    @Override
-    public AnchorPane getNode() {
-        return fp;
-    }
-
-    public static AnchorPane getNodeMain() {
-        return fp;
     }
 
 }

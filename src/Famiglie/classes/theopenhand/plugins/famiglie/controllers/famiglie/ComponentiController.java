@@ -15,10 +15,7 @@
  */
 package theopenhand.plugins.famiglie.controllers.famiglie;
 
-import javafx.scene.layout.AnchorPane;
-import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.plugins.famiglie.data.holders.ComponenteHolder;
-import theopenhand.plugins.famiglie.window.comps.CompMain;
 import theopenhand.runtime.templates.ReferenceController;
 
 /**
@@ -27,40 +24,8 @@ import theopenhand.runtime.templates.ReferenceController;
  */
 public class ComponentiController extends ReferenceController<ComponenteHolder> {
 
-    private static CompMain cm;
-
-    private static CompMain getCM() {
-        if (cm == null) {
-            cm = new CompMain();
-        }
-        return cm;
-    }
-
-    @Override
-    public ClickListener getOnAssocButtonClick() {
-        return () -> {
-            getCM().changeFam();
-        };
-    }
-
-    @Override
-    public String getAssocButtonName() {
-        return "Mostra componenti";
-    }
-
-    @Override
-    public String getGroupName() {
-        return "Famiglie";
-    }
-
     @Override
     public String getID() {
         return "PLG-COMP-WND";
     }
-
-    @Override
-    public AnchorPane getNode() {
-        return getCM();
-    }
-
 }

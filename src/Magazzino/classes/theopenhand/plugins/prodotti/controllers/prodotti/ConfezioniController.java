@@ -15,13 +15,6 @@
  */
 package theopenhand.plugins.prodotti.controllers.prodotti;
 
-import java.util.Optional;
-import javafx.scene.layout.AnchorPane;
-import theopenhand.commons.connection.runtime.ConnectionExecutor;
-import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
-import theopenhand.commons.events.graphics.ClickListener;
-import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
-import theopenhand.plugins.prodotti.data.Confezione;
 import theopenhand.plugins.prodotti.data.holders.ConfezioneHolder;
 import theopenhand.runtime.templates.ReferenceController;
 
@@ -31,34 +24,10 @@ import theopenhand.runtime.templates.ReferenceController;
  */
 public class ConfezioniController extends ReferenceController<ConfezioneHolder> {
 
-    @Override
-    public ClickListener getOnAssocButtonClick() {
-        return () -> {
-            Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Confezione.class, null);
-            if (eq.isPresent()) {
-                setRH(eq.get());
-            }
-        };
-    }
-
-    @Override
-    public String getAssocButtonName() {
-        return "Mostra Confezioni";
-    }
-
-    @Override
-    public String getGroupName() {
-        return "Magazzino";
-    }
-
+    
     @Override
     public String getID() {
         return "PLG-PROD-WND";
-    }
-
-    @Override
-    public AnchorPane getNode() {
-        return ProdottiController.getNodeMain();
     }
 
 }

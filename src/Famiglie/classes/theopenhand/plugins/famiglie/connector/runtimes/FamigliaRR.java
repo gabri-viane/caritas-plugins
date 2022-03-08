@@ -23,7 +23,6 @@ import theopenhand.commons.handlers.InterchangeRequest;
 import theopenhand.plugins.famiglie.controllers.famiglie.ComponentiController;
 import theopenhand.plugins.famiglie.controllers.famiglie.FamiglieController;
 import theopenhand.plugins.famiglie.controllers.famiglie.ParentelaController;
-import theopenhand.plugins.famiglie.controllers.famiglie.secondary.NewFamigliaController;
 import theopenhand.plugins.famiglie.data.DataBuilder;
 import theopenhand.plugins.famiglie.window.pickers.FamPicker;
 import theopenhand.plugins.famiglie.window.pickers.ParPicker;
@@ -44,7 +43,6 @@ public class FamigliaRR extends RuntimeReference {
 
     private void init() {
         addReferenceController(new FamiglieController());
-        addReferenceController(new NewFamigliaController());
         addReferenceController(new ComponentiController());
         addReferenceController(new ParentelaController());
 
@@ -64,6 +62,6 @@ public class FamigliaRR extends RuntimeReference {
                 return castToObject(l);
             }
         });
+        Ribbon r = new Ribbon(this);
     }
-
 }

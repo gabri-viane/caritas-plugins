@@ -129,7 +129,7 @@ public class FamMain extends AnchorPane implements Refreshable {
     public void onRefresh(boolean reload) {
         if (reload) {
             controller.setRH(
-                    ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Famiglia.class, null).orElse(null));
+                ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Famiglia.class, null).orElse(null));
         }
         if (controller.getRH() != null) {
             if (!PluginSettings.table_prop.getValue()) {

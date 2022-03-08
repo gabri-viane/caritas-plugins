@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane layoutX="249.0" layoutY="89.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <HBox alignment="CENTER_LEFT" spacing="5.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Elementi della borsa:">
+                  <Label styleClass="window-title" text="Elementi della borsa:">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -30,12 +30,12 @@
                      <children>
                         <HBox>
                            <children>
-                              <Label text="Famiglia:">
+                              <Label styleClass="window-subtitle" text="Famiglia:">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label text="ID_FAM" HBox.hgrow="ALWAYS">
+                              <Label styleClass="window-subtitle-element" text="ID_FAM" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -44,12 +44,12 @@
                         </HBox>
                         <HBox layoutX="10.0" layoutY="10.0">
                            <children>
-                              <Label text="Data consegna:">
+                              <Label styleClass="window-subtitle" text="Data consegna:">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label text="DATA_CONS" HBox.hgrow="ALWAYS">
+                              <Label styleClass="window-subtitle-element" text="DATA_CONS" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

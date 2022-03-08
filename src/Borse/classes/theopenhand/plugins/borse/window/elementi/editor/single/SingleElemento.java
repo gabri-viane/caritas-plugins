@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,6 +27,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import theopenhand.commons.interfaces.graphics.ValueHolder;
@@ -52,6 +54,10 @@ public class SingleElemento extends AnchorPane implements ValueHolder<Prodotto> 
 
     private TextField quantity;
     private final Prodotto p;
+    
+    private final EventHandler<? super MouseEvent> on_select  =(t)->{
+        insertCB.fire();
+    };
 
     public SingleElemento(Prodotto eb) {
         this.p = eb;
@@ -72,6 +78,9 @@ public class SingleElemento extends AnchorPane implements ValueHolder<Prodotto> 
         qtSetup();
         nameLB.setText(p.getNome());
         dimensionLB.setText(p.getNome_confezione());
+        nameLB.setOnMouseClicked(on_select);
+        dimensionLB.setOnMouseClicked(on_select);
+        controlsHB.setOnMouseClicked(on_select);
         insertCB.selectedProperty().addListener((ov, t, t1) -> {
             if (t1) {
                 controlsHB.getChildren().add(quantity);

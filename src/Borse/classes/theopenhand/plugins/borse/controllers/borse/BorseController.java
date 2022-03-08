@@ -15,15 +15,7 @@
  */
 package theopenhand.plugins.borse.controllers.borse;
 
-import java.util.Optional;
-import javafx.scene.layout.AnchorPane;
-import theopenhand.commons.connection.runtime.ConnectionExecutor;
-import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
-import theopenhand.commons.events.graphics.ClickListener;
-import theopenhand.plugins.borse.connector.PluginRegisterBorse;
-import theopenhand.plugins.borse.data.Borsa;
 import theopenhand.plugins.borse.data.holders.BorsaHolder;
-import theopenhand.plugins.borse.window.borse.BorseMain;
 import theopenhand.runtime.templates.ReferenceController;
 
 /**
@@ -32,44 +24,9 @@ import theopenhand.runtime.templates.ReferenceController;
  */
 public class BorseController extends ReferenceController<BorsaHolder> {
 
-    private static BorseMain bp;
-
-    private static BorseMain getBP() {
-        if (bp == null) {
-            bp = new BorseMain();
-        }
-        return bp;
-    }
-
-    @Override
-    public ClickListener getOnAssocButtonClick() {
-        return () -> {
-            Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterBorse.brr, 0, Borsa.class, null);
-            if (eq.isPresent()) {
-                setRH(eq.get());
-            }
-        };
-    }
-
-    @Override
-    public String getAssocButtonName() {
-        return "Mostra borse";
-    }
-
-    @Override
-    public String getGroupName() {
-        return "Borse";
-    }
-
     @Override
     public String getID() {
         return "PLG-BOR-WND";
     }
 
-    @Override
-    public AnchorPane getNode() {
-        getBP();
-        bp.onRefresh(true);
-        return bp;
-    }
 }

@@ -15,15 +15,7 @@
  */
 package theopenhand.plugins.prodotti.controllers.prodotti;
 
-import java.util.Optional;
-import javafx.scene.layout.AnchorPane;
-import theopenhand.commons.connection.runtime.ConnectionExecutor;
-import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
-import theopenhand.commons.events.graphics.ClickListener;
-import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
-import theopenhand.plugins.prodotti.data.Entrata;
 import theopenhand.plugins.prodotti.data.holders.EntrataHolder;
-import theopenhand.plugins.prodotti.window.mag.shower.entrate.EntMain;
 import theopenhand.runtime.templates.ReferenceController;
 
 /**
@@ -33,33 +25,8 @@ import theopenhand.runtime.templates.ReferenceController;
 public class EntrateController extends ReferenceController<EntrataHolder> {
 
     @Override
-    public ClickListener getOnAssocButtonClick() {
-        return () -> {
-            Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Entrata.class, null);
-            if (eq.isPresent()) {
-                setRH(eq.get());
-            }
-        };
-    }
-
-    @Override
-    public String getAssocButtonName() {
-        return "Mostra Entrate";
-    }
-
-    @Override
-    public String getGroupName() {
-        return "Magazzino";
-    }
-
-    @Override
     public String getID() {
         return "PLG-ENT-WND";
-    }
-
-    @Override
-    public AnchorPane getNode() {
-        return new EntMain();
     }
 
 }

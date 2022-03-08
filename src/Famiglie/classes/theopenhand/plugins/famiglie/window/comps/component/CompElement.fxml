@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="600.0" styleClass="anchor-pane" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <center>
@@ -52,8 +52,8 @@
                         <Hyperlink fx:id="editHL" text="Modifica" VBox.vgrow="NEVER" />
                         <VBox alignment="BOTTOM_RIGHT" spacing="5.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="deleteBTN" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Elimina" textFill="RED" VBox.vgrow="NEVER" />
-                              <Button fx:id="updateBTN" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Salva" VBox.vgrow="NEVER" />
+                              <Button fx:id="deleteBTN" cancelButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Elimina" textFill="RED" VBox.vgrow="NEVER" />
+                              <Button fx:id="updateBTN" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Salva" VBox.vgrow="NEVER" />
                            </children>
                            <padding>
                               <Insets right="5.0" />

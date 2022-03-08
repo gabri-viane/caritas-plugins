@@ -17,7 +17,7 @@
          <children>
             <HBox>
                <children>
-                  <BorderPane>
+                  <BorderPane styleClass="anchor-pane-shadowed">
                      <center>
                         <VBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                            <children>

@@ -15,15 +15,7 @@
  */
 package theopenhand.plugins.prodotti.controllers.prodotti;
 
-import java.util.Optional;
-import javafx.scene.layout.AnchorPane;
-import theopenhand.commons.connection.runtime.ConnectionExecutor;
-import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
-import theopenhand.commons.events.graphics.ClickListener;
-import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
-import theopenhand.plugins.prodotti.data.Donatore;
 import theopenhand.plugins.prodotti.data.holders.DonatoreHolder;
-import theopenhand.plugins.prodotti.window.dons.shower.DonShower;
 import theopenhand.runtime.templates.ReferenceController;
 
 /**
@@ -33,32 +25,8 @@ import theopenhand.runtime.templates.ReferenceController;
 public class DonatoriController extends ReferenceController<DonatoreHolder> {
 
     @Override
-    public ClickListener getOnAssocButtonClick() {
-        return () -> {
-            Optional<ResultHolder> eq = ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 0, Donatore.class, null);
-            if (eq.isPresent()) {
-                setRH(eq.get());
-            }
-        };
-    }
-
-    @Override
-    public String getAssocButtonName() {
-        return "Mostra Donatori";
-    }
-
-    @Override
-    public String getGroupName() {
-        return "Entrate";
-    }
-
-    @Override
     public String getID() {
         return "PLG-DON-WND";
     }
 
-    @Override
-    public AnchorPane getNode() {
-        return new DonShower();
-    }
 }

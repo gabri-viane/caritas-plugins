@@ -38,10 +38,11 @@ public class BorseRR extends RuntimeReference {
     private void init() {
         addReferenceController(new BorseController());
         addReferenceController(new ElementiController());
-        
+
         /*InterchangeRequest.register("borsa_picker", () -> {
             return BorPicker.createPicker();
         });*/
+        Ribbon r = new Ribbon(this);
     }
 
 }

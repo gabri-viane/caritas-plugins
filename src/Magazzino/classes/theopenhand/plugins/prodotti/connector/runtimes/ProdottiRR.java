@@ -25,11 +25,6 @@ import theopenhand.plugins.prodotti.controllers.prodotti.EntrateController;
 import theopenhand.plugins.prodotti.controllers.prodotti.MagazzinoController;
 import theopenhand.plugins.prodotti.controllers.prodotti.MotiviController;
 import theopenhand.plugins.prodotti.controllers.prodotti.ProdottiController;
-import theopenhand.plugins.prodotti.controllers.prodotti.secondary.NewConfezioneController;
-import theopenhand.plugins.prodotti.controllers.prodotti.secondary.NewDonatoreController;
-import theopenhand.plugins.prodotti.controllers.prodotti.secondary.NewEntrataController;
-import theopenhand.plugins.prodotti.controllers.prodotti.secondary.NewMotivoController;
-import theopenhand.plugins.prodotti.controllers.prodotti.secondary.NewProdottoController;
 import theopenhand.plugins.prodotti.window.pickers.ConfPicker;
 import theopenhand.plugins.prodotti.window.pickers.DonPicker;
 import theopenhand.plugins.prodotti.window.pickers.ProdPicker;
@@ -56,15 +51,11 @@ public class ProdottiRR extends RuntimeReference {
         addReferenceController(new MotiviController());
         addReferenceController(new EntrateController());
 
-        addReferenceController(new NewProdottoController());
-        addReferenceController(new NewConfezioneController());
-        addReferenceController(new NewDonatoreController());
-        addReferenceController(new NewEntrataController());
-        addReferenceController(new NewMotivoController());
-
         InterchangeRequest.register("prodotto_picker", ProdPicker::createPicker);
         InterchangeRequest.register("confezione_picker", ConfPicker::createPicker);
         InterchangeRequest.register("donatore_picker", DonPicker::createPicker);
+        
+        Ribbon r = new Ribbon(this);
     }
 
 }
