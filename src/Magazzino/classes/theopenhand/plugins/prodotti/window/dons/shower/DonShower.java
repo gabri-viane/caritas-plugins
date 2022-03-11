@@ -44,7 +44,7 @@ import theopenhand.plugins.prodotti.data.holders.DonatoreHolder;
 import theopenhand.plugins.prodotti.window.confs.shower.ConfShower;
 import theopenhand.plugins.prodotti.window.pickers.DonPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *
@@ -162,7 +162,7 @@ public class DonShower extends AnchorPane implements DialogComponent, Refreshabl
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (d != null) {
-                    controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Donatore.class, d).orElse(null));
+                    controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 4, Donatore.class, d).orElse(null));
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
                             "Non è stato selezionato nessun donatore da eliminare.", null);

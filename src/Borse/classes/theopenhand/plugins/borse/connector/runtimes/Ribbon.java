@@ -24,7 +24,7 @@ import theopenhand.plugins.borse.window.borse.add.BorsaRegister;
 import theopenhand.plugins.borse.window.borse.shower.BorsaShower;
 import theopenhand.plugins.borse.window.elementi.editor.ElementiCreator;
 import theopenhand.statics.StaticReferences;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 import theopenhand.window.graphics.ribbon.RibbonFactory;
 import theopenhand.window.graphics.ribbon.elements.RibbonGroup;
 

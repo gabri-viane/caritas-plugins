@@ -45,8 +45,8 @@ import theopenhand.plugins.prodotti.data.holders.ProdottoHolder;
 import theopenhand.plugins.prodotti.window.pickers.DonPicker;
 import theopenhand.plugins.prodotti.window.pickers.ProdPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
-import theopenhand.window.objects.TextFieldBuilder;
+import theopenhand.window.graphics.creators.DialogCreator;
+import theopenhand.window.graphics.creators.ElementCreator;
 
 /**
  *
@@ -103,7 +103,7 @@ public class EntRegister extends AnchorPane implements DialogComponent {
         } catch (IOException ex) {
             Logger.getLogger(EntRegister.class.getName()).log(Level.SEVERE, null, ex);
         }
-        TextFieldBuilder.transformNumericField(qntEntrTB);
+        ElementCreator.transformNumericField(qntEntrTB);
         qntEntrTB.setText("1");
         registerBTN.setOnAction(a -> saveProd());
         selectDonBTN.setOnAction(a -> {
@@ -147,14 +147,14 @@ public class EntRegister extends AnchorPane implements DialogComponent {
         }
     }
 
-    public void selectProd(ElementoMagazzino p){
-        if(p!=null){
+    public void selectProd(ElementoMagazzino p) {
+        if (p != null) {
             pr = DataBuilder.generateProdottoByID(p.getId_prodotto());
             pr.setNome(p.getNome());
             refreshValues();
         }
     }
-    
+
     private void saveProd() {
         String ent_qnt = qntEntrTB.getText();
         LocalDate ld = dateEntDP.getValue();
@@ -177,6 +177,7 @@ public class EntRegister extends AnchorPane implements DialogComponent {
                                 if (after_accept != null) {
                                     after_accept.onClick();
                                 }
+                                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Operazione completata", null, null);
                             } else {
                                 DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati dell'entrata (data arrivo) non validi", null);
                             }

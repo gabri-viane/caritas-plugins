@@ -34,6 +34,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
+import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
 import theopenhand.commons.interfaces.graphics.Refreshable;
@@ -44,13 +45,13 @@ import theopenhand.plugins.prodotti.data.holders.MotivoHolder;
 import theopenhand.plugins.prodotti.window.confs.shower.ConfShower;
 import theopenhand.plugins.prodotti.window.pickers.MotPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *
  * @author gabri
  */
-public class MotShower extends AnchorPane implements DialogComponent,Refreshable {
+public class MotShower extends AnchorPane implements DialogComponent, Refreshable {
 
     @FXML
     private Hyperlink changeMotHL;
@@ -162,7 +163,7 @@ public class MotShower extends AnchorPane implements DialogComponent,Refreshable
         res.ifPresent((b) -> {
             if (b.equals(ButtonType.YES)) {
                 if (m != null) {
-                    controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 5, Motivo.class, m).orElse(null));
+                    controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterProdotti.prr, 4, Motivo.class, m).orElse(null));
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
                             "Non è stato selezionato nessun motivo da eliminare.", null);
@@ -176,15 +177,18 @@ public class MotShower extends AnchorPane implements DialogComponent,Refreshable
         if (m != null) {
             m.setDescrizione(descTF.getText());
             m.setName(nameTF.getText());
-            ConnectionExecutor.getInstance().executeCall(PluginRegisterProdotti.prr, 4, Motivo.class, m).orElse(null);
+            ResultHolder orElse = ConnectionExecutor.getInstance().executeCall(PluginRegisterProdotti.prr, 4, Motivo.class, m).orElse(null);
             onRefresh(true);
             editable(false);
-            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
-                    "I dati del motivo sono stati aggiornati.", null);
-        } else {
-            DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore modifica",
-                    "Non è stato selezionato nessun motivo da modificare.", null);
+            if (orElse != null && orElse.getExecutionException() == null) {
+                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Modifiche salvate",
+                        "I dati del motivo sono stati aggiornati.", null);
+            }
+            return;
         }
+        DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore modifica",
+                "Non è stato selezionato nessun motivo da modificare.", null);
+
     }
 
     public void editable(boolean ed) {

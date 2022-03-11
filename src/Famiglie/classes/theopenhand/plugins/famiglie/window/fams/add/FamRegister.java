@@ -38,8 +38,8 @@ import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
 import theopenhand.plugins.famiglie.connector.PluginRegisterFamiglie;
 import theopenhand.plugins.famiglie.data.Famiglia;
-import theopenhand.window.graphics.dialogs.DialogCreator;
-import theopenhand.window.objects.TextFieldBuilder;
+import theopenhand.window.graphics.creators.DialogCreator;
+import theopenhand.window.graphics.creators.ElementCreator;
 
 /**
  *
@@ -55,6 +55,9 @@ public class FamRegister extends AnchorPane implements DialogComponent {
 
     @FXML
     private TextField surnameDichTB;
+
+    @FXML
+    private TextField codDichTB;
 
     @FXML
     private TextField addressTB;
@@ -98,7 +101,7 @@ public class FamRegister extends AnchorPane implements DialogComponent {
         } catch (IOException ex) {
             Logger.getLogger(FamRegister.class.getName()).log(Level.SEVERE, null, ex);
         }
-        TextFieldBuilder.transformNumericField(idFamTB);
+        ElementCreator.transformNumericField(idFamTB);
         registerBTN.setOnAction(a -> saveFam());
         conControlsVB.disableProperty().bind(enableCon.selectedProperty().not());
     }
@@ -108,11 +111,12 @@ public class FamRegister extends AnchorPane implements DialogComponent {
         String dich_surn = surnameDichTB.getText();
         String con_name = nameConTB.getText();
         String con_surn = surnameConTB.getText();
+        String cod_dich = codDichTB.getText();
         String address = addressTB.getText();
         String phone = phoneTB.getText();
         LocalDate ld = dateConDP.getValue();
         Date d = null;
-        if (softValidText(dich_name) && softValidText(dich_surn)) {
+        if (softValidText(dich_name) && softValidText(dich_surn) && (cod_dich != null ? cod_dich.length() < 46 : true)) {
             if (validText(phone, false) && softValidText(address)) {
                 boolean con_control = enableCon.isSelected();
                 boolean checkd_ = true;
@@ -136,7 +140,7 @@ public class FamRegister extends AnchorPane implements DialogComponent {
                 if (checkd_) {
                     long id = getIDFam();
                     if (id > 0) {
-                        Famiglia fam = new Famiglia(id, dich_name, dich_surn, address, phone, con_name, con_surn, d);
+                        Famiglia fam = new Famiglia(id, dich_name, dich_surn, address, phone, con_name, con_surn, d, cod_dich);
                         ConnectionExecutor.getInstance().executeCall(PluginRegisterFamiglie.frr, 1, Famiglia.class, fam);
                         if (after_accept != null) {
                             after_accept.onClick();
@@ -190,6 +194,7 @@ public class FamRegister extends AnchorPane implements DialogComponent {
         idFamTB.clear();
         nameConTB.clear();
         surnameConTB.clear();
+        codDichTB.clear();
         nameDichTB.clear();
         surnameDichTB.clear();
         addressTB.clear();

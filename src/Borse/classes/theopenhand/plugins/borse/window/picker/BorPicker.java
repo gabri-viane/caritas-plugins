@@ -23,7 +23,7 @@ import theopenhand.plugins.borse.data.Borsa;
 import theopenhand.plugins.borse.data.holders.BorsaHolder;
 import theopenhand.plugins.borse.window.borse.add.BorsaRegister;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *

@@ -27,7 +27,7 @@
                         <Hyperlink fx:id="addHL" maxWidth="1.7976931348623157E308" text="Aggiungi" VBox.vgrow="NEVER" />
                         <VBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Hyperlink fx:id="closeHL" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Chiudi" VBox.vgrow="NEVER" />
+                              <Hyperlink fx:id="closeHL" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" styleClass="quit" text="Chiudi" VBox.vgrow="NEVER" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" right="5.0" />

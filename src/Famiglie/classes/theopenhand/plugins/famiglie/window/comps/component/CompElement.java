@@ -47,7 +47,7 @@ import theopenhand.plugins.famiglie.data.Parentela;
 import theopenhand.plugins.famiglie.data.holders.ParentelaHolder;
 import theopenhand.plugins.famiglie.window.pickers.ParPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *

@@ -39,9 +39,9 @@ import theopenhand.plugins.prodotti.window.confs.shower.ConfShower;
 import theopenhand.plugins.prodotti.window.mag.add.entrate.EntRegister;
 import theopenhand.plugins.prodotti.window.prods.add.ProdRegister;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
-import theopenhand.window.graphics.dialogs.ActionCreator;
-import theopenhand.window.graphics.dialogs.DialogCreator;
-import theopenhand.window.graphics.dialogs.ElementCreator;
+import theopenhand.window.graphics.creators.ActionCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
+import theopenhand.window.graphics.creators.ElementCreator;
 import theopenhand.window.graphics.inner.DisplayTableValue;
 
 /**

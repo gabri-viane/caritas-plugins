@@ -40,7 +40,7 @@ import theopenhand.plugins.prodotti.data.Prodotto;
 import theopenhand.plugins.prodotti.data.holders.ConfezioneHolder;
 import theopenhand.plugins.prodotti.window.pickers.ConfPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *
@@ -74,7 +74,7 @@ public class ProdRegister extends AnchorPane implements DialogComponent {
 
     private Prodotto p;
     private Confezione c;
-    
+
     private boolean creator_enabled = false;
 
     public ProdRegister() {
@@ -124,7 +124,7 @@ public class ProdRegister extends AnchorPane implements DialogComponent {
                 DialogCreator.showAlert(Alert.AlertType.WARNING, "Attenzione!", "Se non si registra il prodotto a magazzino non si potrà tenere conto nel registro entrate.", null);
             }
         });
-        if(creator_enabled){
+        if (creator_enabled) {
             refreshValues();
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Cambiare dati", "Per continuare è necessario cambiare la confezione selezionata.", null);
         }
@@ -145,6 +145,7 @@ public class ProdRegister extends AnchorPane implements DialogComponent {
                     if (after_accept != null) {
                         after_accept.onClick();
                     }
+                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Operazione completata", null, null);
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Dati della prodotto (confezione) non validi", null);
                 }

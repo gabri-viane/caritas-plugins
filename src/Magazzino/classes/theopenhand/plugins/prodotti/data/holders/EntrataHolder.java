@@ -43,7 +43,7 @@ public class EntrataHolder extends ResultHolderImpl<Entrata> {
      * nel database nella stored procedure.
      */
     @Query(queryID = 4, bindedClass = Entrata.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true, outPrams = {}, hasResult = false)
-    public static final String EDIT_PROCEDURE = "CALL editEntrata(%N0, %N1, %N2, %N3, %N4, %N5, %N6, %N7);";
+    public static final String EDIT_PROCEDURE = "CALL editEntrata(%N0, %N3, %N4);";
 
     @Query(queryID = 5, bindedClass = Entrata.class, hasBindedParams = true, isUpdate = true, hasResult = false)
     public static final String DELETE_QUERY = "DELETE FROM Entrate WHERE %N0 = %V0;";

@@ -23,7 +23,7 @@ import theopenhand.plugins.prodotti.data.Entrata;
 import theopenhand.plugins.prodotti.data.holders.EntrataHolder;
 import theopenhand.plugins.prodotti.window.mag.add.entrate.EntRegister;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *

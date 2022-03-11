@@ -66,10 +66,9 @@ import theopenhand.plugins.famiglie.window.pickers.FamPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
 import theopenhand.window.graphics.commons.ValueDialog;
-import theopenhand.window.graphics.dialogs.DialogCreator;
-import theopenhand.window.graphics.dialogs.ElementCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
+import theopenhand.window.graphics.creators.ElementCreator;
 import theopenhand.window.graphics.inner.DisplayTableValue;
-import theopenhand.window.objects.TextFieldBuilder;
 
 /**
  *
@@ -163,7 +162,7 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
         } catch (IOException ex) {
             Logger.getLogger(BorsaShower.class.getName()).log(Level.SEVERE, null, ex);
         }
-        TextFieldBuilder.transformNumericField(idTB);
+        ElementCreator.transformNumericField(idTB);
         table = ElementCreator.generateTable(ElementoBorsa.class);
         generatePopupControls();
         clearAll();
@@ -255,7 +254,7 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
                 controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterBorse.brr, 3, Borsa.class, b).orElse(null));
             }
             b = controller.getRH().find(b.getID().longValue());
-            f = new Famiglia(b.getId_fam().longValue(), null, null, null, null, null, null, null);
+            f = new Famiglia(b.getId_fam().longValue(), null, null, null, null, null, null, null, null);
             if (b != null) {
                 clearAll();
                 setData(b);
@@ -423,7 +422,7 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
 
     public void showEditQt(ElementoBorsa eb) {
         if (eb != null) {
-            TextField tf = TextFieldBuilder.buildNumericField();
+            TextField tf = ElementCreator.buildNumericField();
             tf.setPrefWidth(80);
             tf.setText(eb.getTot().toString());
             ValueDialog vd = new ValueDialog("Inserisci quantità", "Cambia la quantità dell'elemento della borsa.", tf);

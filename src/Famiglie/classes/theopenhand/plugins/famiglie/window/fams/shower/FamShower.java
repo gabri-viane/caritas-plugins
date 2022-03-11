@@ -48,8 +48,8 @@ import theopenhand.plugins.famiglie.data.holders.FamigliaHolder;
 import theopenhand.plugins.famiglie.window.comps.component.ShortCompElement;
 import theopenhand.plugins.famiglie.window.pickers.FamPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
-import theopenhand.window.graphics.dialogs.ElementCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
+import theopenhand.window.graphics.creators.ElementCreator;
 import theopenhand.window.graphics.inner.DisplayTableValue;
 
 /**
@@ -84,6 +84,9 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
 
     @FXML
     private TextField dichSurnTB;
+
+    @FXML
+    private TextField dichCodTB;
 
     @FXML
     private Hyperlink editFamHL;
@@ -231,6 +234,7 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
         if (f != null) {
             f.setCogn_dic(dichSurnTB.getText());
             f.setNome_dic(dichNameTB.getText());
+            f.setCodice_fiscale(dichCodTB.getText());
             f.setIndirizzo(addressTb.getText());
             f.setTelefono(phoneTB.getText());
             ConnectionExecutor.getInstance().executeCall(PluginRegisterFamiglie.frr, 4, Famiglia.class, f).orElse(null);
@@ -248,6 +252,7 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
         editing = ed;
         dichNameTB.setEditable(ed);
         dichSurnTB.setEditable(ed);
+        dichCodTB.setEditable(ed);
         addressTb.setEditable(ed);
         phoneTB.setEditable(ed);
         saveModBTN.setDisable(!ed);
@@ -266,6 +271,7 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
         idFamLBL.setText(null);
         dichNameTB.setText(null);
         dichSurnTB.setText(null);
+        dichCodTB.setText(null);
         addressTb.setText(null);
         phoneTB.setText(null);
         componentsVB.getChildren().clear();
@@ -283,6 +289,7 @@ public class FamShower extends AnchorPane implements DialogComponent, ValueHolde
             idFamLBL.setText("" + fam.getIdfam());
             dichNameTB.setText(fam.getNome_dic());
             dichSurnTB.setText(fam.getCogn_dic());
+            dichCodTB.setText(fam.getCodice_fiscale());
             addressTb.setText(fam.getIndirizzo());
             phoneTB.setText(fam.getTelefono());
             controller2.setRH(

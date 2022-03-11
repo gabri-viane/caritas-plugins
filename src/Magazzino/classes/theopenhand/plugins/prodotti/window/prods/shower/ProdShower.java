@@ -50,7 +50,7 @@ import theopenhand.plugins.prodotti.window.pickers.ConfPicker;
 import theopenhand.plugins.prodotti.window.pickers.ProdPicker;
 import theopenhand.plugins.prodotti.window.prods.add.ProdRegister;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *

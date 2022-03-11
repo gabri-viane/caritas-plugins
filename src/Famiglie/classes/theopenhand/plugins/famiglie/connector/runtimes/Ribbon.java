@@ -34,7 +34,7 @@ import theopenhand.plugins.famiglie.window.fams.shower.FamShower;
 import theopenhand.plugins.famiglie.window.pickers.FamPicker;
 import theopenhand.statics.StaticReferences;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 import theopenhand.window.graphics.ribbon.RibbonFactory;
 import theopenhand.window.graphics.ribbon.elements.RibbonGroup;
 

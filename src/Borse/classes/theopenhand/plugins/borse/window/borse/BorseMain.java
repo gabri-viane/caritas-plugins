@@ -36,13 +36,13 @@ import theopenhand.plugins.borse.connector.runtimes.PluginSettings;
 import theopenhand.plugins.borse.controllers.borse.BorseController;
 import theopenhand.plugins.borse.data.Borsa;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
-import theopenhand.window.graphics.dialogs.ElementCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
+import theopenhand.window.graphics.creators.ElementCreator;
 import theopenhand.window.graphics.inner.DisplayTableValue;
 import theopenhand.plugins.borse.window.borse.add.BorsaRegister;
 import theopenhand.plugins.borse.window.borse.shower.BorsaShower;
 import theopenhand.statics.StaticReferences;
-import theopenhand.window.graphics.dialogs.ActionCreator;
+import theopenhand.window.graphics.creators.ActionCreator;
 
 /**
  *

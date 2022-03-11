@@ -23,7 +23,7 @@ import theopenhand.plugins.famiglie.data.Famiglia;
 import theopenhand.plugins.famiglie.data.holders.FamigliaHolder;
 import theopenhand.plugins.famiglie.window.fams.add.FamRegister;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *

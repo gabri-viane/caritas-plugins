@@ -32,10 +32,9 @@ import theopenhand.commons.connection.runtime.ConnectionExecutor;
 import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.DialogComponent;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
-import theopenhand.plugins.prodotti.data.Confezione;
 import theopenhand.plugins.prodotti.data.Donatore;
 import theopenhand.plugins.prodotti.window.confs.add.ConfRegister;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *
@@ -82,6 +81,7 @@ public class DonRegister extends AnchorPane implements DialogComponent {
             if (after_accept != null) {
                 after_accept.onClick();
             }
+            DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Operazione completata", null, null);
         } else {
             DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Nome o descrizione immessi non validi.", null);
         }

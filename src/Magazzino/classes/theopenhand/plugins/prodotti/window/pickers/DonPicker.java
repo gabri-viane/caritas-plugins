@@ -23,7 +23,7 @@ import theopenhand.plugins.prodotti.data.Donatore;
 import theopenhand.plugins.prodotti.data.holders.DonatoreHolder;
 import theopenhand.plugins.prodotti.window.dons.add.DonRegister;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *

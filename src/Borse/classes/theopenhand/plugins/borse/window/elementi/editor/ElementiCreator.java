@@ -48,7 +48,7 @@ import theopenhand.plugins.borse.window.elementi.editor.single.SingleElemento;
 import theopenhand.plugins.borse.window.picker.BorPicker;
 import theopenhand.plugins.prodotti.controllers.prodotti.ProdottiController;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *

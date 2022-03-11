@@ -43,7 +43,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="(Obbligatorio)" textFill="RED" HBox.hgrow="ALWAYS">
+                                    <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" styleClass="warning" text="(Obbligatorio)" textFill="RED" HBox.hgrow="ALWAYS">
                                        <padding>
                                           <Insets right="10.0" />
                                        </padding>

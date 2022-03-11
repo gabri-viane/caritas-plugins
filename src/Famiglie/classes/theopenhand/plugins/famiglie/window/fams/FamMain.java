@@ -39,9 +39,9 @@ import theopenhand.plugins.famiglie.window.fams.add.FamRegister;
 import theopenhand.plugins.famiglie.window.fams.shower.FamShower;
 import theopenhand.statics.StaticReferences;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
-import theopenhand.window.graphics.dialogs.ActionCreator;
-import theopenhand.window.graphics.dialogs.DialogCreator;
-import theopenhand.window.graphics.dialogs.ElementCreator;
+import theopenhand.window.graphics.creators.ActionCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
+import theopenhand.window.graphics.creators.ElementCreator;
 import theopenhand.window.graphics.inner.DisplayTableValue;
 
 /**

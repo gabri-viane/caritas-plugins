@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" styleClass="anchor-pane" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane layoutX="184.0" layoutY="67.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -53,18 +53,21 @@
                               </Label>
                               <GridPane>
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="NEVER" maxWidth="62.0" minWidth="62.0" prefWidth="62.0" />
+                                  <ColumnConstraints hgrow="NEVER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
                                   <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="900.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="NEVER" />
                                   <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="NEVER" />
+                                    <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="NEVER" />
                                 </rowConstraints>
                                  <children>
                                     <Label text="Nome:" />
                                     <Label text="Cognome:" GridPane.rowIndex="1" />
+                                    <Label text="Codice fiscale:" GridPane.rowIndex="2" />
                                     <TextField fx:id="dichNameTB" prefWidth="400.0" GridPane.columnIndex="1" />
                                     <TextField fx:id="dichSurnTB" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="dichCodTB" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                                  <padding>
                                     <Insets left="5.0" right="10.0" />

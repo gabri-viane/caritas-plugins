@@ -33,7 +33,7 @@ import javafx.scene.layout.HBox;
 import theopenhand.commons.interfaces.graphics.ValueHolder;
 import theopenhand.plugins.borse.window.borse.BorseMain;
 import theopenhand.plugins.prodotti.data.Prodotto;
-import theopenhand.window.objects.TextFieldBuilder;
+import theopenhand.window.graphics.creators.ElementCreator;
 
 /**
  *
@@ -91,7 +91,7 @@ public class SingleElemento extends AnchorPane implements ValueHolder<Prodotto> 
     }
 
     private void qtSetup() {
-        quantity = TextFieldBuilder.buildNumericField();
+        quantity = ElementCreator.buildNumericField();
         quantity.setTooltip(new Tooltip("Quantità da inserire"));
         quantity.setPrefWidth(80);
         quantity.setText("1");

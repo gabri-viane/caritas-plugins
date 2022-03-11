@@ -32,7 +32,7 @@ import theopenhand.plugins.prodotti.window.prods.ProdMain;
 import theopenhand.plugins.prodotti.window.prods.add.ProdRegister;
 import theopenhand.plugins.prodotti.window.prods.shower.ProdShower;
 import theopenhand.statics.StaticReferences;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 import theopenhand.window.graphics.ribbon.RibbonFactory;
 import theopenhand.window.graphics.ribbon.elements.RibbonGroup;
 
@@ -58,6 +58,7 @@ public class Ribbon {
 
     private void createRibbon() {
         RibbonGroup reg_grp = RibbonFactory.createGroup(rr, "Crea", "Prodotti");
+        RibbonGroup reg_grp_mag= RibbonFactory.createGroup(rr, "Crea", "Magazzino");
         RibbonGroup show_prod_grp = RibbonFactory.createGroup(rr, "Visualizza", "Prodotti");
         RibbonGroup show_mag_grp = RibbonFactory.createGroup(rr, "Visualizza", "Magazzino");
         RibbonGroup hand_grp = RibbonFactory.createGroup(rr, "Gestisci", "Prodotti");
@@ -86,7 +87,7 @@ public class Ribbon {
         v2.setSpacing(5);
         v2.setPrefHeight(Region.USE_COMPUTED_SIZE);
         v2.setMinHeight(Region.USE_COMPUTED_SIZE);
-        show_mag_grp.addNode(v2);
+        reg_grp_mag.addNode(v2);
 
         //Mostra
         Button show_prod = new Button("Mostra prodotto");

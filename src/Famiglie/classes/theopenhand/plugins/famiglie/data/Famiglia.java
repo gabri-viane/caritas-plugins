@@ -41,12 +41,12 @@ public class Famiglia implements BindableResult, TableAssoc {
     @QueryCustom(displayName = "Cognome dich.", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "CDic", fieldID = 5)
     private String cogn_dic;
-    
+
     @QueryCustom(displayName = "Indirizzo", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @ColumnData(Title = "Indirizzo", order = 2)
     @QueryField(name = "Indirizzo", fieldID = 6)
     private String indirizzo;
-    
+
     @QueryCustom(displayName = "Telefono", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @QueryField(name = "Telefono", fieldID = 7)
     private String telefono;
@@ -66,6 +66,11 @@ public class Famiglia implements BindableResult, TableAssoc {
     @QueryField(name = "IDCon", fieldID = 12, registerOut = true)
     private BigInteger id_coniuge;
 
+    @QueryCustom(displayName = "Codice Fiscale", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
+    @ColumnData(Title = "Codice Fiscale", order = 3)
+    @QueryField(name = "CodiceF", fieldID = 13)
+    private String codice_fiscale;
+
     @Override
     public BigInteger getID() {
         return id;
@@ -74,7 +79,7 @@ public class Famiglia implements BindableResult, TableAssoc {
     public Famiglia() {
     }
 
-    public Famiglia(long idfam, String nome_dic, String cogn_dic, String indirizzo, String telefono, String nome_con, String cogn_con, Date d_nascita_con) {
+    public Famiglia(long idfam, String nome_dic, String cogn_dic, String indirizzo, String telefono, String nome_con, String cogn_con, Date d_nascita_con, String codicef) {
         this.id = null;
         this.idfam = BigInteger.valueOf(idfam);
         this.nome_dic = nome_dic;
@@ -84,6 +89,7 @@ public class Famiglia implements BindableResult, TableAssoc {
         this.nome_con = nome_con;
         this.cogn_con = cogn_con;
         this.d_nascita_con = d_nascita_con;
+        this.codice_fiscale = codicef;
     }
 
     public Long getId() {
@@ -134,6 +140,10 @@ public class Famiglia implements BindableResult, TableAssoc {
         return id_coniuge.longValue();
     }
 
+    public String getCodice_fiscale() {
+        return codice_fiscale;
+    }
+
     public void setNome_dic(String nome_dic) {
         this.nome_dic = nome_dic;
     }
@@ -148,6 +158,10 @@ public class Famiglia implements BindableResult, TableAssoc {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public void setCodice_fiscale(String codice_fiscale) {
+        this.codice_fiscale = codice_fiscale;
     }
 
     @Override

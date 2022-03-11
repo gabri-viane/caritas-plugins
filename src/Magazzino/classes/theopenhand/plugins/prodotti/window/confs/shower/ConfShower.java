@@ -42,7 +42,7 @@ import theopenhand.plugins.prodotti.data.Confezione;
 import theopenhand.plugins.prodotti.data.holders.ConfezioneHolder;
 import theopenhand.plugins.prodotti.window.pickers.ConfPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *

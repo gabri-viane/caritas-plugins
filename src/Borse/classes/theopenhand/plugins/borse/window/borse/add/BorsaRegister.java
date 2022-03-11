@@ -40,7 +40,7 @@ import theopenhand.plugins.famiglie.data.Famiglia;
 import theopenhand.plugins.famiglie.data.holders.FamigliaHolder;
 import theopenhand.plugins.famiglie.window.pickers.FamPicker;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
-import theopenhand.window.graphics.dialogs.DialogCreator;
+import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
  *
@@ -129,6 +129,7 @@ public class BorsaRegister extends AnchorPane implements DialogComponent {
                     if (after_accept != null) {
                         after_accept.onClick();
                     }
+                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Operazione completata", null, null);
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una data di consegna valida.", null);
                 }
