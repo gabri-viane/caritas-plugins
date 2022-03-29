@@ -99,6 +99,9 @@ public class EntMain extends AnchorPane implements Refreshable {
         } catch (IOException ex) {
             Logger.getLogger(ConfShower.class.getName()).log(Level.SEVERE, null, ex);
         }
+        showEntrDate.setVisited(false);
+        showEntrDon.setVisited(false);
+        showEntrProd.setVisited(false);
         regEntrataHL.setOnAction(a -> {
             EntRegister pr = new EntRegister();
             DialogCreator.showDialog(pr, () -> {

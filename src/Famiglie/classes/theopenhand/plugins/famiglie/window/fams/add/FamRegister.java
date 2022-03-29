@@ -114,7 +114,7 @@ public class FamRegister extends AnchorPane implements DialogComponent {
         String cod_dich = codDichTB.getText();
         String address = addressTB.getText();
         String phone = phoneTB.getText();
-        LocalDate ld = dateConDP.getValue();
+        LocalDate ld = dateConDP.getConverter().fromString(dateConDP.getEditor().getText());
         Date d = null;
         if (softValidText(dich_name) && softValidText(dich_surn) && (cod_dich != null ? cod_dich.length() < 46 : true)) {
             if (validText(phone, false) && softValidText(address)) {
@@ -145,6 +145,8 @@ public class FamRegister extends AnchorPane implements DialogComponent {
                         if (after_accept != null) {
                             after_accept.onClick();
                         }
+                        DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Operazione completata", null, null);
+                        clearFields();
                     } else {
                         DialogCreator.showAlert(Alert.AlertType.ERROR, "Errori registrazione", "La famiglia non è stata registrata.", null);
                     }
@@ -187,7 +189,6 @@ public class FamRegister extends AnchorPane implements DialogComponent {
     }
 
     ClickListener after_accept = () -> {
-        clearFields();
     };
 
     private void clearFields() {

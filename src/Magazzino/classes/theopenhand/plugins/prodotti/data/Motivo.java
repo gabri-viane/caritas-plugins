@@ -16,6 +16,7 @@
 package theopenhand.plugins.prodotti.data;
 
 import java.math.BigInteger;
+import java.util.Objects;
 import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
 import theopenhand.commons.connection.runtime.custom.ClauseType;
@@ -74,6 +75,22 @@ public class Motivo implements BindableResult {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Motivo m) {
+            return m.id != null & id != null ? id.longValue() == m.id.longValue() : false;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.name);
+        return hash;
     }
 
 }

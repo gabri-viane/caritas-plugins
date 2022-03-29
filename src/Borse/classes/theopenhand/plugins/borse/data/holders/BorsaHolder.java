@@ -37,12 +37,12 @@ public class BorsaHolder extends ResultHolderImpl<Borsa> {
     @Query(queryID = 4, bindedClass = Borsa.class, hasBindedParams = false, isStoredProcedureCall = true, isUpdate = true)
     public static final String EDIT_PROCEDURE = "CALL editBorsa(%N0, %N1, %N2, %N3, %N4);";
 
-    @Query(queryID = 5, bindedClass = Borsa.class, hasBindedParams = true, isUpdate = true, hasResult = false)
-    public static final String DELETE_QUERY = "DELETE FROM Borse WHERE %N0 = %V0;";
+    @Query(queryID = 5, bindedClass = Borsa.class, hasBindedParams = false, isStoredProcedureCall = true, isUpdate = true, hasResult = false)
+    public static final String DELETE_PROCEDURE = "CALL removeBorsa(%N0);";
 
     @Query(queryID = 6, bindedClass = Borsa.class, hasBindedParams = true, hasResult = true)
     public static final String SELECT_QUERY_COMPLETE_FAMIGLIA = "SELECT * FROM getBorseCompleteF WHERE %N1 = %V1";
-    
+
     @Query(queryID = 7, bindedClass = Borsa.class, hasBindedParams = true, hasResult = true)
     public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getBorseCompleteF";
 

@@ -17,6 +17,7 @@ package theopenhand.plugins.borse.data;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Objects;
 import theopenhand.commons.DataUtils;
 import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
@@ -126,6 +127,22 @@ public class Borsa implements BindableResult, TableAssoc {
     @Override
     public String toString() {
         return dichiarante + " - " + DataUtils.format(consegna);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Borsa b) {
+            return b.id != null & id != null ? id.longValue() == b.id.longValue() : false;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.id_fam);
+        return hash;
     }
 
 }

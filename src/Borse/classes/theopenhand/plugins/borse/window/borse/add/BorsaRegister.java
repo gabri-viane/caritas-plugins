@@ -92,7 +92,7 @@ public class BorsaRegister extends AnchorPane implements DialogComponent {
         } catch (IOException ex) {
             Logger.getLogger(BorsaRegister.class.getName()).log(Level.SEVERE, null, ex);
         }
-        registerBTN.setOnAction(a -> saveProd());
+        registerBTN.setOnAction(a -> saveBorsa());
         selectFamBTN.setOnAction(a -> {
             PickerDialogCNTRL<Famiglia, FamigliaHolder> ppcntrl = FamPicker.createPicker();
             Stage s = DialogCreator.showDialog(ppcntrl, ppcntrl.getPrefWidth(), ppcntrl.getPrefHeight(), "Seleziona famiglia");
@@ -117,21 +117,26 @@ public class BorsaRegister extends AnchorPane implements DialogComponent {
         }
     }
 
-    private void saveProd() {
+    private void saveBorsa() {
         String note = noteTA.getText();
-        LocalDate ld = dateConsDP.getValue();
+        LocalDate ld = dateConsDP.getConverter().fromString(dateConsDP.getEditor().getText());
         if (f != null) {
             Long idfam = f.getIdfam();
             if (idfam != null && idfam > -1) {
-                if (ld != null) {
+                if (ld != null && ld.isAfter(LocalDate.now().minusDays(1))) {
                     b = new Borsa(idfam, DataUtils.toDate(ld), note, false);
                     ConnectionExecutor.getInstance().executeCall(PluginRegisterBorse.brr, 1, Borsa.class, b);
-                    if (after_accept != null) {
-                        after_accept.onClick();
+                    if (b.getID() == null || b.getID().longValue() < 0) {
+                        DialogCreator.showAlert(Alert.AlertType.WARNING, "Operazione fallita", null, null);
+                    } else {
+                        if (after_accept != null) {
+                            after_accept.onClick();
+                        }
+                        DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Operazione completata", null, null);
+                        clearFields();
                     }
-                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Operazione completata", null, null);
                 } else {
-                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una data di consegna valida.", null);
+                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una data di consegna valida.\n(Ammessa solo odierna o futura)", null);
                 }
             } else {
                 DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Dati errati", "Selezionare una famiglia valida.", null);
@@ -148,12 +153,12 @@ public class BorsaRegister extends AnchorPane implements DialogComponent {
     }
 
     ClickListener after_accept = () -> {
-        clearFields();
     };
 
     private void clearFields() {
         selectFamBTN.setText("Seleziona famiglia");
         dateConsDP.setValue(LocalDate.now());
+        noteTA.setText("");
         f = null;
         b = null;
     }
@@ -163,16 +168,12 @@ public class BorsaRegister extends AnchorPane implements DialogComponent {
             selectFamBTN.setText(f.getDichiarante());
         }
         if (b != null) {
-            /*qntEntrTB.setText("" + b.getTotale());
-            dateEntDP.setValue(DataUtils.toLocalDate(b.getData_arrivo()));
-            if (dn == null) {
-                selectDonBTN.setText(b.getNome_donatore());
-                dn = DataBuilder.generateDonatoreByID(b.getId_donatore());
-            }
+            dateConsDP.setValue(DataUtils.toLocalDate(b.getConsegna()));
+            noteTA.setText(b.getNote());
             if (f == null) {
-                selectProdBTN.setText(b.getNome_prodotto());
-                f = DataBuilder.generateProdottoByID(b.getId_prodotto());
-            }*/
+                selectFamBTN.setText(b.getDichiarante());
+                f = DataBuilder.generateFamigliaByID(b.getId_fam());
+            }
         }
     }
 

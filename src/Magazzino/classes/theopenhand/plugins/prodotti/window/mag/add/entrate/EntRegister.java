@@ -157,7 +157,7 @@ public class EntRegister extends AnchorPane implements DialogComponent {
 
     private void saveProd() {
         String ent_qnt = qntEntrTB.getText();
-        LocalDate ld = dateEntDP.getValue();
+        LocalDate ld = dateEntDP.getConverter().fromString(dateEntDP.getEditor().getText());
         if (pr != null) {
             if (dn != null) {
                 BigInteger iddon = dn.getId();

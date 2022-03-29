@@ -228,7 +228,7 @@ public class CompElement extends AnchorPane implements ValueHolder<Componente>, 
         if (c != null) {
             String con_name = nameTF.getText();
             String con_surn = surnameTf.getText();
-            LocalDate ld = bornDP.getValue();
+            LocalDate ld = bornDP.getConverter().fromString(bornDP.getEditor().getText());
             BigInteger id = c.getId_parentela();
             if (DataUtils.softValidText(con_surn) && DataUtils.softValidText(con_name)) {
                 if (ld != null && ld.isBefore(LocalDate.now())) {

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.BooleanProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,30 +41,30 @@ import theopenhand.window.graphics.creators.ElementCreator;
  * @author gabri
  */
 public class SingleElemento extends AnchorPane implements ValueHolder<Prodotto> {
-
+    
     @FXML
     private HBox controlsHB;
-
+    
     @FXML
     private Label dimensionLB;
-
+    
     @FXML
     private CheckBox insertCB;
     @FXML
     private Label nameLB;
-
+    
     private TextField quantity;
     private final Prodotto p;
     
-    private final EventHandler<? super MouseEvent> on_select  =(t)->{
+    private final EventHandler<? super MouseEvent> on_select = (t) -> {
         insertCB.fire();
     };
-
+    
     public SingleElemento(Prodotto eb) {
         this.p = eb;
         init();
     }
-
+    
     private void init() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -76,6 +77,7 @@ public class SingleElemento extends AnchorPane implements ValueHolder<Prodotto> 
             Logger.getLogger(BorseMain.class.getName()).log(Level.SEVERE, null, ex);
         }
         qtSetup();
+        setOnMouseClicked(on_select);
         nameLB.setText(p.getNome());
         dimensionLB.setText(p.getNome_confezione());
         nameLB.setOnMouseClicked(on_select);
@@ -89,7 +91,7 @@ public class SingleElemento extends AnchorPane implements ValueHolder<Prodotto> 
             }
         });
     }
-
+    
     private void qtSetup() {
         quantity = ElementCreator.buildNumericField();
         quantity.setTooltip(new Tooltip("Quantità da inserire"));
@@ -104,23 +106,31 @@ public class SingleElemento extends AnchorPane implements ValueHolder<Prodotto> 
             }
         });
     }
-
+    
+    public BooleanProperty getSelectionProperty() {
+        return insertCB.selectedProperty();
+    }
+    
     public boolean isSelected() {
         return insertCB.isSelected();
     }
-
+    
     public int getQuantity() {
         return Integer.parseInt(quantity.getText());
     }
-
+    
+    public void setQuantity(int qnt) {
+        quantity.setText("" + qnt);
+    }
+    
     @Override
     public Prodotto getValue() {
         return p;
     }
-
+    
     @Override
     public Parent getParentNode() {
         return null;
     }
-
+    
 }

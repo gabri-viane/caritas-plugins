@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -43,11 +45,16 @@ import theopenhand.plugins.borse.connector.runtimes.PluginSettings;
 import theopenhand.plugins.borse.data.Borsa;
 import theopenhand.plugins.borse.data.ElementoBorsa;
 import theopenhand.plugins.borse.data.holders.BorsaHolder;
+import theopenhand.plugins.borse.data.savable.SavableBorsa;
+import theopenhand.plugins.borse.data.savable.SavableElement;
 import theopenhand.plugins.borse.window.borse.BorseMain;
 import theopenhand.plugins.borse.window.elementi.editor.single.SingleElemento;
 import theopenhand.plugins.borse.window.picker.BorPicker;
 import theopenhand.plugins.prodotti.controllers.prodotti.ProdottiController;
+import theopenhand.runtime.data.DataElement;
+import theopenhand.runtime.data.SubscribeData;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
+import theopenhand.window.graphics.commons.ValueDialog;
 import theopenhand.window.graphics.creators.DialogCreator;
 
 /**
@@ -75,11 +82,19 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
     private Hyperlink refreshHL;
 
     @FXML
+    private Hyperlink clearSelectionHL;
+
+    @FXML
     private Hyperlink saveToBorsaHL;
 
     private final ProdottiController controller;
 
+    private final HashMap<BigInteger, Integer> selections;
+
+    private boolean save_elems = true;
+
     public ElementiCreator() {
+        selections = new HashMap<>();
         controller = SharedReferenceQuery.getController(ProdottiController.class);
         init();
     }
@@ -95,6 +110,16 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
         } catch (IOException ex) {
             Logger.getLogger(BorseMain.class.getName()).log(Level.SEVERE, null, ex);
         }
+        clearSelectionHL.setOnAction(a -> {
+            save_elems = false;
+            onRefresh(true);
+            save_elems = true;
+            clearSelectionHL.setVisited(false);
+        });
+        exportDataHL.setOnAction(a -> {
+            exportData();
+            exportDataHL.setVisited(false);
+        });
         refreshHL.setOnAction(a -> {
             onRefresh(true);
             refreshHL.setVisited(false);
@@ -104,12 +129,7 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
                     null,
                     SharedReferenceQuery.EXECUTION_REQUEST.CUSTOM_QUERY,
                     ((args) -> {
-                        ObservableList<Node> els = containerFP.getChildren();
-                        els.clear();
-                        controller.getRH().getList().stream().forEachOrdered(e -> {
-                            SingleElemento se = new SingleElemento(e);
-                            els.add(se);
-                        });
+                        generateElements();
                         return null;
                     })
             );
@@ -149,28 +169,64 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
                     });
         }
         if (controller.getRH() != null) {
-            ObservableList<Node> els = containerFP.getChildren();
-            els.clear();
-            controller.getRH().getList().stream().forEachOrdered(e -> {
-                SingleElemento se = new SingleElemento(e);
-                els.add(se);
-            });
+            generateElements();
         }
     }
 
-    public ArrayList<ElementoBorsa> getSelection(Borsa b) {
-        ArrayList<ElementoBorsa> elementi = new ArrayList<>();
+    private void generateElements() {
+        if (save_elems) {
+            saveSelection();
+        }
+        ObservableList<Node> els = containerFP.getChildren();
+        els.clear();
+        controller.getRH().getList().stream().forEachOrdered(e -> {
+            SingleElemento se = new SingleElemento(e);
+            if (selections.containsKey(e.getID())) {
+                se.getSelectionProperty().setValue(true);
+                se.setQuantity(selections.get(e.getID()));
+            }
+            els.add(se);
+        });
+    }
+
+    private void saveSelection() {
+        selections.clear();
         ObservableList<Node> els = containerFP.getChildren();
         els.forEach(el -> {
             SingleElemento se = (SingleElemento) el;
             if (se.isSelected()) {
-                ElementoBorsa eb = ElementoBorsa.create(se.getValue().getId(), BigInteger.valueOf(se.getQuantity()));
-                eb.setIdborsa(b.getID());
-                eb.setSubtr(PluginSettings.remove_qt.getValue());
-                elementi.add(eb);
+                selections.put(se.getValue().getID(), se.getQuantity());
             }
         });
+    }
+
+    public ArrayList<ElementoBorsa> getSelection(Borsa b) {
+        ArrayList<ElementoBorsa> elementi = new ArrayList<>();
+        selections.forEach((id, value) -> {
+            ElementoBorsa eb = ElementoBorsa.create(id, BigInteger.valueOf(value));
+            eb.setIdborsa(b.getID());
+            eb.setSubtr(PluginSettings.remove_qt.getValue());
+            elementi.add(eb);
+        });
         return elementi;
+    }
+
+    public void exportData() {
+        saveSelection();
+        SavableBorsa sb = new SavableBorsa();
+        selections.forEach((id, qnt) -> {
+            sb.addElement(new SavableElement(id, qnt));
+        });
+        TextField tf = new TextField("Borsa_Salvata");
+        ValueDialog vd = new ValueDialog("Salva selezione", "Inserisci un nome per il salvataggio", tf);
+        DialogCreator.showDialog(vd, () -> {
+            if (!tf.getText().isBlank()) {
+                DataElement generateElement = SubscribeData.generateElement(PluginRegisterBorse.sf, tf.getText()+".data", sb);
+                if(generateElement!=null){
+                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Salavataggio completato!", null, null);
+                }
+            }
+        }, null);
     }
 
 }

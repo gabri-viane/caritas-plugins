@@ -16,6 +16,7 @@
 package theopenhand.plugins.prodotti.data;
 
 import java.math.BigInteger;
+import java.util.Objects;
 import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
 import theopenhand.commons.connection.runtime.custom.ClauseType;
@@ -89,6 +90,22 @@ public class ElementoMagazzino implements TableAssoc {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ElementoMagazzino em) {
+            return em.id != null & id != null ? id.longValue() == em.id.longValue() : false;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.id_prodotto);
+        return hash;
     }
 
 }

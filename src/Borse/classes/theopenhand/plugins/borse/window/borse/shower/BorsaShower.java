@@ -274,7 +274,7 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
         res.ifPresent((r) -> {
             if (r.equals(ButtonType.YES)) {
                 if (this.b != null) {
-                    controller.setRH(ConnectionExecutor.getInstance().executeQuery(PluginRegisterBorse.brr, 5, Borsa.class, this.b).orElse(null));
+                    controller.setRH(ConnectionExecutor.getInstance().executeCall(PluginRegisterBorse.brr, 5, Borsa.class, this.b).orElse(null));
                 } else {
                     DialogCreator.showAlert(Alert.AlertType.ERROR, "Errore eliminazione",
                             "Non è stata selezionata nessuna borsa da eliminare.", null);
@@ -286,7 +286,7 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
 
     private void updateBorsa() {
         if (b != null) {
-            LocalDate date = dataConsegnaDP.getValue();
+            LocalDate date = dataConsegnaDP.getConverter().fromString(dataConsegnaDP.getEditor().getText());
             if (date != null && f != null) {
                 b.setId_fam(f.getIdfam());
                 b.setConsegna(DataUtils.toDate(date));

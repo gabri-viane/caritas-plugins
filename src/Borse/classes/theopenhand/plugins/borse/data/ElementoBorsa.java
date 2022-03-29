@@ -16,6 +16,7 @@
 package theopenhand.plugins.borse.data;
 
 import java.math.BigInteger;
+import java.util.Objects;
 import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
 import theopenhand.commons.connection.runtime.custom.ClauseType;
@@ -38,7 +39,6 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
     @QueryField(fieldID = 2, name = "IDProdotti")
     private BigInteger idprodotto;
 
-    
     @QueryCustom(displayName = "Quantità", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @ColumnData(Title = "Totale", order = 2)
     @QueryField(fieldID = 3, name = "Totale")
@@ -48,7 +48,6 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
     @QueryField(fieldID = 4, name = "IsSottratto")
     private Boolean subtr;
 
-    
     @QueryCustom(displayName = "Prodotto", enabled = {ClauseType.WHERE, ClauseType.ORDER_BY})
     @ColumnData(Title = "Prodotto", order = 0)
     @QueryField(fieldID = 5, name = "Prodotto")
@@ -72,7 +71,7 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
     public ElementoBorsa(boolean existing) {
         this.existing = existing;
     }
-    
+
     public ElementoBorsa(long idborsa, long idprodotto, long tot, boolean subtr) {
         this.id = null;
         this.idborsa = BigInteger.valueOf(idborsa);
@@ -123,11 +122,10 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
         this.tot = BigInteger.valueOf(tot);
     }
 
-    
     public void setTot(BigInteger tot) {
         this.tot = tot;
     }
-    
+
     public Boolean getSubtr() {
         return subtr;
     }
@@ -163,6 +161,23 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
     @Override
     public String toString() {
         return prodotto + " - " + confezione + " : " + tot;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ElementoBorsa eb) {
+            return eb.id != null & id != null ? id.longValue() == eb.id.longValue() : false;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.idborsa);
+        hash = 23 * hash + Objects.hashCode(this.idprodotto);
+        return hash;
     }
 
 }

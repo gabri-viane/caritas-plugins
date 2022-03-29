@@ -35,7 +35,7 @@ import theopenhand.runtime.templates.Settings;
 public class PluginRegisterBorse implements LinkableClass {
 
     public static final BorseRR brr = new BorseRR("plugin_borse");
-    private static final Settings sf = new PluginSettings();
+    public static final Settings sf = new PluginSettings();
 
     @Override
     public void load() {

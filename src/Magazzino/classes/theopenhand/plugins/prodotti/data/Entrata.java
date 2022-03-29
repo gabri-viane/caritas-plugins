@@ -17,6 +17,7 @@ package theopenhand.plugins.prodotti.data;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Objects;
 import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
 import theopenhand.commons.connection.runtime.custom.ClauseType;
@@ -128,6 +129,23 @@ public class Entrata implements BindableResult, TableAssoc {
     @Override
     public String toString() {
         return nome_prodotto + " +" + totale;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Entrata e) {
+            return e.id != null & id != null ? id.longValue() == e.id.longValue() : false;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.id_prodotto);
+        hash = 29 * hash + Objects.hashCode(this.id_donatore);
+        return hash;
     }
 
 }

@@ -52,7 +52,7 @@
                                         </Label>
                                         <GridPane>
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="NEVER" maxWidth="78.0" minWidth="78.0" prefWidth="78.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="78.0" />
                                                 <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="900.0" />
                                             </columnConstraints>
                                             <rowConstraints>

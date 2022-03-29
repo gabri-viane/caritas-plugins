@@ -96,6 +96,7 @@ public class CompMain extends AnchorPane implements ValueHolder<Famiglia>, Dialo
         } catch (IOException ex) {
             Logger.getLogger(CompMain.class.getName()).log(Level.SEVERE, null, ex);
         }
+        idfamLBL.setText("Seleziona famiglia");
         refreshHL.setOnAction(a -> {
             refreshHL.setVisited(false);
             onRefresh(true);

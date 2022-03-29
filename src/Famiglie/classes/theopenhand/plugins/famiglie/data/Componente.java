@@ -7,6 +7,7 @@ package theopenhand.plugins.famiglie.data;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Objects;
 import theopenhand.commons.connection.runtime.annotations.QueryCustom;
 import theopenhand.commons.connection.runtime.annotations.QueryField;
 import theopenhand.commons.connection.runtime.custom.ClauseType;
@@ -119,6 +120,22 @@ public class Componente implements TableAssoc {
     @Override
     public String toString() {
         return nome_com + " " + cogn_com + (parentela != null ? " - " + parentela : ""); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Componente c) {
+            return c.id != null & id != null ? id.longValue() == c.id.longValue() : false;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.idfam);
+        return hash;
     }
 
 }

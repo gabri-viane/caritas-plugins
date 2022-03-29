@@ -32,7 +32,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="modifingLBL" text="(In modifica)" textFill="#ff0000" visible="false" HBox.hgrow="ALWAYS" />
+                  <Label fx:id="modifingLBL" styleClass="warning" text="(In modifica)" textFill="#ff0000" visible="false" HBox.hgrow="ALWAYS" />
                </children>
                <padding>
                   <Insets left="10.0" />
@@ -53,7 +53,7 @@
                               </Label>
                               <GridPane>
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="NEVER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="80.0" />
                                   <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="900.0" />
                                 </columnConstraints>
                                 <rowConstraints>
@@ -87,7 +87,7 @@
                               </Label>
                               <GridPane>
                                  <columnConstraints>
-                                    <ColumnConstraints hgrow="NEVER" maxWidth="62.0" minWidth="62.0" prefWidth="62.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="62.0" />
                                     <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="900.0" />
                                  </columnConstraints>
                                  <rowConstraints>
