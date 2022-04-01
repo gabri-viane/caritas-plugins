@@ -17,28 +17,43 @@ package theopenhand.plugins.prodotti.window.mag;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import theopenhand.commons.ReferenceQuery;
 import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
+import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
+import theopenhand.commons.events.graphics.ClickListener;
 import theopenhand.commons.interfaces.graphics.Refreshable;
 import theopenhand.plugins.prodotti.connector.PluginRegisterProdotti;
 import theopenhand.plugins.prodotti.connector.runtimes.PluginSettings;
 import theopenhand.plugins.prodotti.controllers.prodotti.MagazzinoController;
+import theopenhand.plugins.prodotti.data.DataBuilder;
 import theopenhand.plugins.prodotti.data.ElementoMagazzino;
+import theopenhand.plugins.prodotti.data.ModificaMagazzino;
+import theopenhand.plugins.prodotti.data.Prodotto;
 import theopenhand.plugins.prodotti.window.confs.shower.ConfShower;
 import theopenhand.plugins.prodotti.window.mag.add.entrate.EntRegister;
+import theopenhand.plugins.prodotti.window.mag.add.modifiche.ModificaRegister;
 import theopenhand.plugins.prodotti.window.prods.add.ProdRegister;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
+import theopenhand.window.graphics.commons.ValueDialog;
 import theopenhand.window.graphics.creators.ActionCreator;
 import theopenhand.window.graphics.creators.DialogCreator;
 import theopenhand.window.graphics.creators.ElementCreator;
@@ -48,7 +63,7 @@ import theopenhand.window.graphics.inner.DisplayTableValue;
  *
  * @author gabri
  */
-public class MagMain extends AnchorPane implements Refreshable{
+public class MagMain extends AnchorPane implements Refreshable {
 
     @FXML
     private VBox containerVB;
@@ -113,9 +128,9 @@ public class MagMain extends AnchorPane implements Refreshable{
                 DialogCreator.showDialog(er, () -> {
                     onRefresh(true);
                 }, null);
-                regEntrataHL.setVisited(false);
             }
         });
+        generatePopupControls();
         PluginSettings.table_prop.addListener((previus_value, new_value) -> {
             changeType(new_value);
         });
@@ -151,6 +166,51 @@ public class MagMain extends AnchorPane implements Refreshable{
                 table.setData(controller.getRH().getList());
             }
         }
+    }
+
+    private void generatePopupControls() {
+        ContextMenu cm = new ContextMenu();
+        //enuItem remove_element = new MenuItem("Rimuovi");
+        MenuItem edit_element = new MenuItem("Modifica quantità");
+        MenuItem reg_entrata = new MenuItem("Registra entrata");
+
+        cm.getItems().addAll(edit_element, /*remove_element,*/ new SeparatorMenuItem(), reg_entrata);
+
+        /*        remove_element.setOnAction(a -> {
+            DialogCreator.showAlert(Alert.AlertType.CONFIRMATION, "Rimuovere da magazzino?",
+                    "Rimuovendo l'elemento dal magazzino verranno eliminati i conteggi generali associati.\nContinure?", null)
+                    .ifPresent((t) -> {
+                        if (t.equals(ButtonType.YES)) {
+                            
+                            ElementoMagazzino selectedItem = table.getSelectionModel().getSelectedItem();
+                            Prodotto p = DataBuilder.generateProdottoByID(selectedItem.getId_prodotto());
+                            
+            ConnectionExecutor.getInstance().executeCall(PluginRegisterBorse.brr, 5, ElementoBorsa.class, selectedItem);
+            onRefresh(true);
+                        }
+                    });
+        });*/
+        edit_element.setOnAction(a -> {
+            ModificaMagazzino mm = new ModificaMagazzino();
+            ElementoMagazzino selectedItem = table.getSelectionModel().getSelectedItem();
+            mm.setId_prodotto(selectedItem.getId_prodotto());
+            mm.setProdotto(selectedItem.getNome());
+
+            ModificaRegister mr = new ModificaRegister(mm);
+            DialogCreator.showDialog(mr, () -> {
+                onRefresh(true);
+            }, null);
+        });
+        reg_entrata.setOnAction(a -> {
+            ElementoMagazzino selectedItem = table.getSelectionModel().getSelectedItem();
+            EntRegister er = new EntRegister();
+            er.selectProd(selectedItem);
+            DialogCreator.showDialog(er, () -> {
+                onRefresh(true);
+            }, null);
+        });
+
+        table.setPopUpMenu(cm);
     }
 
 }

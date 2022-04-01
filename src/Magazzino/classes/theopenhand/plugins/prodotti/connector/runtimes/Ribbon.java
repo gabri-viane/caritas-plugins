@@ -15,7 +15,10 @@
  */
 package theopenhand.plugins.prodotti.connector.runtimes;
 
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,7 +28,9 @@ import theopenhand.plugins.prodotti.window.dons.add.DonRegister;
 import theopenhand.plugins.prodotti.window.dons.shower.DonShower;
 import theopenhand.plugins.prodotti.window.mag.MagMain;
 import theopenhand.plugins.prodotti.window.mag.add.entrate.EntRegister;
+import theopenhand.plugins.prodotti.window.mag.add.modifiche.ModificaRegister;
 import theopenhand.plugins.prodotti.window.mag.shower.entrate.EntMain;
+import theopenhand.plugins.prodotti.window.mag.shower.modifiche.ModificheMain;
 import theopenhand.plugins.prodotti.window.mots.add.MotRegister;
 import theopenhand.plugins.prodotti.window.mots.shower.MotShower;
 import theopenhand.plugins.prodotti.window.prods.ProdMain;
@@ -44,6 +49,7 @@ public class Ribbon {
 
     private final ProdottiRR rr;
     private EntMain em;
+    private ModificheMain mmm;
     private MagMain mm;
     private ProdMain pm;
     private DonShower ds;
@@ -58,10 +64,11 @@ public class Ribbon {
 
     private void createRibbon() {
         RibbonGroup reg_grp = RibbonFactory.createGroup(rr, "Crea", "Prodotti");
-        RibbonGroup reg_grp_mag= RibbonFactory.createGroup(rr, "Crea", "Magazzino");
+        RibbonGroup reg_grp_mag = RibbonFactory.createGroup(rr, "Crea", "Magazzino");
         RibbonGroup show_prod_grp = RibbonFactory.createGroup(rr, "Visualizza", "Prodotti");
         RibbonGroup show_mag_grp = RibbonFactory.createGroup(rr, "Visualizza", "Magazzino");
         RibbonGroup hand_grp = RibbonFactory.createGroup(rr, "Gestisci", "Prodotti");
+        RibbonGroup hand_grp_2 = RibbonFactory.createGroup(rr, "Gestisci", "Magazzino");
 
         //Aggiungi
         Button new_prod = new Button("Nuovo Prodotto");
@@ -83,14 +90,23 @@ public class Ribbon {
         Button new_don = new Button("Nuovo Donatore");
         new_don.setOnAction(a -> regDon());
 
+        Button new_mot = new Button("Nuovo\nMotivo Modifica");
+        new_mot.setOnAction(a -> regMotivo());
+
         VBox v2 = new VBox(new_entr, new_don);
         v2.setSpacing(5);
         v2.setPrefHeight(Region.USE_COMPUTED_SIZE);
         v2.setMinHeight(Region.USE_COMPUTED_SIZE);
-        reg_grp_mag.addNode(v2);
+
+        HBox hb1 = new HBox(v2, new Separator(Orientation.VERTICAL), new_mot);
+        hb1.setSpacing(5);
+        hb1.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        hb1.setMinHeight(Region.USE_COMPUTED_SIZE);
+
+        reg_grp_mag.addNode(hb1);
 
         //Mostra
-        Button show_prod = new Button("Mostra prodotto");
+        Button show_prod = new Button("Mostra Prodotto");
         show_prod.setOnAction(a -> showProd());
 
         Button show_conf = new Button("Mostra Confezione");
@@ -123,18 +139,20 @@ public class Ribbon {
         hand_grp.addNode(home_prod);
         show_mag_grp.addNode(home_mag).addNode(v4);
 
-        Button new_mot = new Button("Motivo modifica");
-        new_mot.setOnAction(a -> regMotivo());
-
         Button show_mot = new Button("Mostra Motivo");
+        Button show_mod = new Button("Modifiche Magazzino");
         show_mot.setOnAction(a -> showMot());
+        show_mod.setOnAction(a -> showMod());
 
-        VBox v5 = new VBox(new_mot, show_mot);
+        VBox v5 = new VBox(show_mot, show_mod);
         v5.setSpacing(5);
         v5.setPrefHeight(Region.USE_COMPUTED_SIZE);
         v5.setMinHeight(Region.USE_COMPUTED_SIZE);
         show_mag_grp.addNode(v5);
 
+        Button new_alter_mag = new Button("Modifica magazzino");
+        new_alter_mag.setOnAction(a -> regModificaMagazzino());
+        hand_grp_2.addNode(new_alter_mag);
     }
 
     public void regProd() {
@@ -182,6 +200,15 @@ public class Ribbon {
         dialog.show();
     }
 
+    public void regModificaMagazzino() {
+        ModificaRegister mr = new ModificaRegister();
+        Stage dialog = DialogCreator.createDialog(mr);
+        mr.onExitPressed(() -> {
+            dialog.close();
+        });
+        dialog.show();
+    }
+
     public void showConf() {
         if (cs == null) {
             cs = new ConfShower();
@@ -212,6 +239,14 @@ public class Ribbon {
         }
 //        ms.onRefresh(true);
         StaticReferences.getMainWindowReference().setCenterNode(ms);
+    }
+
+    public void showMod() {
+        if (mmm == null) {
+            mmm = new ModificheMain();
+        }
+//        ms.onRefresh(true);
+        StaticReferences.getMainWindowReference().setCenterNode(mmm);
     }
 
     public void showProd() {

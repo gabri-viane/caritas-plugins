@@ -23,6 +23,7 @@ import theopenhand.plugins.prodotti.controllers.prodotti.ConfezioniController;
 import theopenhand.plugins.prodotti.controllers.prodotti.DonatoriController;
 import theopenhand.plugins.prodotti.controllers.prodotti.EntrateController;
 import theopenhand.plugins.prodotti.controllers.prodotti.MagazzinoController;
+import theopenhand.plugins.prodotti.controllers.prodotti.ModificheController;
 import theopenhand.plugins.prodotti.controllers.prodotti.MotiviController;
 import theopenhand.plugins.prodotti.controllers.prodotti.ProdottiController;
 import theopenhand.plugins.prodotti.window.pickers.ConfPicker;
@@ -50,6 +51,7 @@ public class ProdottiRR extends RuntimeReference {
         addReferenceController(new DonatoriController());
         addReferenceController(new MotiviController());
         addReferenceController(new EntrateController());
+        addReferenceController(new ModificheController());
 
         InterchangeRequest.register("prodotto_picker", ProdPicker::createPicker);
         InterchangeRequest.register("confezione_picker", ConfPicker::createPicker);

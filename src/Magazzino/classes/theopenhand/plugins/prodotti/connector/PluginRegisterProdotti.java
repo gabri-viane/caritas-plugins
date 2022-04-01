@@ -22,18 +22,21 @@ import theopenhand.plugins.prodotti.controllers.prodotti.ConfezioniController;
 import theopenhand.plugins.prodotti.controllers.prodotti.DonatoriController;
 import theopenhand.plugins.prodotti.controllers.prodotti.EntrateController;
 import theopenhand.plugins.prodotti.controllers.prodotti.MagazzinoController;
+import theopenhand.plugins.prodotti.controllers.prodotti.ModificheController;
 import theopenhand.plugins.prodotti.controllers.prodotti.MotiviController;
 import theopenhand.plugins.prodotti.controllers.prodotti.ProdottiController;
 import theopenhand.plugins.prodotti.data.Confezione;
 import theopenhand.plugins.prodotti.data.Donatore;
 import theopenhand.plugins.prodotti.data.ElementoMagazzino;
 import theopenhand.plugins.prodotti.data.Entrata;
+import theopenhand.plugins.prodotti.data.ModificaMagazzino;
 import theopenhand.plugins.prodotti.data.Motivo;
 import theopenhand.plugins.prodotti.data.Prodotto;
 import theopenhand.plugins.prodotti.data.holders.ConfezioneHolder;
 import theopenhand.plugins.prodotti.data.holders.DonatoreHolder;
 import theopenhand.plugins.prodotti.data.holders.EntrataHolder;
 import theopenhand.plugins.prodotti.data.holders.MagazzinoHolder;
+import theopenhand.plugins.prodotti.data.holders.ModificaMagazzinoHolder;
 import theopenhand.plugins.prodotti.data.holders.MotivoHolder;
 import theopenhand.plugins.prodotti.data.holders.ProdottoHolder;
 import theopenhand.runtime.SubscriptionHandler;
@@ -58,6 +61,7 @@ public class PluginRegisterProdotti implements LinkableClass {
         SubscriptionHandler.subscribeToDBObjects(prr, DonatoreHolder.class, Donatore.class);
         SubscriptionHandler.subscribeToDBObjects(prr, MotivoHolder.class, Motivo.class);
         SubscriptionHandler.subscribeToDBObjects(prr, EntrataHolder.class, Entrata.class);
+        SubscriptionHandler.subscribeToDBObjects(prr, ModificaMagazzinoHolder.class, ModificaMagazzino.class);
 
         SharedReferenceQuery.getInstance().register(prr, "prodotto", Prodotto.class, ProdottiController.class);
         SharedReferenceQuery.getInstance().register(prr, "motivo", Motivo.class, MotiviController.class);
@@ -65,6 +69,7 @@ public class PluginRegisterProdotti implements LinkableClass {
         SharedReferenceQuery.getInstance().register(prr, "magazzino", ElementoMagazzino.class, MagazzinoController.class);
         SharedReferenceQuery.getInstance().register(prr, "donatore", Donatore.class, DonatoriController.class);
         SharedReferenceQuery.getInstance().register(prr, "entrata", Entrata.class, EntrateController.class);
+        SharedReferenceQuery.getInstance().register(prr, "modificamagazzino", ModificaMagazzino.class, ModificheController.class);
     }
 
     @Override

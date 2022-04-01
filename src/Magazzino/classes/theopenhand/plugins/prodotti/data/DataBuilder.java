@@ -72,4 +72,19 @@ public class DataBuilder {
         return null;
     }
 
+    public static Motivo generateMotivoByID(long id) {
+        Motivo d = new Motivo();
+        d.id = BigInteger.valueOf(id);
+        return d;
+    }
+
+    public static Motivo generateMotivoByID(BigInteger id) {
+        if (id != null) {
+            Motivo d = new Motivo();
+            d.id = id;
+            return d;
+        }
+        return null;
+    }
+    
 }
