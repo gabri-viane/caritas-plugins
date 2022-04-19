@@ -24,4 +24,6 @@ open module Borse {
     requires javafx.controls;
     requires java.base;
     requires java.logging;
+
+    exports theopenhand.plugins.borse.data.savable;
 }

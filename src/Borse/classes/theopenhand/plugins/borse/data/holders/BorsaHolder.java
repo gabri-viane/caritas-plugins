@@ -37,7 +37,7 @@ public class BorsaHolder extends ResultHolderImpl<Borsa> {
     @Query(queryID = 4, bindedClass = Borsa.class, hasBindedParams = false, isStoredProcedureCall = true, isUpdate = true)
     public static final String EDIT_PROCEDURE = "CALL editBorsa(%N0, %N1, %N2, %N3, %N4);";
 
-    @Query(queryID = 5, bindedClass = Borsa.class, hasBindedParams = false, isStoredProcedureCall = true, isUpdate = true, hasResult = false)
+    @Query(queryID = 5, bindedClass = Borsa.class, hasBindedParams = false, isStoredProcedureCall = true, isUpdate = true)
     public static final String DELETE_PROCEDURE = "CALL removeBorsa(%N0);";
 
     @Query(queryID = 6, bindedClass = Borsa.class, hasBindedParams = true, hasResult = true)

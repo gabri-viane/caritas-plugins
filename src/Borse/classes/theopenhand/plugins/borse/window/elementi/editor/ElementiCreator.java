@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -33,8 +34,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import theopenhand.commons.DataUtils;
 import theopenhand.commons.SharedReferenceQuery;
 import theopenhand.commons.connection.runtime.ConnectionExecutor;
 import theopenhand.commons.connection.runtime.interfaces.ResultHolder;
@@ -45,17 +46,18 @@ import theopenhand.plugins.borse.connector.runtimes.PluginSettings;
 import theopenhand.plugins.borse.data.Borsa;
 import theopenhand.plugins.borse.data.ElementoBorsa;
 import theopenhand.plugins.borse.data.holders.BorsaHolder;
-import theopenhand.plugins.borse.data.savable.SavableBorsa;
-import theopenhand.plugins.borse.data.savable.SavableElement;
+import theopenhand.plugins.borse.data.savable.SavedBorseHolder;
 import theopenhand.plugins.borse.window.borse.BorseMain;
 import theopenhand.plugins.borse.window.elementi.editor.single.SingleElemento;
 import theopenhand.plugins.borse.window.picker.BorPicker;
 import theopenhand.plugins.prodotti.controllers.prodotti.ProdottiController;
-import theopenhand.runtime.data.DataElement;
-import theopenhand.runtime.data.SubscribeData;
+import theopenhand.plugins.prodotti.data.Prodotto;
+import theopenhand.runtime.data.components.ListDataElement;
+import theopenhand.runtime.data.components.PairDataElement;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
 import theopenhand.window.graphics.commons.ValueDialog;
 import theopenhand.window.graphics.creators.DialogCreator;
+import theopenhand.window.graphics.creators.ElementCreator;
 
 /**
  *
@@ -64,13 +66,16 @@ import theopenhand.window.graphics.creators.DialogCreator;
 public class ElementiCreator extends AnchorPane implements Refreshable {
 
     @FXML
+    private Hyperlink clearSelectionHL;
+
+    @FXML
     private FlowPane containerFP;
 
     @FXML
-    private VBox containerVB;
+    private Hyperlink exportDataHL;
 
     @FXML
-    private Hyperlink exportDataHL;
+    private Hyperlink importDataHL;
 
     @FXML
     private BorderPane mainBP;
@@ -79,10 +84,10 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
     private Hyperlink orderHL;
 
     @FXML
-    private Hyperlink refreshHL;
+    private Hyperlink orderInternalHL;
 
     @FXML
-    private Hyperlink clearSelectionHL;
+    private Hyperlink refreshHL;
 
     @FXML
     private Hyperlink saveToBorsaHL;
@@ -90,11 +95,14 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
     private final ProdottiController controller;
 
     private final HashMap<BigInteger, Integer> selections;
+    private final HashMap<BigInteger, SingleElemento> graphic_elements;
 
     private boolean save_elems = true;
+    private boolean save_selection = true;
 
     public ElementiCreator() {
         selections = new HashMap<>();
+        graphic_elements = new HashMap<>();
         controller = SharedReferenceQuery.getController(ProdottiController.class);
         init();
     }
@@ -112,7 +120,9 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
         }
         clearSelectionHL.setOnAction(a -> {
             save_elems = false;
+            save_selection = false;
             onRefresh(true);
+            save_selection = false;
             save_elems = true;
             clearSelectionHL.setVisited(false);
         });
@@ -120,19 +130,40 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
             exportData();
             exportDataHL.setVisited(false);
         });
+        importDataHL.setOnAction(a -> {
+            importData();
+            importDataHL.setVisited(false);
+        });
         refreshHL.setOnAction(a -> {
+            save_selection = true;
             onRefresh(true);
             refreshHL.setVisited(false);
         });
         orderHL.setOnAction(a -> {
+            mainBP.setLeft(null);
             SharedReferenceQuery.execute(SharedReferenceQuery.getInstance().forceGenerate("plugin_prodotti", "prodotto", 8),
-                    null,
+                    new Prodotto(),
                     SharedReferenceQuery.EXECUTION_REQUEST.CUSTOM_QUERY,
                     ((args) -> {
+                        save_selection = true;
                         generateElements();
                         return null;
                     })
             );
+        });
+        orderInternalHL.setOnAction(a -> {
+            mainBP.setLeft(ElementCreator.getOrdableControl(SharedReferenceQuery.getInstance().forceGenerate("plugin_prodotti", "prodotto", 8),
+                    new Prodotto(), ((args) -> {
+                        save_selection = true;
+                        generateElements();
+                        return null;
+                    }), (b) -> {
+                        mainBP.setLeft(null);
+                        save_selection = true;
+                        onRefresh(true);
+                        return null;
+                    }
+            ));
         });
         saveToBorsaHL.setOnAction(a -> {
             PickerDialogCNTRL<Borsa, BorsaHolder> bpcntrl = BorPicker.createPicker();
@@ -155,6 +186,7 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
             });
             bpcntrl.onRefresh(true);
         });
+
         onRefresh(true);
     }
 
@@ -179,18 +211,22 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
         }
         ObservableList<Node> els = containerFP.getChildren();
         els.clear();
+        graphic_elements.clear();
         controller.getRH().getList().stream().forEachOrdered(e -> {
             SingleElemento se = new SingleElemento(e);
             if (selections.containsKey(e.getID())) {
                 se.getSelectionProperty().setValue(true);
                 se.setQuantity(selections.get(e.getID()));
             }
+            graphic_elements.put(se.getValue().getID(), se);
             els.add(se);
         });
     }
 
     private void saveSelection() {
-        selections.clear();
+        if (!save_selection) {
+            selections.clear();
+        }
         ObservableList<Node> els = containerFP.getChildren();
         els.forEach(el -> {
             SingleElemento se = (SingleElemento) el;
@@ -201,6 +237,7 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
     }
 
     public ArrayList<ElementoBorsa> getSelection(Borsa b) {
+        saveSelection();
         ArrayList<ElementoBorsa> elementi = new ArrayList<>();
         selections.forEach((id, value) -> {
             ElementoBorsa eb = ElementoBorsa.create(id, BigInteger.valueOf(value));
@@ -213,20 +250,45 @@ public class ElementiCreator extends AnchorPane implements Refreshable {
 
     public void exportData() {
         saveSelection();
-        SavableBorsa sb = new SavableBorsa();
-        selections.forEach((id, qnt) -> {
-            sb.addElement(new SavableElement(id, qnt));
-        });
-        TextField tf = new TextField("Borsa_Salvata");
+        TextField tf = new TextField("Borsa_Salvata_" + DataUtils.format(new Date()));
         ValueDialog vd = new ValueDialog("Salva selezione", "Inserisci un nome per il salvataggio", tf);
         DialogCreator.showDialog(vd, () -> {
             if (!tf.getText().isBlank()) {
-                DataElement generateElement = SubscribeData.generateElement(PluginRegisterBorse.sf, tf.getText()+".data", sb);
-                if(generateElement!=null){
-                    DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Salavataggio completato!", null, null);
-                }
+                var sb = SavedBorseHolder.createBorsa(tf.getText());
+                selections.forEach((id, qnt) -> {
+                    SavedBorseHolder.addElementToBorsa(sb, id, qnt, graphic_elements.get(id).getValue().toString());
+                });
+                DialogCreator.showAlert(Alert.AlertType.INFORMATION, "Salavataggio completato!", null, null);
             }
         }, null);
+    }
+
+    public void importData() {
+        selections.clear();
+        save_selection = false;
+        save_elems = false;
+        onRefresh(true);
+        SavedBorseHolder.getInstance().selectFromAvailable((args) -> {
+            select((ListDataElement<PairDataElement<BigInteger, Integer>>) args[0]);
+            return null;
+        });
+    }
+
+    private void select(ListDataElement<PairDataElement<BigInteger, Integer>> borsa) {
+        borsa.getList().forEach((pair) -> {
+            var id = pair.getSxValue();
+            var qnt = pair.getDxValue();
+            selections.put(id, qnt);
+        });
+        ObservableList<Node> els = containerFP.getChildren();
+        els.forEach(el -> {
+            SingleElemento se = (SingleElemento) el;
+            var id = se.getValue().getID();
+            if (selections.containsKey(id)) {
+                se.getSelectionProperty().setValue(true);
+                se.setQuantity(selections.get(id));
+            }
+        });
     }
 
 }

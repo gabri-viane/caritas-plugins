@@ -18,14 +18,7 @@
          <center>
             <ScrollPane fitToHeight="true" fitToWidth="true">
                <content>
-                  <VBox fx:id="containerVB" spacing="5.0">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                     <children>
-                        <FlowPane fx:id="containerFP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
+                  <FlowPane fx:id="containerFP" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="5.0" />
                </content>
             </ScrollPane>
          </center>
@@ -51,10 +44,29 @@
                         <Hyperlink fx:id="clearSelectionHL" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" text="Pulisci selezione" />
                         <Separator />
                         <Hyperlink fx:id="refreshHL" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" text="Aggiorna" />
-                        <Hyperlink fx:id="orderHL" maxWidth="1.7976931348623157E308" text="Ordina" />
+                        <HBox>
+                           <children>
+                              <Hyperlink fx:id="orderHL" maxWidth="1.7976931348623157E308" text="Ordina (ext)" />
+                              <Hyperlink fx:id="orderInternalHL" text="(qui)" />
+                           </children>
+                        </HBox>
                         <Separator />
-                        <Hyperlink fx:id="saveToBorsaHL" maxWidth="1.7976931348623157E308" text="Salva in una borsa" />
-                        <Hyperlink fx:id="exportDataHL" maxWidth="1.7976931348623157E308" text="Esporta elementi borsa" />
+                        <Hyperlink fx:id="saveToBorsaHL" maxWidth="1.7976931348623157E308" text="Assegna borsa" />
+                        <Separator />
+                        <Label maxWidth="1.7976931348623157E308" text="Importa/Esporta:" VBox.vgrow="NEVER">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Hyperlink fx:id="exportDataHL" maxWidth="1.7976931348623157E308" text="Esporta selezione">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin></Hyperlink>
+                        <Hyperlink fx:id="importDataHL" layoutX="20.0" layoutY="133.0" maxWidth="1.7976931348623157E308" text="Importa selezione">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Hyperlink>
                      </children>
                   </VBox>
                </children>

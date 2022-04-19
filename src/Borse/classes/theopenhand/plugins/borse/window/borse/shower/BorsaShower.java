@@ -306,8 +306,8 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
 
     public void editable(boolean ed) {
         editing = ed;
-        idTB.setEditable(ed);
-        dichTB.setEditable(ed);
+        //idTB.setEditable(ed);
+        //dichTB.setEditable(ed);
         dataConsegnaDP.setEditable(ed);
         dataConsegnaDP.setDisable(!ed);
         noteTA.setEditable(ed);
@@ -347,7 +347,7 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
 
     public void setData(Borsa bor) {
         if (bor != null) {
-            idBorLBL.setText("" + bor.getID());
+            idBorLBL.setText(bor.getId_fam() + " - " + DataUtils.format(bor.getConsegna()));
             idTB.setText("" + bor.getId_fam());
             dichTB.setText(bor.getDichiarante());
             dataConsegnaDP.setValue(DataUtils.toLocalDate(bor.getConsegna()));

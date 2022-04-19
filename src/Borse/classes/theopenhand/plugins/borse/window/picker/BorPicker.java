@@ -39,6 +39,7 @@ public class BorPicker {
         ReferenceQuery<Borsa, BorsaHolder> rq = new ReferenceQuery<>(PluginRegisterBorse.brr, Borsa.class, SharedReferenceQuery.getController(BorseController.class).getRH(), 0);
         BorsaRegister frcntrl = new BorsaRegister();
         PickerDialogCNTRL<Borsa, BorsaHolder> createPicker = DialogCreator.createPicker(rq, "Lista Borse", frcntrl);
+        createPicker.setTransformer_id(null);
         return createPicker;
     }
 
