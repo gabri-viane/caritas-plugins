@@ -113,7 +113,7 @@ public class FamMain extends AnchorPane implements Refreshable {
             changeType(new_value);
         });
         changeType(PluginSettings.table_prop.getValue());
-        ActionCreator.setHyperlinkAction(ActionCreator.generateOrderAction(new ReferenceQuery(PluginRegisterFamiglie.frr,Famiglia.class,controller.getRH(),7), this), orderHL);
+        ActionCreator.setHyperlinkAction(ActionCreator.generateOrderAction(new ReferenceQuery(PluginRegisterFamiglie.frr, Famiglia.class, controller.getRH(), 7), this), orderHL);
         /*reloadElements(true);*/
     }
 
@@ -129,7 +129,7 @@ public class FamMain extends AnchorPane implements Refreshable {
     public void onRefresh(boolean reload) {
         if (reload) {
             controller.setRH(
-                ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Famiglia.class, null).orElse(null));
+                    ConnectionExecutor.getInstance().executeQuery(PluginRegisterFamiglie.frr, 0, Famiglia.class, null).orElse(null));
         }
         if (controller.getRH() != null) {
             if (!PluginSettings.table_prop.getValue()) {

@@ -36,7 +36,7 @@ public class ProdPicker {
     }
 
     public static PickerDialogCNTRL<Prodotto, ProdottoHolder> createPicker() {
-        ReferenceQuery<Prodotto, ProdottoHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Prodotto.class, SharedReferenceQuery.getController(ProdottiController.class).getRH(), 0);
+        ReferenceQuery<Prodotto, ProdottoHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Prodotto.class, SharedReferenceQuery.getController(ProdottiController.class).getRH(), 10);
         ProdRegister pr = new ProdRegister();
         PickerDialogCNTRL<Prodotto, ProdottoHolder> createPicker = DialogCreator.createPicker(rq, "Lista Prodotti", pr);
         createPicker.setTransformer_id(null);

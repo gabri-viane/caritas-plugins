@@ -78,8 +78,7 @@ public class Ribbon {
     }
 
     public void createElems() {
-        ElementiCreator ec = new ElementiCreator();
-        StaticReferences.getMainWindowReference().setCenterNode(ec);
+        StaticReferences.getMainWindowReference().setCenterNode(new ElementiCreator());
     }
 
     public void showBorsa() {

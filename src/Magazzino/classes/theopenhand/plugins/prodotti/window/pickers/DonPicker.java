@@ -36,7 +36,7 @@ public class DonPicker {
     }
 
     public static PickerDialogCNTRL<Donatore, DonatoreHolder> createPicker() {
-        ReferenceQuery<Donatore, DonatoreHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Donatore.class, SharedReferenceQuery.getController(DonatoriController.class).getRH(), 0);
+        ReferenceQuery<Donatore, DonatoreHolder> rq = new ReferenceQuery<>(PluginRegisterProdotti.prr, Donatore.class, SharedReferenceQuery.getController(DonatoriController.class).getRH(), 5);
         DonRegister cr = new DonRegister();
         PickerDialogCNTRL<Donatore, DonatoreHolder> createPicker = DialogCreator.createPicker(rq, "Lista Donatori", cr);
         createPicker.setTransformer_id(null);

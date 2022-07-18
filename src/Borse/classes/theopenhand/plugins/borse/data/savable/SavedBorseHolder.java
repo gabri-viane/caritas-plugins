@@ -16,7 +16,6 @@
 package theopenhand.plugins.borse.data.savable;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import theopenhand.commons.events.programm.FutureCallable;
 import theopenhand.runtime.data.components.ListDataElement;
 import theopenhand.runtime.data.components.MapDataElement;
@@ -66,6 +65,15 @@ public class SavedBorseHolder {
     public void selectFromAvailable(FutureCallable<ListDataElement<PairDataElement<BigInteger, Integer>>> sb) {
         if (scb != null) {
             BasePickerDialogCNTRL<ListDataElement<PairDataElement<BigInteger, Integer>>, MapDataElement<String, ListDataElement<PairDataElement<BigInteger, Integer>>>> picker = new BasePickerDialogCNTRL<>("Seleziona elemento", scb);
+            picker.setActionButton("Rimuovi", (args) -> {
+                var arg = args[0];
+                if (arg != null) {
+                    var b = (ListDataElement<PairDataElement<BigInteger, Integer>>) arg;
+                    scb.removeElement(b.getName());
+                    picker.onRefresh(true);
+                }
+                return null;
+            });
             DialogCreator.showDialog(picker, () -> {
                 sb.execute(picker.getValue());
             }, null);

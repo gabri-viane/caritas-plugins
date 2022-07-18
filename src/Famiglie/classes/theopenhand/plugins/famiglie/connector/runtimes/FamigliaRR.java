@@ -62,6 +62,10 @@ public class FamigliaRR extends RuntimeReference {
                 return castToObject(l);
             }
         });
+    }
+
+    @Override
+    public void initRibbon() {
         Ribbon r = new Ribbon(this);
     }
 }

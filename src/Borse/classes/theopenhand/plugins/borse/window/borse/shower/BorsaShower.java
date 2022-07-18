@@ -59,10 +59,12 @@ import theopenhand.plugins.borse.controllers.borse.ElementiController;
 import theopenhand.plugins.borse.data.Borsa;
 import theopenhand.plugins.borse.data.ElementoBorsa;
 import theopenhand.plugins.borse.data.holders.BorsaHolder;
+import theopenhand.plugins.borse.window.elementi.editor.ElementiCreator;
 import theopenhand.plugins.borse.window.picker.BorPicker;
 import theopenhand.plugins.famiglie.data.Famiglia;
 import theopenhand.plugins.famiglie.data.holders.FamigliaHolder;
 import theopenhand.plugins.famiglie.window.pickers.FamPicker;
+import theopenhand.statics.StaticReferences;
 import theopenhand.window.graphics.commons.PickerDialogCNTRL;
 import theopenhand.window.graphics.commons.PickerElementCNTRL;
 import theopenhand.window.graphics.commons.ValueDialog;
@@ -193,7 +195,13 @@ public class BorsaShower extends AnchorPane implements DialogComponent, ValueHol
             moveToFamHL.setVisited(false);
         });
         editElemsHL.setOnAction(a -> {
-
+            ElementiCreator ec = new ElementiCreator();
+            ec.editBorsa(b, () -> {
+                StaticReferences.getMainWindowReference().setCenterNode(this);
+                onRefresh(true);
+            });
+            StaticReferences.getMainWindowReference().setCenterNode(ec);
+            editElemsHL.setVisited(false);
         });
         editBorHL.setOnAction((a) -> {
             editBorHL.setVisited(false);

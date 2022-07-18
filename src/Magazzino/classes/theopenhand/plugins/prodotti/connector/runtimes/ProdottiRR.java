@@ -56,8 +56,11 @@ public class ProdottiRR extends RuntimeReference {
         InterchangeRequest.register("prodotto_picker", ProdPicker::createPicker);
         InterchangeRequest.register("confezione_picker", ConfPicker::createPicker);
         InterchangeRequest.register("donatore_picker", DonPicker::createPicker);
-        
-        Ribbon r = new Ribbon(this);
+    }
+
+    @Override
+    public void initRibbon() {
+        Ribbon r = new Ribbon(this); 
     }
 
 }

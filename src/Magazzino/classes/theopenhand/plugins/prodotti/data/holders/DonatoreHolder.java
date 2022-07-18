@@ -40,6 +40,8 @@ public class DonatoreHolder extends ResultHolderImpl<Donatore> {
     @Query(queryID = 4, bindedClass = Donatore.class, hasBindedParams = true, isUpdate = true, hasResult = false)
     public static final String DELETE_QUERY = "DELETE FROM Donatori WHERE %N0 = %V0;";
 
+    @Query(queryID = 5, bindedClass = Donatore.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_ORDERED = "SELECT * FROM getDonatori ORDER BY %N1";
     
     public DonatoreHolder() {
     }

@@ -45,9 +45,15 @@ public class ProdottoHolder extends ResultHolderImpl<Prodotto> {
 
     @Query(queryID = 7, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
     public static final String SELECT_QUERY_CUSTOM_FORMATTED = "SELECT * FROM getCustomProdF";
-    
-     @Query(queryID = 8, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
+
+    @Query(queryID = 8, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
     public static final String SELECT_QUERY_COMPLETE_CUSTOM = "SELECT * FROM getProdottiCompleteS";
+
+    @Query(queryID = 9, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_COMPLETE_CUSTOM_ORDERED = "SELECT * FROM getProdottiCompleteS ORDER BY %N1 AND %N2";
+
+    @Query(queryID = 10, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_FORMATTED_ORDERED = "SELECT * FROM getProdottiF ORDER BY %N1";
 
     public ProdottoHolder() {
     }

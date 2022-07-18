@@ -33,6 +33,12 @@ public class FamigliaHolder extends ResultHolderImpl<Famiglia> {
     @Query(queryID = 7, bindedClass = Famiglia.class, hasBindedParams = true, hasResult = false)
     public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getFamiglieCompleteF";
 
+    @Query(queryID = 8, bindedClass = Famiglia.class, hasBindedParams = true, hasResult = false)
+    public static final String SELECT_QUERY_COMPLETE_ALL_ORDERED = "SELECT * FROM getFamiglieCompleteF ORDER BY %N1";
+
+    @Query(queryID = 9, bindedClass = Famiglia.class, hasBindedParams = true, hasResult = true)
+    public static final String SELECT_QUERY_ORDERED = "SELECT * FROM getFamiglieF ORDER BY %N1";
+
     public FamigliaHolder() {
     }
 

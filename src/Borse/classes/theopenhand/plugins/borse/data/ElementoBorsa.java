@@ -59,7 +59,7 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
     private String confezione;
 
     @QueryField(fieldID = 7, name = "NO_ASSOC_DATA")
-    private final Boolean existing;
+    private Boolean existing;
 
     @QueryField(fieldID = 8, name = "NO_ASSOC_DATA")
     private Boolean restore_on_delete = true;
@@ -86,6 +86,14 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
         eb.idprodotto = idprodotto;
         eb.tot = tot;
         eb.subtr = false;
+        return eb;
+    }
+
+    public static ElementoBorsa createExising(BigInteger id, BigInteger idprodotto) {
+        ElementoBorsa eb = new ElementoBorsa(true);
+        eb.idprodotto = idprodotto;
+        eb.id = id;
+        eb.restore_on_delete = true;
         return eb;
     }
 
@@ -178,6 +186,10 @@ public class ElementoBorsa implements BindableResult, TableAssoc {
         hash = 23 * hash + Objects.hashCode(this.idborsa);
         hash = 23 * hash + Objects.hashCode(this.idprodotto);
         return hash;
+    }
+
+    public void setExisting(boolean existing) {
+        this.existing = existing;
     }
 
 }

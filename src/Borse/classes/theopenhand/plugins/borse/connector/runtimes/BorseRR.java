@@ -42,6 +42,11 @@ public class BorseRR extends RuntimeReference {
         /*InterchangeRequest.register("borsa_picker", () -> {
             return BorPicker.createPicker();
         });*/
+        
+    }
+
+    @Override
+    public void initRibbon() {
         Ribbon r = new Ribbon(this);
     }
 
