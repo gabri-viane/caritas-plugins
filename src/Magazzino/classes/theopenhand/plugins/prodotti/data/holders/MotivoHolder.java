@@ -26,19 +26,19 @@ import theopenhand.plugins.prodotti.data.Motivo;
 public class MotivoHolder extends ResultHolderImpl<Motivo> {
 
     @Query(queryID = 0, bindedClass = Motivo.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getMotivi";
+    public static final String SELECT_QUERY = "SELECT * FROM getmotivi";
 
     @Query(queryID = 1, bindedClass = Motivo.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String ADD_PROCEDURE = "CALL addMotivo(%N1, %N2, %N0);";
 
     @Query(queryID = 2, bindedClass = Motivo.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getMotivi WHERE %N0 = %V0";
+    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getmotivi WHERE %N0 = %V0";
 
     @Query(queryID = 3, bindedClass = Motivo.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String EDIT_PROCEDURE = "CALL editMotivo(%N0, %N1, %N2);";
 
     @Query(queryID = 4, bindedClass = Motivo.class, hasBindedParams = true, isUpdate = true, hasResult = false)
-    public static final String DELETE_QUERY = "DELETE FROM Motivi WHERE %N0 = %V0;";
+    public static final String DELETE_QUERY = "DELETE FROM motivi WHERE %N0 = %V0;";
 
     public MotivoHolder() {
     }

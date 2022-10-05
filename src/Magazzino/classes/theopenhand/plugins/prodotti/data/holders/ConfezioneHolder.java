@@ -26,19 +26,19 @@ import theopenhand.plugins.prodotti.data.Confezione;
 public class ConfezioneHolder extends ResultHolderImpl<Confezione> {
 
     @Query(queryID = 0, bindedClass = Confezione.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_FORMATTED = "SELECT * FROM getConfezioniF";
+    public static final String SELECT_QUERY_FORMATTED = "SELECT * FROM getconfezionif";
 
     @Query(queryID = 1, bindedClass = Confezione.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String ADD_PROCEDURE = "CALL addConfezione(%N1, %N0);";
 
     @Query(queryID = 2, bindedClass = Confezione.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getConfezioni";
+    public static final String SELECT_QUERY = "SELECT * FROM getconfezioni";
 
     @Query(queryID = 4, bindedClass = Confezione.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String EDIT_PROCEDURE = "CALL editConfezione(%N0, %N1);";
 
     @Query(queryID = 5, bindedClass = Confezione.class, hasBindedParams = true, isUpdate = true, hasResult = false)
-    public static final String DELETE_QUERY = "DELETE FROM Confezioni WHERE %N0 = %V0;";
+    public static final String DELETE_QUERY = "DELETE FROM confezioni WHERE %N0 = %V0;";
 
     public ConfezioneHolder() {
     }

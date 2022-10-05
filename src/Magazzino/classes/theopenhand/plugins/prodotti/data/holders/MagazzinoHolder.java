@@ -26,25 +26,25 @@ import theopenhand.plugins.prodotti.data.ElementoMagazzino;
 public class MagazzinoHolder extends ResultHolderImpl<ElementoMagazzino> {
 
     @Query(queryID = 0, bindedClass = ElementoMagazzino.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_FORMATTED = "SELECT * FROM getMagazzinoF";
+    public static final String SELECT_QUERY_FORMATTED = "SELECT * FROM getmagazzinof";
 
     @Query(queryID = 2, bindedClass = ElementoMagazzino.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getMagazzino";
+    public static final String SELECT_QUERY = "SELECT * FROM getmagazzino";
 
     @Query(queryID = 3, bindedClass = ElementoMagazzino.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getMagazzinoCompleteF WHERE %N0 = %V0";
+    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getmagazzinocompletef WHERE %N0 = %V0";
 
     @Query(queryID = 6, bindedClass = ElementoMagazzino.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE_PROD_ID = "SELECT * FROM getMagazzinoCompleteF WHERE %N1 = %V1";
+    public static final String SELECT_QUERY_COMPLETE_PROD_ID = "SELECT * FROM getmagazzinocompletef WHERE %N1 = %V1";
 
     @Query(queryID = 4, bindedClass = ElementoMagazzino.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String EDIT_PROCEDURE = "CALL editMagazzino(%N2, %N4, %N5, %N6, %N7);";
 
     @Query(queryID = 5, bindedClass = ElementoMagazzino.class, hasBindedParams = true, isUpdate = true, hasResult = false)
-    public static final String DELETE_QUERY = "DELETE FROM Magazzino WHERE %N0 = %V0;";
+    public static final String DELETE_QUERY = "DELETE FROM magazzino WHERE %N0 = %V0;";
 
     @Query(queryID = 7, bindedClass = ElementoMagazzino.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getMagazzinoCompleteF";
+    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getmagazzinocompletef";
 
     public MagazzinoHolder() {
     }

@@ -16,28 +16,28 @@ import theopenhand.plugins.famiglie.data.Famiglia;
 public class FamigliaHolder extends ResultHolderImpl<Famiglia> {
 
     @Query(queryID = 0, bindedClass = Famiglia.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getFamiglieF";
+    public static final String SELECT_QUERY = "SELECT * FROM getfamiglief";
 
     @Query(queryID = 1, bindedClass = Famiglia.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String ADD_PROCEDURE = "CALL addFamiglia(%N2, %N4, %N5, %N6, %N7, %N8, %N9, %N10, %N13, %N1, %N11, %N12);";
 
     @Query(queryID = 3, bindedClass = Famiglia.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getFamiglieCompleteF WHERE %N2 = %V2";
+    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getfamigliecompletef WHERE %N2 = %V2";
 
     @Query(queryID = 4, bindedClass = Famiglia.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String EDIT_PROCEDURE = "CALL editFamiglia(%N2, %N4, %N5, %N6, %N7, %N13);";
 
     @Query(queryID = 5, bindedClass = Famiglia.class, hasBindedParams = true, isUpdate = true, hasResult = false)
-    public static final String DELETE_QUERY = "DELETE FROM Famiglie WHERE %N2 = %V2;";
+    public static final String DELETE_QUERY = "DELETE FROM famiglie WHERE %N2 = %V2;";
 
     @Query(queryID = 7, bindedClass = Famiglia.class, hasBindedParams = true, hasResult = false)
-    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getFamiglieCompleteF";
+    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getfamigliecompletef";
 
     @Query(queryID = 8, bindedClass = Famiglia.class, hasBindedParams = true, hasResult = false)
-    public static final String SELECT_QUERY_COMPLETE_ALL_ORDERED = "SELECT * FROM getFamiglieCompleteF ORDER BY %N1";
+    public static final String SELECT_QUERY_COMPLETE_ALL_ORDERED = "SELECT * FROM getfamigliecompletef ORDER BY %N1";
 
     @Query(queryID = 9, bindedClass = Famiglia.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_ORDERED = "SELECT * FROM getFamiglieF ORDER BY %N1";
+    public static final String SELECT_QUERY_ORDERED = "SELECT * FROM getfamiglief ORDER BY %N1";
 
     public FamigliaHolder() {
     }

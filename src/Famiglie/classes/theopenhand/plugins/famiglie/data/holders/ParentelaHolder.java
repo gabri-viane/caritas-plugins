@@ -26,7 +26,7 @@ import theopenhand.plugins.famiglie.data.Parentela;
 public class ParentelaHolder extends ResultHolderImpl<Parentela> {
 
     @Query(queryID = 0, bindedClass = Parentela.class, hasBindedParams = false, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getParentele";
+    public static final String SELECT_QUERY = "SELECT * FROM getparentele";
 
     public ParentelaHolder() {
     }

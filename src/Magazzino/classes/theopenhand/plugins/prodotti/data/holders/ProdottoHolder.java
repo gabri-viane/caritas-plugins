@@ -26,34 +26,34 @@ import theopenhand.plugins.prodotti.data.Prodotto;
 public class ProdottoHolder extends ResultHolderImpl<Prodotto> {
 
     @Query(queryID = 0, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_FORMATTED = "SELECT * FROM getProdottiF";
+    public static final String SELECT_QUERY_FORMATTED = "SELECT * FROM getprodottif";
 
     @Query(queryID = 1, bindedClass = Prodotto.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String ADD_PROCEDURE = "CALL addProdotto(%N1, %N2, %N3, %N4, %N5, %N6, %N0, %N7);";
 
     @Query(queryID = 2, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getProdotti";
+    public static final String SELECT_QUERY = "SELECT * FROM getprodotti";
 
     @Query(queryID = 3, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getProdottiCompleteF WHERE %N0 = %V0";
+    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getprodotticompletef WHERE %N0 = %V0";
 
     @Query(queryID = 4, bindedClass = Prodotto.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String EDIT_PROCEDURE = "CALL editProdotto(%N0, %N1, %N2, %N3, %N4, %N5, %N6, %N7);";
 
     @Query(queryID = 5, bindedClass = Prodotto.class, hasBindedParams = true, isUpdate = true, hasResult = false)
-    public static final String DELETE_QUERY = "DELETE FROM Prodotti WHERE %N0 = %V0;";
+    public static final String DELETE_QUERY = "DELETE FROM prodotti WHERE %N0 = %V0;";
 
     @Query(queryID = 7, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_CUSTOM_FORMATTED = "SELECT * FROM getCustomProdF";
+    public static final String SELECT_QUERY_CUSTOM_FORMATTED = "SELECT * FROM getcustomprodf";
 
     @Query(queryID = 8, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE_CUSTOM = "SELECT * FROM getProdottiCompleteS";
+    public static final String SELECT_QUERY_COMPLETE_CUSTOM = "SELECT * FROM getprodotticompletes";
 
     @Query(queryID = 9, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE_CUSTOM_ORDERED = "SELECT * FROM getProdottiCompleteS ORDER BY %N1 AND %N2";
+    public static final String SELECT_QUERY_COMPLETE_CUSTOM_ORDERED = "SELECT * FROM getprodotticompletes ORDER BY %N1 AND %N2";
 
     @Query(queryID = 10, bindedClass = Prodotto.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_FORMATTED_ORDERED = "SELECT * FROM getProdottiF ORDER BY %N1";
+    public static final String SELECT_QUERY_FORMATTED_ORDERED = "SELECT * FROM getprodottif ORDER BY %N1";
 
     public ProdottoHolder() {
     }

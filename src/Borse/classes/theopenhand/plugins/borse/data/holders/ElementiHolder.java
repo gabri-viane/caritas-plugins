@@ -26,22 +26,22 @@ import theopenhand.plugins.borse.data.ElementoBorsa;
 public class ElementiHolder extends ResultHolderImpl<ElementoBorsa> {
 
     @Query(queryID = 0, bindedClass = ElementoBorsa.class, hasBindedParams = false, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getElementiBorseF";
+    public static final String SELECT_QUERY = "SELECT * FROM getelementiborsef";
 
     @Query(queryID = 1, bindedClass = ElementoBorsa.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String ADD_EDIT_PROCEDURE = "CALL setElementoBorsa(%N1, %N2, %N3, %N4, %N7, %N0);";
 
     @Query(queryID = 3, bindedClass = ElementoBorsa.class, hasBindedParams = false, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getElementiBorseCompleteF WHERE %N0 = %V0";
+    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getelementiborsecompletef WHERE %N0 = %V0";
 
     @Query(queryID = 5, bindedClass = ElementoBorsa.class, hasBindedParams = false, isUpdate = true, hasResult = false, isStoredProcedureCall = true)
     public static final String DELETE_QUERY = "CALL removeElementoBorsa(%N0,%N2,%N8);";
 
     @Query(queryID = 6, bindedClass = ElementoBorsa.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE_BORSA = "SELECT * FROM getElementiBorseCompleteF WHERE %N1 = %V1";
+    public static final String SELECT_QUERY_COMPLETE_BORSA = "SELECT * FROM getelementiborsecompletef WHERE %N1 = %V1";
 
     @Query(queryID = 7, bindedClass = ElementoBorsa.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getElementiBorseCompleteF";
+    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getelementiborsecompletef";
 
     public ElementiHolder() {
     }

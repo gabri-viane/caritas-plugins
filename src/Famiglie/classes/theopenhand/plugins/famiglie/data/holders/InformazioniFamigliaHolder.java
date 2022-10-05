@@ -26,7 +26,7 @@ import theopenhand.plugins.famiglie.data.InformazioniFamiglia;
 public class InformazioniFamigliaHolder extends ResultHolderImpl<InformazioniFamiglia> {
 
     @Query(queryID = 0, bindedClass = InformazioniFamiglia.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getInformazioniFamiglie";
+    public static final String SELECT_QUERY = "SELECT * FROM getinformazionifamiglie";
 
     /*@Query(queryID = 1, bindedClass = InformazioniFamiglia.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String ADD_PROCEDURE = "CALL addFamiglia(%N2, %N4, %N5, %N6,%N7, %N8, %N9,%N10, %N1, %N11, %N12);";

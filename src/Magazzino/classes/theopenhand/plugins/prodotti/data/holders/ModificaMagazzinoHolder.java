@@ -26,13 +26,13 @@ import theopenhand.plugins.prodotti.data.ModificaMagazzino;
 public class ModificaMagazzinoHolder extends ResultHolderImpl<ModificaMagazzino> {
 
     @Query(queryID = 0, bindedClass = ModificaMagazzino.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getModificheMagazzino;";
+    public static final String SELECT_QUERY = "SELECT * FROM getmodifichemagazzino;";
 
     @Query(queryID = 1, bindedClass = ModificaMagazzino.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String ADD_PROCEDURE = "CALL addModificaMagazzino(%N2, %N1, %N3, %N4, %N0);";
 
     @Query(queryID = 2, bindedClass = ModificaMagazzino.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getModificheMagazzinoCompleteS WHERE %N0 = %V0";
+    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getmodifichemagazzinocompletes WHERE %N0 = %V0";
 
 //    @Query(queryID = 3, bindedClass = Motivo.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
 //    public static final String EDIT_PROCEDURE = "CALL editMotivo(%N0, %N1, %N2);";
@@ -40,8 +40,8 @@ public class ModificaMagazzinoHolder extends ResultHolderImpl<ModificaMagazzino>
     public static final String DELETE_QUERY = "CALL removeModificaMagazzino(%N0, %N1, %N2)";
 
     @Query(queryID = 5, bindedClass = ModificaMagazzino.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_FORMATTED = "SELECT * FROM getModificheMagazzinoF";
+    public static final String SELECT_QUERY_FORMATTED = "SELECT * FROM getmodifichemagazzinof";
 
     @Query(queryID = 7, bindedClass = ModificaMagazzino.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_FORMATTED_COMPLETE = "SELECT * FROM getModificheMagazzinoCompleteS";
+    public static final String SELECT_QUERY_FORMATTED_COMPLETE = "SELECT * FROM getmodifichemagazzinocompletes";
 }

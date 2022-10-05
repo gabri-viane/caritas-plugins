@@ -26,13 +26,13 @@ import theopenhand.plugins.borse.data.Borsa;
 public class BorsaHolder extends ResultHolderImpl<Borsa> {
 
     @Query(queryID = 0, bindedClass = Borsa.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY = "SELECT * FROM getBorseF";
+    public static final String SELECT_QUERY = "SELECT * FROM getborsef";
 
     @Query(queryID = 1, bindedClass = Borsa.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String ADD_PROCEDURE = "CALL addBorsa(%N1, %N2, %N3, %N0);";
 
     @Query(queryID = 3, bindedClass = Borsa.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getBorseCompleteF WHERE %N0 = %V0";
+    public static final String SELECT_QUERY_COMPLETE = "SELECT * FROM getborsecompletef WHERE %N0 = %V0";
 
     @Query(queryID = 4, bindedClass = Borsa.class, hasBindedParams = false, isStoredProcedureCall = true, isUpdate = true)
     public static final String EDIT_PROCEDURE = "CALL editBorsa(%N0, %N1, %N2, %N3, %N4);";
@@ -41,10 +41,10 @@ public class BorsaHolder extends ResultHolderImpl<Borsa> {
     public static final String DELETE_PROCEDURE = "CALL removeBorsa(%N0);";
 
     @Query(queryID = 6, bindedClass = Borsa.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE_FAMIGLIA = "SELECT * FROM getBorseCompleteF WHERE %N1 = %V1";
+    public static final String SELECT_QUERY_COMPLETE_FAMIGLIA = "SELECT * FROM getborsecompletef WHERE %N1 = %V1";
 
     @Query(queryID = 7, bindedClass = Borsa.class, hasBindedParams = true, hasResult = true)
-    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getBorseCompleteF";
+    public static final String SELECT_QUERY_COMPLETE_ALL = "SELECT * FROM getborsecompleteF";
 
     public BorsaHolder() {
     }

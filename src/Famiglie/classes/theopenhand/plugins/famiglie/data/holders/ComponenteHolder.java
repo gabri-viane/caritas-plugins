@@ -26,7 +26,7 @@ import theopenhand.plugins.famiglie.data.Componente;
 public class ComponenteHolder extends ResultHolderImpl<Componente> {
 
     @Query(queryID = 0, bindedClass = Componente.class, hasBindedParams = true, hasResult = true)
-    public static final String QUERY_SELECT = "SELECT * FROM getComponentiF WHERE %N2 = %V2";
+    public static final String QUERY_SELECT = "SELECT * FROM getcomponentif WHERE %N2 = %V2";
 
     @Query(queryID = 1, bindedClass = Componente.class, hasBindedParams = true, isStoredProcedureCall = true, isUpdate = true)
     public static final String ADD_PROCEDURE = "CALL addComponente(%N2, %N3, %N4, %N5, %N6 , %N1);";
@@ -35,7 +35,7 @@ public class ComponenteHolder extends ResultHolderImpl<Componente> {
     public static final String UPDATE_PROCEDURE = "CALL editComponente(%N1, %N3, %N4, %N5, %N6);";
 
     @Query(queryID = 5, bindedClass = Componente.class, hasBindedParams = true, isUpdate = true, hasResult = false)
-    public static final String DELETE_QUERY = "DELETE FROM Componenti WHERE %N1 = %V1;";
+    public static final String DELETE_QUERY = "DELETE FROM componenti WHERE %N1 = %V1;";
 
     public ComponenteHolder() {
     }
